@@ -234,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb289-6"><a href="variansanalys.html#cb289-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
 <span id="cb289-7"><a href="variansanalys.html#cb289-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb289-8"><a href="variansanalys.html#cb289-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -698,8 +698,8 @@ VI
 <div id="övningar-4" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> Övningar</h2>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-60" class="exercise"><strong>Övning 9.1  (Jämförelse mellan t-test och anova) </strong></span>Detta är ett datamaterial som jämför hållfastheten hos murbruk för två oberoende stickprov.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Övning 9.1  (Jämförelse mellan t-test och anova) </strong></span>Detta är ett datamaterial som jämför hållfastheten hos murbruk för två oberoende stickprov.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -878,7 +878,7 @@ Standard
 <p>c. Jämför resultaten i (a) och (b).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-61" class="hypothesis"><strong>Lösningsförslag 9.1  (Jämförelse mellan t-test och anova) </strong></span>a.</p>
+<p><span id="hyp:unlabeled-div-62" class="hypothesis"><strong>Lösningsförslag 9.1  (Jämförelse mellan t-test och anova) </strong></span>a.</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="variansanalys.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Behandling, Hållfasthet)) <span class="sc">+</span></span>
 <span id="cb313-2"><a href="variansanalys.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
@@ -921,8 +921,8 @@ Standard
 <p>c. F-testet i (b) ger samma p-värde som t-test i (a).</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-62" class="exercise"><strong>Övning 9.2  (Äppelinfektion) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Övning 9.2  (Äppelinfektion) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1038,7 +1038,7 @@ D
 <p>d. Jämför sorter med Fishers LSD.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-63" class="hypothesis"><strong>Lösningsförslag 9.2  (Äppelinfektion) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
+<p><span id="hyp:unlabeled-div-64" class="hypothesis"><strong>Lösningsförslag 9.2  (Äppelinfektion) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="variansanalys.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb320-2"><a href="variansanalys.html#cb320-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Äppelangrepp&quot;</span>)</span>
 <span id="cb320-3"><a href="variansanalys.html#cb320-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1096,8 +1096,8 @@ Ungefärligt normalfördelat.</p>
 <p>Fishers LSD pekar på att det inte finns några skillnader mellan sorterna.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-64" class="exercise"><strong>Övning 9.3  (Majshybrider) </strong></span>Fyra majssorter planteras på fem platser (som agerar som fem block). Datan ges av följande tabell.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Övning 9.3  (Majshybrider) </strong></span>Fyra majssorter planteras på fem platser (som agerar som fem block). Datan ges av följande tabell.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1207,7 +1207,7 @@ RC-3
 <p>b. Använd Tukey-metoden för parvisa jämförelser mellan hybrider.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-65" class="hypothesis"><strong>Lösningsförslag 9.3  (Majshybrider) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
+<p><span id="hyp:unlabeled-div-66" class="hypothesis"><strong>Lösningsförslag 9.3  (Majshybrider) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="variansanalys.html#cb328-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Majshybrider&quot;</span>)</span>
 <span id="cb328-2"><a href="variansanalys.html#cb328-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb328-3"><a href="variansanalys.html#cb328-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Hybrid, Avkastning, <span class="at">group =</span> Plats, <span class="at">col =</span> Plats)) <span class="sc">+</span></span>
@@ -1243,7 +1243,7 @@ RC-3
 <p>Klart signifikanta skillnader mellan hybrider. Post-hoc-tester ger att RC-3 har lägre avkastning av övriga.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-66" class="exercise"><strong>Övning 9.4  (Maskiner med och utan block) </strong></span>För att undersöka hur mycket vatten ett material kan tåla observerar man hur lång tid det tar innan vatten börjar droppa från en trasa av materialet. I fabriken finns tre olika maskiner i produktionen och man vill undersöka om det är en skillnad mellan dessa. Resultatet ges nedan.</p>
+<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Övning 9.4  (Maskiner med och utan block) </strong></span>För att undersöka hur mycket vatten ett material kan tåla observerar man hur lång tid det tar innan vatten börjar droppa från en trasa av materialet. I fabriken finns tre olika maskiner i produktionen och man vill undersöka om det är en skillnad mellan dessa. Resultatet ges nedan.</p>
 <div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="variansanalys.html#cb333-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Maskin =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">each =</span> <span class="dv">6</span>),</span>
 <span id="cb333-2"><a href="variansanalys.html#cb333-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Replikat =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>),</span>
 <span id="cb333-3"><a href="variansanalys.html#cb333-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Tid =</span> <span class="fu">c</span>(<span class="dv">34</span>,<span class="dv">38</span>,<span class="dv">32</span>,<span class="dv">41</span>,<span class="dv">41</span>,<span class="dv">36</span>,</span>
@@ -1277,7 +1277,7 @@ RC-3
 <p>d. Någon säger att försöket inte är gjort under en dag utan att replikat i själva verket anger vilken dag som försöket gjordes. Man vill därför använda replikat som block i försöket. Gör detta och undersök om detta förändrar resultatet. Tror du att replikat anger olika dagar?</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-67" class="hypothesis"><strong>Lösningsförslag 9.4  (Maskiner med och utan block) </strong></span>a.</p>
+<p><span id="hyp:unlabeled-div-68" class="hypothesis"><strong>Lösningsförslag 9.4  (Maskiner med och utan block) </strong></span>a.</p>
 <div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="variansanalys.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Maskin, Tid, <span class="at">group =</span> Replikat)) <span class="sc">+</span></span>
 <span id="cb335-2"><a href="variansanalys.html#cb335-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb335-3"><a href="variansanalys.html#cb335-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>

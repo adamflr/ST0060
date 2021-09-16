@@ -339,7 +339,7 @@ De tre testen ger liknande resultat, med p-värden kring 3 procent. Ett test på
 <span id="cb191-2"><a href="ett-stickprov.html#cb191-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Antal =</span> <span class="fu">c</span>(<span class="dv">237</span>, <span class="dv">220</span>, <span class="dv">143</span>))</span>
 <span id="cb191-3"><a href="ett-stickprov.html#cb191-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb191-4"><a href="ett-stickprov.html#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -396,7 +396,7 @@ Backsvala
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="ett-stickprov.html#cb195-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Utfall =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>, </span>
 <span id="cb195-2"><a href="ett-stickprov.html#cb195-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Frekvens =</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">76</span>,<span class="dv">125</span>,<span class="dv">107</span>,<span class="dv">79</span>,<span class="dv">54</span>,<span class="dv">23</span>,<span class="dv">15</span>))</span>
 <span id="cb195-3"><a href="ett-stickprov.html#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -505,13 +505,13 @@ Frekvens
 <div id="övningar-2" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Övningar</h2>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-32" class="exercise"><strong>Övning 7.1  (Smältpunkt) </strong></span>Någon mäter smältpunkter för legeringar av metall och får följande värden.</p>
+<p><span id="exr:unlabeled-div-33" class="exercise"><strong>Övning 7.1  (Smältpunkt) </strong></span>Någon mäter smältpunkter för legeringar av metall och får följande värden.</p>
 <pre><code>## [1] &quot;1054.8, 1052.9, 1051, 1049.8, 1051.6, 1047.9, 1051.8, 1048.5, 1040.2, 1050.7&quot;</code></pre>
 <p>a. Beräkna ett 95-procentigt konfidensintervall för medelvärdet.</p>
 <p>b. Genomför ett hypotestest för att testa om medelsmältpunkten är 1050 grader.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-33" class="hypothesis"><strong>Lösningsförslag 7.1  (Uppgift 29 i övningskompendiet. Smältpunkt) </strong></span>Datan kan importeras från excelfilen med uppgiftsdata.</p>
+<p><span id="hyp:unlabeled-div-34" class="hypothesis"><strong>Lösningsförslag 7.1  (Uppgift 29 i övningskompendiet. Smältpunkt) </strong></span>Datan kan importeras från excelfilen med uppgiftsdata.</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="ett-stickprov.html#cb206-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Smältpunkt&quot;</span>)</span>
 <span id="cb206-2"><a href="ett-stickprov.html#cb206-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb206-3"><a href="ett-stickprov.html#cb206-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Smältpunkt, <span class="dv">0</span>)) <span class="sc">+</span></span>
@@ -535,7 +535,7 @@ Frekvens
 <p>Testet ger ett högt p-värde, vilket tyder på att nollhypotesen inte bör förkastar. Ett 95-procentigt konfidensintervall ges av <span class="math inline">\((1047.08, 1052.76)\)</span>.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-34" class="exercise"><strong>Övning 7.2  (Väderstation Falsterbo. Test och konfidensintervall) </strong></span>Bland kursdatan finns en fil med temperaturmätningar från Falsterbo. Datan kan läsas in med följande kod.</p>
+<p><span id="exr:unlabeled-div-35" class="exercise"><strong>Övning 7.2  (Väderstation Falsterbo. Test och konfidensintervall) </strong></span>Bland kursdatan finns en fil med temperaturmätningar från Falsterbo. Datan kan läsas in med följande kod.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="ett-stickprov.html#cb209-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;Data/smhi-opendata_1_52230_20210912_114534.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb209-2"><a href="ett-stickprov.html#cb209-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Lufttemperatur =</span> <span class="fu">as.numeric</span>(Lufttemperatur))</span></code></pre></div>
 <p>Medeltemperatur 2000-2009 ges av följande tabell.</p>
@@ -546,7 +546,7 @@ Frekvens
 <span id="cb210-5"><a href="ett-stickprov.html#cb210-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Medeltemperatur =</span> <span class="fu">mean</span>(Lufttemperatur)) <span class="sc">%&gt;%</span> </span>
 <span id="cb210-6"><a href="ett-stickprov.html#cb210-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Medeltemperatur =</span> <span class="fu">round</span>(Medeltemperatur, <span class="dv">2</span>))</span>
 <span id="cb210-7"><a href="ett-stickprov.html#cb210-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat_temp)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -645,7 +645,7 @@ Medeltemperatur
 <p>c. Titta på antalet mätningar per dag. Diskutera möjlig påverkan på testet i (b).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-35" class="hypothesis"><strong>Lösningsförslag 7.2  (Väderstation Falsterbo. Test och konfidensintervall) </strong></span>a. Konfidensvallet kan tas fram med <code>t.test</code>. Den aggregerade datan med årsmedelvärden sparades tidigare som <code>dat_temp</code>.</p>
+<p><span id="hyp:unlabeled-div-36" class="hypothesis"><strong>Lösningsförslag 7.2  (Väderstation Falsterbo. Test och konfidensintervall) </strong></span>a. Konfidensvallet kan tas fram med <code>t.test</code>. Den aggregerade datan med årsmedelvärden sparades tidigare som <code>dat_temp</code>.</p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="ett-stickprov.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat_temp<span class="sc">$</span>Medeltemperatur)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
@@ -679,8 +679,8 @@ Medeltemperatur
 <p>Antal observationer per dag är inte konstant. Om vissa dagar är uppmätta vid tider på dygnet då det är kallare eller varmare kan det ge en skevhet i mätningarna, vilket gör att jämförelsen mellan olika tider inte är rättvis. En lösning skulle kunna vara att ta värdet en viss tid på dygnet, en tid då det finns observationer för samtliga dagar.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-36" class="exercise"><strong>Övning 7.3  (Äppelträd) </strong></span>I en undersökning av insektsskador på äppelträd har 6 plantor blivit vägda före och efter insektsdödande behandling. Syftet är att undersöka om behandlingen leder till förändrad vikt. Resultatet ges av följande tabell.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-37" class="exercise"><strong>Övning 7.3  (Äppelträd) </strong></span>I en undersökning av insektsskador på äppelträd har 6 plantor blivit vägda före och efter insektsdödande behandling. Syftet är att undersöka om behandlingen leder till förändrad vikt. Resultatet ges av följande tabell.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -788,7 +788,7 @@ F
 <p>b. Beräkna ett konfidensintervall för skillnaden i populationsmedelvärde.n</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-37" class="hypothesis"><strong>Lösningsförslag 7.3  (Äppelträd) </strong></span>Datan importeras från excelfilen med uppgiftsdata. Datan ändras till långform genom <code>pivot_longer</code> och plottas med <code>ggplot</code>.</p>
+<p><span id="hyp:unlabeled-div-38" class="hypothesis"><strong>Lösningsförslag 7.3  (Äppelträd) </strong></span>Datan importeras från excelfilen med uppgiftsdata. Datan ändras till långform genom <code>pivot_longer</code> och plottas med <code>ggplot</code>.</p>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="ett-stickprov.html#cb216-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Äppelträd&quot;</span>)</span>
 <span id="cb216-2"><a href="ett-stickprov.html#cb216-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb216-3"><a href="ett-stickprov.html#cb216-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -827,11 +827,11 @@ F
 <p>Konfidensintervallet ges av <span class="math inline">\((-73.46, 11.29)\)</span>. Den sanna behandlingsskillnaden ligger med 95 procents konfidens i det intervallet.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-38" class="exercise"><strong>Övning 7.4  (Simulering, hypotestest) </strong></span>Slumptal kan användas för att undersöka hypotestestens egenskaper. Skriv en funktion som genererar 100 slumptal från en normalfördelning med populationsmedelvärdet 0, testar mot nollhypotesen <span class="math inline">\(\mu_0 = 0\)</span> i ett t-test, och ger ut p-värdet från det testet. Generera 10000 körningar av funktionen och illustrera p-värdena med ett histogram.</p>
+<p><span id="exr:unlabeled-div-39" class="exercise"><strong>Övning 7.4  (Simulering, hypotestest) </strong></span>Slumptal kan användas för att undersöka hypotestestens egenskaper. Skriv en funktion som genererar 100 slumptal från en normalfördelning med populationsmedelvärdet 0, testar mot nollhypotesen <span class="math inline">\(\mu_0 = 0\)</span> i ett t-test, och ger ut p-värdet från det testet. Generera 10000 körningar av funktionen och illustrera p-värdena med ett histogram.</p>
 <p>Upprepa samma procedur men dra denna gång slumptal från en normalfördelning med populationsmedelvärdet 0.1 (anvnäds samma nollhypotes som tidigare <span class="math inline">\(\mu_0 = 0\)</span>). Hur stor andel av de 10000 simuleringarna resulterar i ett p-värde under 0.05?</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-39" class="hypothesis"><strong>Lösningsförslag 7.4  (Simulering hypotestest) </strong></span>Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärdet är skilt från noll, och ger ut p-värdet från testet. Funktionen replikeras 10000 gånger och de resulterande p-värdena illustreras med ett histogram.</p>
+<p><span id="hyp:unlabeled-div-40" class="hypothesis"><strong>Lösningsförslag 7.4  (Simulering hypotestest) </strong></span>Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärdet är skilt från noll, och ger ut p-värdet från testet. Funktionen replikeras 10000 gånger och de resulterande p-värdena illustreras med ett histogram.</p>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="ett-stickprov.html#cb221-1" aria-hidden="true" tabindex="-1"></a>p_values_when_mean_0 <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb221-2"><a href="ett-stickprov.html#cb221-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>)</span>
 <span id="cb221-3"><a href="ett-stickprov.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, <span class="at">mu =</span> <span class="dv">0</span>)</span>
@@ -845,7 +845,7 @@ F
 <span id="cb221-11"><a href="ett-stickprov.html#cb221-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>))</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="ett-stickprov.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0478</code></pre>
+<pre><code>## [1] 0.0515</code></pre>
 <p>När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ett-stickprov.html#cb224-1" aria-hidden="true" tabindex="-1"></a>p_values_when_mean_0 <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb224-2"><a href="ett-stickprov.html#cb224-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="fl">0.1</span>)</span>
@@ -860,14 +860,14 @@ F
 <span id="cb224-11"><a href="ett-stickprov.html#cb224-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.05</span>))</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="ett-stickprov.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.1696</code></pre>
+<pre><code>## [1] 0.1656</code></pre>
 <p>När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-40" class="exercise"><strong>Övning 7.5  (Jurysystemet) </strong></span>I en amerikansk stad är 25 procent av befolkningen afroamerikaner. Bland 1050 individuer utvalda att delta i den lokala domstolens juryarbete är 177 afroamerikaner (ungefär 17 procent). Testa om andelen utvalda är mindre än 25 procent.</p>
+<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Övning 7.5  (Jurysystemet) </strong></span>I en amerikansk stad är 25 procent av befolkningen afroamerikaner. Bland 1050 individuer utvalda att delta i den lokala domstolens juryarbete är 177 afroamerikaner (ungefär 17 procent). Testa om andelen utvalda är mindre än 25 procent.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-41" class="hypothesis"><strong>Lösningsförslag 7.5  (Jurysystemet) </strong></span>Frågan kan hanteras med ett test för proportioner (ett <em>z-test</em>, vilket bygger på en normalapproximation). Funktionen <code>prop.test</code> tar ingångsvärden för antalet <em>positiva</em> utfall, totalt antal utfall, nollhypotesens värde (här <span class="math inline">\(p_0 = 0.25\)</span>), och riktning för alternativhypotesen. I det här fallet finns en ensidig alternativhypotes att den sanna proportionen är mindre än <span class="math inline">\(0.25\)</span>, vilket anges med <code>alternative = "less"</code>.</p>
+<p><span id="hyp:unlabeled-div-42" class="hypothesis"><strong>Lösningsförslag 7.5  (Jurysystemet) </strong></span>Frågan kan hanteras med ett test för proportioner (ett <em>z-test</em>, vilket bygger på en normalapproximation). Funktionen <code>prop.test</code> tar ingångsvärden för antalet <em>positiva</em> utfall, totalt antal utfall, nollhypotesens värde (här <span class="math inline">\(p_0 = 0.25\)</span>), och riktning för alternativhypotesen. I det här fallet finns en ensidig alternativhypotes att den sanna proportionen är mindre än <span class="math inline">\(0.25\)</span>, vilket anges med <code>alternative = "less"</code>.</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="ett-stickprov.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">177</span>, <span class="dv">1050</span>, <span class="at">p =</span> <span class="fl">0.25</span>, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  1-sample proportions test with continuity correction
@@ -883,10 +883,10 @@ F
 <p>Det låga p-värdet tyder på att nollhypotesen (att <span class="math inline">\(p_0 = 0.25\)</span>) bör förkastas.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-42" class="exercise"><strong>Övning 7.6  (Guldfiskgenetik) </strong></span>En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om den faktiska proportionen skiljer sig från 0.75.</p>
+<p><span id="exr:unlabeled-div-43" class="exercise"><strong>Övning 7.6  (Guldfiskgenetik) </strong></span>En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om den faktiska proportionen skiljer sig från 0.75.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-43" class="hypothesis"><strong>Lösningsförslag 7.6  (Guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är tre fjärdedelar. Notera att funktionen anges både med antalet (och andelen under nollhypotesen) med genomskinliga fjäll och antalet med färglagda fjäll.</p>
+<p><span id="hyp:unlabeled-div-44" class="hypothesis"><strong>Lösningsförslag 7.6  (Guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är tre fjärdedelar. Notera att funktionen anges både med antalet (och andelen under nollhypotesen) med genomskinliga fjäll och antalet med färglagda fjäll.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="ett-stickprov.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.75</span>, <span class="fl">0.25</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
@@ -896,10 +896,10 @@ F
 <p>Det låga p-värdet tyder på att den sanna sannolikheten för genomskinliga fjäll inte är 0.75.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-44" class="exercise"><strong>Övning 7.7  (Mer guldfiskgenetik) </strong></span>En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om proportionen skiljer sig från 0.9375.</p>
+<p><span id="exr:unlabeled-div-45" class="exercise"><strong>Övning 7.7  (Mer guldfiskgenetik) </strong></span>En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om proportionen skiljer sig från 0.9375.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-45" class="hypothesis"><strong>Lösningsförslag 7.7  (Mer guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är femton sextondelar.</p>
+<p><span id="hyp:unlabeled-div-46" class="hypothesis"><strong>Lösningsförslag 7.7  (Mer guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är femton sextondelar.</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="ett-stickprov.html#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="dv">15</span><span class="sc">/</span><span class="dv">16</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">16</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
@@ -909,11 +909,11 @@ F
 <p>Nollhypotesen att sannolikheten för genomskinliga fjäll är femton sextondelar, <span class="math inline">\(p = 15/16\)</span>, kan ej förkastas.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-46" class="exercise"><strong>Övning 7.8  (Simulering konfidensintervall) </strong></span>Konfidensinterval konstrueras så att det sanna parametervärden ingår i intervall med en viss konfidensgrad (oftast 95 procent). Skriv en funktion som drar 10 slumptal från en normalfördelning med medelvärdet 9 och beräknar konfidensintervall. Upprepa funktionen 10000 gånger. Hur ofta täcker intervallet 9?</p>
+<p><span id="exr:unlabeled-div-47" class="exercise"><strong>Övning 7.8  (Simulering konfidensintervall) </strong></span>Konfidensinterval konstrueras så att det sanna parametervärden ingår i intervall med en viss konfidensgrad (oftast 95 procent). Skriv en funktion som drar 10 slumptal från en normalfördelning med medelvärdet 9 och beräknar konfidensintervall. Upprepa funktionen 10000 gånger. Hur ofta täcker intervallet 9?</p>
 <p>Notera att detta är en svårare uppgift.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-47" class="hypothesis"><strong>Lösningsförslag 7.8  (Simulering konfidensintervall) </strong></span>Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensintervall. Eftersom funktionen ger två värden (intervallets lägre och övre gräns) behövs lite mer hantering än i tidigare exempel (där de funktioner som använts givit ett utfallsvärde).</p>
+<p><span id="hyp:unlabeled-div-48" class="hypothesis"><strong>Lösningsförslag 7.8  (Simulering konfidensintervall) </strong></span>Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensintervall. Eftersom funktionen ger två värden (intervallets lägre och övre gräns) behövs lite mer hantering än i tidigare exempel (där de funktioner som använts givit ett utfallsvärde).</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="ett-stickprov.html#cb233-1" aria-hidden="true" tabindex="-1"></a>ci_from_ten <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb233-2"><a href="ett-stickprov.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">9</span>)</span>
 <span id="cb233-3"><a href="ett-stickprov.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x)</span>
@@ -926,9 +926,9 @@ F
 <span id="cb233-10"><a href="ett-stickprov.html#cb233-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Undre&quot;</span>, <span class="st">&quot;Övre&quot;</span>)</span>
 <span id="cb233-11"><a href="ett-stickprov.html#cb233-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb233-12"><a href="ett-stickprov.html#cb233-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Undre <span class="sc">&gt;</span> <span class="dv">9</span>)</span></code></pre></div>
-<pre><code>## [1] 0.026</code></pre>
+<pre><code>## [1] 0.0211</code></pre>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="ett-stickprov.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Övre <span class="sc">&lt;</span> <span class="dv">9</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0241</code></pre>
+<pre><code>## [1] 0.0256</code></pre>
 <p>Värdet 9 ligger under den övre gränsen ungeför 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.</p>
 <p>En illustration med 100 simulerade fall.</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="ett-stickprov.html#cb237-1" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">ci_from_ten</span>())</span>

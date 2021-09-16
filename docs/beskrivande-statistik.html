@@ -458,7 +458,7 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 <p><span id="exr:unlabeled-div-17" class="exercise"><strong>Övning 6.1  (Antal barn) </strong></span>Antal barn per familj för 30 familjer är</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="beskrivande-statistik.html#cb126-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>)</span>
 <span id="cb126-2"><a href="beskrivande-statistik.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">matrix</span>(dat, <span class="dv">3</span>))</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td style="text-align:right;">
@@ -596,7 +596,7 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 <p><span id="exr:unlabeled-div-19" class="exercise"><strong>Övning 6.2  (Darwindata) </strong></span>Följande data gäller längden (i tum) hos 15 stycken plantor som fortplantats genom självbefruktning:</p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="beskrivande-statistik.html#cb136-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">174</span>,<span class="dv">204</span>,<span class="dv">200</span>,<span class="dv">200</span>,<span class="dv">184</span>,<span class="dv">186</span>,<span class="dv">186</span>,<span class="dv">153</span>,<span class="dv">165</span>,<span class="dv">180</span>,<span class="dv">163</span>,<span class="dv">180</span>,<span class="dv">128</span>,<span class="dv">155</span>,<span class="dv">180</span>, <span class="cn">NA</span>) <span class="sc">/</span> <span class="dv">10</span></span>
 <span id="cb136-2"><a href="beskrivande-statistik.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">matrix</span>(dat, <span class="dv">2</span>, <span class="at">byrow =</span> T))</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
 <td style="text-align:right;">
@@ -684,7 +684,7 @@ NA
 <span id="cb141-5"><a href="beskrivande-statistik.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Metod, <span class="at">values_from =</span> Utfall) <span class="sc">%&gt;%</span> </span>
 <span id="cb141-6"><a href="beskrivande-statistik.html#cb141-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">%&gt;%</span> </span>
 <span id="cb141-7"><a href="beskrivande-statistik.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -838,8 +838,8 @@ Korsbefruktade
 <p>b. Utveckla diagrammet från (a) genom att på lämpligt sätt ange personlighet (kolumnen <em>personality</em>).</p>
 <p>c. Vilken är spelens mest populära låt?</p>
 </div>
-<p>::: {hypothesis name=“Animal Crossing”}
-a.</p>
+<div class="hypothesis">
+<p><span id="hyp:unlabeled-div-24" class="hypothesis"><strong>Lösningsförslag 6.4  (Animal Crossing) </strong></span>a.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="beskrivande-statistik.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(villagers, <span class="fu">aes</span>(species)) <span class="sc">+</span></span>
 <span id="cb144-2"><a href="beskrivande-statistik.html#cb144-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
@@ -873,17 +873,17 @@ a.</p>
 ##  9 K.K. Soul         7
 ## 10 Cafe K.K.         6
 ## # ... with 83 more rows</code></pre>
-<p>Det vanligaste alternativet är att sång saknas, vilket då anges som <code>NA</code>. Den mest populära faktiska sången är <em>KK Country</em>.
-:::</p>
+<p>Det vanligaste alternativet är att sång saknas, vilket då anges som <code>NA</code>. Den mest populära faktiska sången är <em>KK Country</em>.</p>
+</div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-24" class="exercise"><strong>Övning 6.5  (Allsvenskan för herrar) </strong></span>Bland kursdatan finns en fil med matchresultat från herrarnas fotbollsallsvenska, 1924 - 2019. Läs in datan och undersök följande.</p>
+<p><span id="exr:unlabeled-div-25" class="exercise"><strong>Övning 6.5  (Allsvenskan för herrar) </strong></span>Bland kursdatan finns en fil med matchresultat från herrarnas fotbollsallsvenska, 1924 - 2019. Läs in datan och undersök följande.</p>
 <p>a. Hur många gånger har Malmö FF mött Mjällby? Vilket datum inföll Mjällbys enda seger?</p>
 <p>b. Fyra säsonger har lag gått rent på hemmaplan (segrar i samtliga matcher). Vilka är de två lagen och vilka är de fyra säsongerna?</p>
 <p>c. Vilka är de målrikaste matcherna?</p>
 <p>d. Producera ett spridningsdiagram med hemmamål på x-axeln och bortamål på y-axeln. Hur kan man hantera överlappande punkter?</p>
 </div>
 <div class="solution">
-<p><span id="unlabeled-div-25" class="solution"><em>Solution</em> (Allsvenskan för herrar). </span>Filen kan läsas in med <code>read_csv</code> från <code>readr</code>.</p>
+<p><span id="unlabeled-div-26" class="solution"><em>Solution</em> (Allsvenskan för herrar). </span>Filen kan läsas in med <code>read_csv</code> från <code>readr</code>.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="beskrivande-statistik.html#cb149-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, herrar, 1924-2019.csv&quot;</span>)</span></code></pre></div>
 <p>a. Matcher kan filtreras ut genom filter-funktionen. Två skilda rader kan användas för att få både hemma- och borta-matcher.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="beskrivande-statistik.html#cb150-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(hemma <span class="sc">==</span> <span class="st">&quot;Malmö FF&quot;</span>, borta <span class="sc">==</span> <span class="st">&quot;Mjällby&quot;</span>)</span></code></pre></div>
@@ -961,7 +961,7 @@ För att beräkna antalet vinster kan man använda <code>sum(hemmamal &gt; borta
 <p>Det verkar som att 1-1, följt av 2-1 och 1-0 är de vanligaste resultaten.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-26" class="exercise"><strong>Övning 6.6  (Väderstation Falsterbo) </strong></span>SMHI publicerar historisk väderdata från en stor mängd väderstationer (<a href="https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer" class="uri">https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer</a>). Ett exempel på en sådan fil, från väderstationen i Falsterbo, finns bland kursdatan. Notera att flera inledande rader innehåller metadata och inte ska läsas in. Filen är dessutom inte kommaseparerad utan semikolon-separerad. Den kan läsas in med funktionen <code>read_csv2</code> från <code>readr</code>. Vid inläsning kan man också ändra datatyp för temperaturkolumnen, som annars felaktigt tolkats som en textkolumn.</p>
+<p><span id="exr:unlabeled-div-27" class="exercise"><strong>Övning 6.6  (Väderstation Falsterbo) </strong></span>SMHI publicerar historisk väderdata från en stor mängd väderstationer (<a href="https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer" class="uri">https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer</a>). Ett exempel på en sådan fil, från väderstationen i Falsterbo, finns bland kursdatan. Notera att flera inledande rader innehåller metadata och inte ska läsas in. Filen är dessutom inte kommaseparerad utan semikolon-separerad. Den kan läsas in med funktionen <code>read_csv2</code> från <code>readr</code>. Vid inläsning kan man också ändra datatyp för temperaturkolumnen, som annars felaktigt tolkats som en textkolumn.</p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="beskrivande-statistik.html#cb160-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;Data/smhi-opendata_1_52230_20210912_114534.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb160-2"><a href="beskrivande-statistik.html#cb160-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Lufttemperatur =</span> <span class="fu">as.numeric</span>(Lufttemperatur))</span></code></pre></div>
 <p>a. Vilken är den högst uppmätta temperaturen?</p>
@@ -969,7 +969,7 @@ För att beräkna antalet vinster kan man använda <code>sum(hemmamal &gt; borta
 <p>c. Skapa en variabel som anger observationens årtionde. Beräkna medeltemperaturen per årtionde och illustrera med lämplig graf.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-27" class="hypothesis"><strong>Lösningsförslag 6.4  (Väderstation Falsterbo) </strong></span>a. Ordna data efter lufttemperatur och skriv ut de översta raderna.</p>
+<p><span id="hyp:unlabeled-div-28" class="hypothesis"><strong>Lösningsförslag 6.5  (Väderstation Falsterbo) </strong></span>a. Ordna data efter lufttemperatur och skriv ut de översta raderna.</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="beskrivande-statistik.html#cb161-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Lufttemperatur)) <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 245,869 x 6
 ##    Datum      `Tid (UTC)` Lufttemperatur Kvalitet ...5  `Tidsutsnitt:`
@@ -1007,12 +1007,12 @@ För att beräkna antalet vinster kan man använda <code>sum(hemmamal &gt; borta
 <p>Temperaturen verkar öka i Falsterbo. Märk att stapeln för 2020-talet bara innefattar ett år.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-28" class="exercise"><strong>Övning 6.7  (Relativ frekvens) </strong></span>Säg att man kastar ett häftstift och att sannolikheten att stiftet stannar spetsen upp är 0.66. Simulera tusen häftstiftskast och beräkna den relativa frekvensen häftstiften hamnat med spetsen uppåt. Den relativa frekvensen för en serie värden ges av antalet positiva utfall delat på antalet kast för varje kast. Den relativa frekvensen efter 35 kast är till exempel antalet positiva utfall bland de 35, delat på 35.
+<p><span id="exr:unlabeled-div-29" class="exercise"><strong>Övning 6.7  (Relativ frekvens) </strong></span>Säg att man kastar ett häftstift och att sannolikheten att stiftet stannar spetsen upp är 0.66. Simulera tusen häftstiftskast och beräkna den relativa frekvensen häftstiften hamnat med spetsen uppåt. Den relativa frekvensen för en serie värden ges av antalet positiva utfall delat på antalet kast för varje kast. Den relativa frekvensen efter 35 kast är till exempel antalet positiva utfall bland de 35, delat på 35.
 Illustrera med ett linjediagram.</p>
 <p>Ledning: tusen kast kan simuleras med <code>rbin(1000, 1, 0.66)</code>, vilket skapar tusen slumptal från en binomialfördelning där <span class="math inline">\(n = 1\)</span> och <span class="math inline">\(p = 0.67\)</span>.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-29" class="hypothesis"><strong>Lösningsförslag 6.5  (Relativ frekvens) </strong></span>För att beräkna och illustrera den relativa frekvensen skapas en <code>tibble</code> där den första kolumnen anger antalet kast vid varje steg, det vill säga en kolumn som anger ett till tusen. Därefter dras tusen slumptal enligt ledningen ovan. Därefter beräknas den <em>kumulativa summan</em> - antalet positiva utfall upp till det kast som anges för raden. Och slutligen beräknas den relativa frekvensen genom att ta den kumulativa summan och dela med antalet kast.</p>
+<p><span id="hyp:unlabeled-div-30" class="hypothesis"><strong>Lösningsförslag 6.6  (Relativ frekvens) </strong></span>För att beräkna och illustrera den relativa frekvensen skapas en <code>tibble</code> där den första kolumnen anger antalet kast vid varje steg, det vill säga en kolumn som anger ett till tusen. Därefter dras tusen slumptal enligt ledningen ovan. Därefter beräknas den <em>kumulativa summan</em> - antalet positiva utfall upp till det kast som anges för raden. Och slutligen beräknas den relativa frekvensen genom att ta den kumulativa summan och dela med antalet kast.</p>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="beskrivande-statistik.html#cb165-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Kast =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
 <span id="cb165-2"><a href="beskrivande-statistik.html#cb165-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Utfall =</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="fl">0.67</span>),</span>
 <span id="cb165-3"><a href="beskrivande-statistik.html#cb165-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Antal_spets_upp =</span> <span class="fu">cumsum</span>(Utfall),</span>
@@ -1024,12 +1024,12 @@ Illustrera med ett linjediagram.</p>
 ##    &lt;int&gt;  &lt;int&gt;           &lt;int&gt;            &lt;dbl&gt;
 ##  1     1      1               1            1    
 ##  2     2      1               2            1    
-##  3     3      0               2            0.667
-##  4     4      0               2            0.5  
-##  5     5      1               3            0.6  
-##  6     6      1               4            0.667
-##  7     7      0               4            0.571
-##  8     8      1               5            0.625
+##  3     3      1               3            1    
+##  4     4      0               3            0.75 
+##  5     5      1               4            0.8  
+##  6     6      0               4            0.667
+##  7     7      1               5            0.714
+##  8     8      0               5            0.625
 ##  9     9      0               5            0.556
 ## 10    10      0               5            0.5  
 ## # ... with 990 more rows</code></pre>
@@ -1041,12 +1041,12 @@ Illustrera med ett linjediagram.</p>
 <p>Den relativa frekvensen stabiliseras efter ett par hundra kast.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-30" class="exercise"><strong>Övning 6.8  (Egenskapad standardavvikelsefunktion) </strong></span>En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktioner är skrivna i R. Ta som exempel funktionen för standardavvikelse:</p>
+<p><span id="exr:unlabeled-div-31" class="exercise"><strong>Övning 6.8  (Egenskapad standardavvikelsefunktion) </strong></span>En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktioner är skrivna i R. Ta som exempel funktionen för standardavvikelse:</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="beskrivande-statistik.html#cb168-1" aria-hidden="true" tabindex="-1"></a>sd</span></code></pre></div>
 <pre><code>## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x000000001bd247f8&gt;
+## &lt;bytecode: 0x000000001b918420&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <p>Standardavvikelsen beräknas alltså som kvadratroten (<code>sqrt</code>) av variansen (<code>var</code>). Sedan finns också lite mer avancerad kod för att hantera olika typer av ingångsdata.</p>
 <p>Standardavvikelsen av <span class="math inline">\(n\)</span> datapunkter ges av</p>
@@ -1055,7 +1055,7 @@ Illustrera med ett linjediagram.</p>
 <p>Skapa en egen standardavvikelsefunktion baserat på de stegen. Funktionen ska ta en godtycklig mängd värden som ingångsvärden och ge standardavvikelsen som output.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-31" class="hypothesis"><strong>Lösningsförslag 6.6  (Egenskapad standardavvikelsefunktion) </strong></span>Funktionen nedan går igenom stegen för att beräkna standardavvikelsen.</p>
+<p><span id="hyp:unlabeled-div-32" class="hypothesis"><strong>Lösningsförslag 6.7  (Egenskapad standardavvikelsefunktion) </strong></span>Funktionen nedan går igenom stegen för att beräkna standardavvikelsen.</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="beskrivande-statistik.html#cb170-1" aria-hidden="true" tabindex="-1"></a>egen_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb170-2"><a href="beskrivande-statistik.html#cb170-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)          <span class="co"># Spara datans storlek som n</span></span>
 <span id="cb170-3"><a href="beskrivande-statistik.html#cb170-3" aria-hidden="true" tabindex="-1"></a>  medel <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)        <span class="co"># 1</span></span>

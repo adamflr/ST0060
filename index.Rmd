@@ -27,6 +27,6 @@ library(kableExtra)
 
 kable <- . %>% 
   kbl(booktabs = T) %>% 
-  kable_styling()
+  kable_styling(full_width = F)
 ```
 

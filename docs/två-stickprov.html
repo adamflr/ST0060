@@ -291,7 +291,7 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="två-stickprov.html#cb247-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Behandling =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>),</span>
 <span id="cb247-2"><a href="två-stickprov.html#cb247-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Vikt =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="fl">48.2</span>, <span class="fl">39.2</span>, <span class="fl">47.9</span>, <span class="fl">57.5</span>, <span class="fl">61.5</span>, <span class="dv">58</span>, <span class="fl">66.5</span>))</span>
 <span id="cb247-3"><a href="två-stickprov.html#cb247-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -494,8 +494,8 @@ Testet ger ett högt p-värde vilket innebär att nollhypotesen inte förkastas.
 <div id="övningar-3" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Övningar</h2>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-48" class="exercise"><strong>Övning 8.1  (Lök) </strong></span>Åtta monoglukosidmätningar på lök samlas in från fyra konventionella och fyra ekologiska ordlare.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-49" class="exercise"><strong>Övning 8.1  (Lök) </strong></span>Åtta monoglukosidmätningar på lök samlas in från fyra konventionella och fyra ekologiska ordlare.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -577,7 +577,7 @@ Konventionell
 <p>b. Beräkna ett 95-procentigt konfidensintervall för skillnaden i medelvärde.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-49" class="hypothesis"><strong>Lösningsförslag 8.1  (Lök) </strong></span>Datan kan importeras från excelfilen med uppgiftsdata. En lämplig graf kan skapas genom att pivotera till långform och plotta med <code>ggplot</code>.</p>
+<p><span id="hyp:unlabeled-div-50" class="hypothesis"><strong>Lösningsförslag 8.1  (Lök) </strong></span>Datan kan importeras från excelfilen med uppgiftsdata. En lämplig graf kan skapas genom att pivotera till långform och plotta med <code>ggplot</code>.</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="två-stickprov.html#cb264-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Lökfärg&quot;</span>)</span>
 <span id="cb264-2"><a href="två-stickprov.html#cb264-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb264-3"><a href="två-stickprov.html#cb264-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -614,7 +614,7 @@ Konventionell
 <p>b. Om varianser antas lika ges ett 95-procentigt konfidensintervall av <span class="math inline">\((-70.9, -1.4)\)</span>. Notera att ett 95-procentigt intervall inte täcker noll, vilket är i linje med att p-värdet är mindre än 5 procent.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-50" class="exercise"><strong>Övning 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>Bland kursdata finns datafiler med allsvenska matcher för damer (2000-2020) och herrar (1924-2019).
+<p><span id="exr:unlabeled-div-51" class="exercise"><strong>Övning 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>Bland kursdata finns datafiler med allsvenska matcher för damer (2000-2020) och herrar (1924-2019).
 Det genomsnittliga antalet mål i respektive serie ges för åren 2000-2009 av följande tabell.</p>
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="två-stickprov.html#cb269-1" aria-hidden="true" tabindex="-1"></a>dat_dam <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, damer, 2000-2020.csv&quot;</span>)</span>
 <span id="cb269-2"><a href="två-stickprov.html#cb269-2" aria-hidden="true" tabindex="-1"></a>dat_herr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, herrar, 1924-2019.csv&quot;</span>)</span>
@@ -638,7 +638,7 @@ Det genomsnittliga antalet mål i respektive serie ges för åren 2000-2009 av f
 <span id="cb269-20"><a href="två-stickprov.html#cb269-20" aria-hidden="true" tabindex="-1"></a>dat_total <span class="sc">%&gt;%</span> </span>
 <span id="cb269-21"><a href="två-stickprov.html#cb269-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">values_from =</span> Mål, <span class="at">names_from =</span> Allsvenska) <span class="sc">%&gt;%</span> </span>
 <span id="cb269-22"><a href="två-stickprov.html#cb269-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -770,7 +770,7 @@ Herr
 <p>c. Genomför ett lämpligt test för att se om serierna har samma populationsmedelvärde för antal mål. Diskutera om datan bör ses som parad (två observationer per år).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-51" class="hypothesis"><strong>Lösningsförslag 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>a. Datan kan illustreras med ett linjediagram med två separata linjer.</p>
+<p><span id="hyp:unlabeled-div-52" class="hypothesis"><strong>Lösningsförslag 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>a. Datan kan illustreras med ett linjediagram med två separata linjer.</p>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="två-stickprov.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fortsättning från inläsningen ovan</span></span>
 <span id="cb270-2"><a href="två-stickprov.html#cb270-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_total, <span class="fu">aes</span>(Säsong, Mål, <span class="at">col =</span> Allsvenska)) <span class="sc">+</span></span>
 <span id="cb270-3"><a href="två-stickprov.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
@@ -808,13 +808,13 @@ Herr
 <p>I det här fallet kan man diskutera om det inte är mer lämpligt att använda ett t-test för parade observation, eftersom det är två observationer per år. Ett argument mot det är att det inte finns någon egentlig anledning att tro att det skulle finnas något samband mellan antal mål för damer respektive för herrar ett visst år.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-52" class="exercise"><strong>Övning 8.3  (Burfågel) </strong></span>I en undersökning av lungcancerpatienter finner man följande antal.</p>
+<p><span id="exr:unlabeled-div-53" class="exercise"><strong>Övning 8.3  (Burfågel) </strong></span>I en undersökning av lungcancerpatienter finner man följande antal.</p>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="två-stickprov.html#cb275-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">`</span><span class="at"> </span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Burfågel&quot;</span>, <span class="st">&quot;Ej burfågel&quot;</span>),</span>
 <span id="cb275-2"><a href="två-stickprov.html#cb275-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Lungcancer =</span> <span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">141</span>),</span>
 <span id="cb275-3"><a href="två-stickprov.html#cb275-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Ej lungcancer</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">328</span>))</span>
 <span id="cb275-4"><a href="två-stickprov.html#cb275-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb275-5"><a href="två-stickprov.html#cb275-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -855,7 +855,7 @@ Ej burfågel
 <p>Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-53" class="hypothesis"><strong>Lösningsförslag 8.3  (Burfågel) </strong></span>Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.</p>
+<p><span id="hyp:unlabeled-div-54" class="hypothesis"><strong>Lösningsförslag 8.3  (Burfågel) </strong></span>Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.</p>
 <div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="två-stickprov.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">101</span>), <span class="fu">c</span>(<span class="dv">98</span> <span class="sc">+</span> <span class="dv">141</span>, <span class="dv">101</span> <span class="sc">+</span> <span class="dv">328</span>), <span class="at">correct =</span> F)</span></code></pre></div>
 <pre><code>## 
 ##  2-sample test for equality of proportions without continuity
@@ -872,8 +872,8 @@ Ej burfågel
 <p>Det låga p-värdet tyder på att det finns skillnader mellan grupperna.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-54" class="exercise"><strong>Övning 8.4  (Po-ta-toes) </strong></span>I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-55" class="exercise"><strong>Övning 8.4  (Po-ta-toes) </strong></span>I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -967,7 +967,7 @@ D
 <p>Genomför ett lämpligt test för att se om det finns färgskillnader mellan behandlingarna.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-55" class="hypothesis"><strong>Lösningsförslag 8.4  (Po-ta-toes) </strong></span>Funktionen <code>matrix</code> kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till <code>chisq.test</code>.</p>
+<p><span id="hyp:unlabeled-div-56" class="hypothesis"><strong>Lösningsförslag 8.4  (Po-ta-toes) </strong></span>Funktionen <code>matrix</code> kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till <code>chisq.test</code>.</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="två-stickprov.html#cb278-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">64</span>,<span class="dv">36</span>,<span class="dv">38</span>,</span>
 <span id="cb278-2"><a href="två-stickprov.html#cb278-2" aria-hidden="true" tabindex="-1"></a>                <span class="dv">45</span>,<span class="dv">36</span>,<span class="dv">44</span>,<span class="dv">48</span>,</span>
 <span id="cb278-3"><a href="två-stickprov.html#cb278-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">18</span>,<span class="dv">13</span>,<span class="dv">27</span>,<span class="dv">20</span>,</span>
@@ -994,8 +994,8 @@ D
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-56" class="exercise"><strong>Övning 8.5  (Mer burfågel) </strong></span>En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Övning 8.5  (Mer burfågel) </strong></span>En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1036,7 +1036,7 @@ Ej burfågel
 <p>Genomför ett <span class="math inline">\(\chi^2\)</span>-test för att se om det finns något signifikant samband mellan variablerna.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-57" class="hypothesis"><strong>Lösningsförslag 8.5  (Mer burfågel) </strong></span>För att genomföra <span class="math inline">\(\chi^2\)</span>-testet kan man skriva in data som en 2-gånger-2-matris med funktionen <code>matrix</code>.</p>
+<p><span id="hyp:unlabeled-div-58" class="hypothesis"><strong>Lösningsförslag 8.5  (Mer burfågel) </strong></span>För att genomföra <span class="math inline">\(\chi^2\)</span>-testet kan man skriva in data som en 2-gånger-2-matris med funktionen <code>matrix</code>.</p>
 <div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="två-stickprov.html#cb281-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">141</span>, <span class="dv">101</span>, <span class="dv">328</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
 <span id="cb281-2"><a href="två-stickprov.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat, <span class="at">correct =</span> F)</span></code></pre></div>
 <pre><code>## 
@@ -1047,7 +1047,7 @@ Ej burfågel
 <p>Samma resultat som i den tidigare beräkningen på samma data.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-58" class="exercise"><strong>Övning 8.6  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>Bland kursdatan finns text till Selma Lagerlöfs <em>Gösta Berlings saga</em> och August Strindbergs <em>Röda rummet</em>, i kolumnform. Det finns också en text med okänd författare (filen <em>Den tredje boken</em>). En ytlig textanalys kan baseras på frekvensen för olika ord. Närliggande tabell ger antalet förekomster för texternas fem vanligaste ord i första kapitlet av varje text.</p>
+<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Övning 8.6  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>Bland kursdatan finns text till Selma Lagerlöfs <em>Gösta Berlings saga</em> och August Strindbergs <em>Röda rummet</em>, i kolumnform. Det finns också en text med okänd författare (filen <em>Den tredje boken</em>). En ytlig textanalys kan baseras på frekvensen för olika ord. Närliggande tabell ger antalet förekomster för texternas fem vanligaste ord i första kapitlet av varje text.</p>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="två-stickprov.html#cb283-1" aria-hidden="true" tabindex="-1"></a>dat_rr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Röda rummet.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb283-2"><a href="två-stickprov.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Röda rummet&quot;</span>)</span>
 <span id="cb283-3"><a href="två-stickprov.html#cb283-3" aria-hidden="true" tabindex="-1"></a>dat_gbs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Gösta Berlings saga.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -1069,7 +1069,7 @@ Ej burfågel
 <span id="cb283-19"><a href="två-stickprov.html#cb283-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Bok, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span> </span>
 <span id="cb283-20"><a href="två-stickprov.html#cb283-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Gösta Berlings saga</span><span class="st">`</span> <span class="sc">+</span> Okänd <span class="sc">+</span> <span class="st">`</span><span class="at">Röda rummet</span><span class="st">`</span>))</span>
 <span id="cb283-21"><a href="två-stickprov.html#cb283-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat_ord_wide)</span></code></pre></div>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -1163,7 +1163,7 @@ i
 <p>b. Genomför två <span class="math inline">\(\chi^2\)</span>-test för att se vilken av Gösta Berlings saga och Röda rummet den okända texten är mest lik (sett till de fem vanligaste orden).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-59" class="hypothesis"><strong>Lösningsförslag 8.6  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>a. En möjlig illustration är ett stapeldiagram för proportion av varje ord inom respektive text.</p>
+<p><span id="hyp:unlabeled-div-60" class="hypothesis"><strong>Lösningsförslag 8.6  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>a. En möjlig illustration är ett stapeldiagram för proportion av varje ord inom respektive text.</p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="två-stickprov.html#cb284-1" aria-hidden="true" tabindex="-1"></a>dat_ord <span class="sc">%&gt;%</span></span>
 <span id="cb284-2"><a href="två-stickprov.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Bok, n, <span class="at">fill =</span> Ord)) <span class="sc">+</span></span>
 <span id="cb284-3"><a href="två-stickprov.html#cb284-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_fill</span>(), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>

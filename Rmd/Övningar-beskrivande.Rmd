@@ -139,7 +139,7 @@ b\. Utveckla diagrammet från (a) genom att på lämpligt sätt ange personlighe
 c\. Vilken är spelens mest populära låt?
 :::
 
-::: {hypothesis name="Animal Crossing"}
+::: {.hypothesis name="Animal Crossing"}
 a\.
 ```{r, fig.height=4}
 ggplot(villagers, aes(species)) +
