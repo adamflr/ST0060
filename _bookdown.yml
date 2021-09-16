@@ -1,0 +1,34 @@
+book_filename: "R-anvisningar"
+delete_merged_file: true
+rmd_files: ["index.Rmd", 
+"Rmd/Installation.Rmd",                
+"Rmd/Dataimport.Rmd", 
+"Rmd/Objekt-och-funktioner.Rmd",       
+"Rmd/Egna-funktioner-och-simuleringar.Rmd",
+"Rmd/Övningar-sannolikhetsteori.Rmd",
+"Rmd/Beskrivande-statistik.Rmd",       
+"Rmd/Övningar-beskrivande.Rmd",
+"Rmd/t-test-ett-stickprov.Rmd",        
+"Rmd/Proportioner-ett-stickprov.Rmd", 
+"Rmd/Chi-två-goodness-of-fit.Rmd",     
+"Rmd/Övningar-ett-stickprov.Rmd",
+"Rmd/t-test-två-stickprov.Rmd",        
+"Rmd/Proportioner-två-stickprov.Rmd",
+"Rmd/Chi-två-korstabeller.Rmd",        
+"Rmd/Övningar-två-stickprov.Rmd",
+"Rmd/Anova.Rmd",                       
+"Rmd/Övningar-variansanalys.Rmd",
+"Rmd/Regression-och-korrelation.Rmd",  
+"Rmd/Övningar-regression.Rmd"]
+language:
+  label:
+    fig: 'Figur '
+    tab: 'Tabell '
+    exm: 'Exempel '
+    prp: 'Problem '
+    prf: 'Bevis '
+    thm: 'Sats '
+    exr: 'Övning '
+    hyp: 'Lösningsförslag '
+  ui:
+    chapter_name: "Kapitel "

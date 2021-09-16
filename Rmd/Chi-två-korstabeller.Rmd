@@ -1,0 +1,51 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Nominal eller ordinal data. Korstabeller
+
+Data med två insamlade variabler per observerad enhet kan presenteras med en korstabell. Ett exempel från växtskydd kan vara att man observerar ett antal plantor och för varje planta noterar skadegrad (som ett värde mellan 0 och 3) och förekomst av en viss skadeinsekt (som ett binärt utfall med förekomst eller icke-förekomst). De första raderna i datasetet ges av följande.
+
+```{r, echo = F}
+set.seed(8)
+dat <- tibble(id = 1:400, 
+              Skadegrad = sample(0:3, 400, T, prob = c(0.1,0.2,0.4,0.3)),
+              Förekomst = rbinom(400, 1, (Skadegrad + 2) / 7)) %>% 
+  mutate(Förekomst = c("Icke-förekomst", "Förekomst")[Förekomst + 1])
+```
+
+```{r}
+dat
+```
+
+En korstabell mellan skadegrad och förekomst kan beräknas genom `table`.
+
+```{r}
+table(dat$Förekomst, dat$Skadegrad)
+```
+
+Datan tyder på att förekomst av skadeinsekt är kopplad till en högre skadegrad. En illustration kan göras genom ett stapeldiagram.
+
+```{r}
+ggplot(dat, aes(Förekomst, fill = as.character(Skadegrad))) +
+  geom_bar(position = position_dodge())
+```
+
+Här används `as.character(Skadegrad)` för att funktionen ska tolka nivåerna i skadegrad som text, vilket krävs för att indelningen av staplar ska bli korrekt. Argumentet `position` i `geom_bar` används för att skapa grupperade staplar.
+
+Ett $\chi^2$-test på en korstabell har nollhypotesen att det inte finns något samband mellan förekomst och skadegrad. Testet kan enkelt göras med `chisq.test`.
+
+```{r}
+chisq.test(table(dat$Förekomst, dat$Skadegrad))
+```
+
+Utskriften ger teststorheten $\chi^2 = 46.5$, antal frihetsgrader, och p-värdet. I det här fallet är p-värdet mycket litet (skrivning med `e` ska läsas som $4.404e-10 = 4.404 \cdot 10^{-10} = 0.00000000004404$) och slutsatsen blir att nollhypotesen förkastas - det finns ett samband mellan förekomst och skadegrad. Antalet frihetsgrader ges av antalet rader minus ett gånger antalet kolumner minus ett (här $(4-1) \cdot (2-1) = 3$).
+
+$\chi^2$-test är ett asymptotiskt test - dess egenskaper är beroende av *stora* stickprov. Som gräns för storleken används ofta att samtliga förväntade antal ska vara större än 5. Funktionen ger en varning om förväntade värden är små. En möjlig lösning i sådana fall är att slå ihop klasser.
+
+```{r}
+test_result <- chisq.test(table(dat$Förekomst, dat$Skadegrad))
+test_result$expected # Samtliga förväntade värden över 5
+```
