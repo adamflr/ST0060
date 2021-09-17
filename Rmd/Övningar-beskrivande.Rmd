@@ -185,7 +185,7 @@ c\. Vilka är de målrikaste matcherna?
 d\. Producera ett spridningsdiagram med hemmamål på x-axeln och bortamål på y-axeln. Hur kan man hantera överlappande punkter?
 :::
 
-::: {.solution name="Allsvenskan för herrar"}
+::: {.hypothesis name="Allsvenskan för herrar"}
 Filen kan läsas in med `read_csv` från `readr`.
 
 ```{r}

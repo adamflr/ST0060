@@ -19,7 +19,7 @@ a\. Beräkna ett 95-procentigt konfidensintervall för medelvärdet.
 b\. Genomför ett hypotestest för att testa om medelsmältpunkten är 1050 grader.
 :::
 
-::: {.hypothesis name="Uppgift 29 i övningskompendiet. Smältpunkt"}
+::: {.hypothesis name="Smältpunkt"}
 Datan kan importeras från excelfilen med uppgiftsdata.
 
 ```{r}
@@ -253,7 +253,7 @@ Värdet 9 ligger under den övre gränsen ungeför 2.5 procent av gångerna och 
 En illustration med 100 simulerade fall.
 
 ```{r, fig.height=5}
-intervals <- replicate(10000, ci_from_ten())
+intervals <- replicate(100, ci_from_ten())
 intervals <- t(intervals) # Transponera till kolumner
 intervals <- as.data.frame(intervals)
 names(intervals) <- c("Undre", "Övre")
