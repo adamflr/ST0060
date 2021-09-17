@@ -2,9 +2,9 @@ book_filename: "R-anvisningar"
 delete_merged_file: true
 output_dir: "docs"
 rmd_files: ["index.Rmd", 
-"Rmd/Installation.Rmd",                
-"Rmd/Dataimport.Rmd", 
-"Rmd/Objekt-och-funktioner.Rmd",       
+"Rmd/Installation.Rmd",
+"Rmd/Objekt-och-funktioner.Rmd",                
+"Rmd/Dataimport.Rmd",       
 "Rmd/Egna-funktioner-och-simuleringar.Rmd",
 "Rmd/Övningar-sannolikhetsteori.Rmd",
 "Rmd/Beskrivande-statistik.Rmd",       

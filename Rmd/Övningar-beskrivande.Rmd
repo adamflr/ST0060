@@ -93,6 +93,8 @@ ggplot(dat, aes(Längd)) +
 ggplot(dat, aes("Självbefruktning", Längd)) + 
   geom_boxplot()
 ```
+
+Storleken på intervallen i histogrammets x-axel kan styras med `binwidth`.
 :::
 
 ::: {.exercise name="Stapeldiagram med felstaplar"}
@@ -121,8 +123,11 @@ dat %>%
   ggplot(aes(Metod, m)) +
   geom_bar(stat = "identity", width = 0.3, col = "black", fill = "white") +
   geom_errorbar(aes(ymin = m - s, ymax = m + s), width = 0.1) +
-  theme_bw()
+  theme_bw() +
+  labs(caption = "Felstapel anger +/- en standardavvikelse")
 ```
+
+Det är inte alltid klart vilket spridningsmått felstaplarna illusterar (vanliga alternativ är standardavvikelsen, medelfelet (standardavvikelsen delat på roten ur stickprovsstorleken) och konfidensintervallet). Det är därför god praxis att skriva ut vad felstaplarna anger.
 :::
 
 ::: {.exercise name="Animal Crossing"}

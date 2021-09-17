@@ -54,8 +54,9 @@ dat <- tibble(x = 0:10,
 
 ggplot(dat, aes(x)) +
   geom_bar(aes(y = Fördelningsfunktion), stat = "identity", 
-           fill = "pink", col = "hotpink", size = 2, width = 0.5) +
-  geom_segment(aes(x = x, xend = x, y = Sannolikhetsfunktion, yend = 0)) +
+           fill = "pink", col = "hotpink", width = 0.5) +
+  geom_segment(aes(x = x, xend = x, 
+                   y = Sannolikhetsfunktion, yend = 0)) +
   theme(panel.background = element_rect(fill = "purple"), 
         panel.grid = element_blank())
 ```
@@ -202,8 +203,8 @@ dat_norm <- tibble(x = seq(0, 100, by = 0.1),
 
 ggplot() +
   geom_line(aes(x, Snlh), data = dat_norm, col = "blue") +
-  geom_segment(aes(x = x, xend = x, y = 0, yend =Snlh), data = dat_bin, 
-               col = "red") 
+  geom_segment(aes(x = x, xend = x, y = 0, yend =Snlh), 
+               data = dat_bin, col = "red") 
 ```
 
 Normalkurvan (blå kontinuerlig linje) följer binomalfördelningen (röda staplar). Man kan också jämföra specifika sannolikheter, till exempel

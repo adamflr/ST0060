@@ -9,7 +9,7 @@ Det första steget i en statistisk analys är att importera sin data. I R kan de
 
 Som exempel används följande data från ett försök på purjolök.
 
-```{r}
+```{r, echo = F}
 dat <- data.frame(Vecka = rep(c(7, 11), each = 6),
                   Behandling = c(0,0,0,1,1,1,0,0,0,1,1,1),
                   Vikt = c(232, 161, 148, 368, 218, 257, 
@@ -27,7 +27,8 @@ Notera att det finns saknade värde i kolumnen N.
 I ett tidigare exempel användes funktionen `c` för att skapa en vektor av data. En datatabell (en `data.frame` i R) skapas genom funktionen `data.frame` följt av namngivna vektorer. Exempeldata kan skrivas in genom föjande.
 
 ```{r}
-dat <- data.frame(Vecka = c(7, 7, 7, 7, 7, 7, 11, 11, 11, 11, 11, 11),
+dat <- data.frame(Vecka = c(7, 7, 7, 7, 7, 7, 
+                            11, 11, 11, 11, 11, 11),
                   Behandling = c(0,0,0,1,1,1,0,0,0,1,1,1),
                   Vikt = c(232, 161, 148, 368, 218, 257, 
                            1633, 2213, 972, 2560, 2430, 855),
@@ -41,7 +42,7 @@ Radbrytningar och blanksteg är oviktiga i R, och används bara för läsbarhet 
 
 ## Import från en extern fil
 
-Inskrivning av värden är ofta tidskrävande och kan lätt leda till misstag. Det är därför mycket vanligare att data läses in från en extern fil. Det finns en mängd funktioner för dataimport och det exakta valet av funktion beror på vilken typ av fil datan är sparad i. Det vanligaste filformatet för mindre datamängder är Excel. En Excelfil kan läsas med `read_excel` från paketet `readxl`.
+Inskrivning av värden är ofta tidskrävande och kan lätt leda till misstag. Det är därför mycket vanligare att data läses in från en extern fil. Det finns en mängd funktioner för dataimport och det exakta valet av funktion beror på vilken typ av fil datan är sparad i. Det vanligaste filformatet för mindre datamängder är Excel. En excelfil kan läsas med `read_excel` från paketet `readxl`.
 
 ```{r}
 library(readxl)

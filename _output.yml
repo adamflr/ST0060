@@ -6,6 +6,9 @@ bookdown::gitbook:
       before: |
         <li><a href="./">R-anvisningar</a></li>
     download: ["pdf"]
+    fontsettings:
+      theme: sepia
+      family: serif
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

@@ -12,3 +12,23 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.exercise:not(span) {
+	padding: 15px;
+	border-radius: 5px;
+	border: 4px solid #cc6e6e;
+}
+
+.hypothesis:not(span) {
+	padding: 15px;
+	border-radius: 5px;
+	border: 4px solid #8db591;
+}
+
+.sourceCode, pre {
+	border-radius: 5px;
+}
+
+.summary {
+	background-color: #dad2b6;
+}

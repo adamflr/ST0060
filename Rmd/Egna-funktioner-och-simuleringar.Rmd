@@ -128,14 +128,17 @@ g2 <- tibble(x = 0:20,
 g1 + g2
 ```
 
-Utöver sannolikhetsberäkningar har R funktioner för att skapa slumptal från en angiven fördelning. Dessa genom av `r` följd av fördelningens namn, t.ex. `rnorm` för normalfördelningen och `rbinom` för binomialfördelningen. I exemplet nedan dras tiotusen observationer från en normalfördelning. Histogrammet visar att slumptalen ungefär följer den teoretiska fördelningen (här utritad med funktionen `stat_function`).
+Utöver sannolikhetsberäkningar har R funktioner för att skapa slumptal från en angiven fördelning. Dessa anges genom bokstaven `r` (för *random*) följt av fördelningens namn, t.ex. `rnorm` för normalfördelningen och `rbinom` för binomialfördelningen. I exemplet nedan dras tiotusen observationer från en normalfördelning. Histogrammet visar att slumptalen ungefär följer den teoretiska fördelningen (här utritad med funktionen `stat_function`).
 
 ```{r}
 dat <- tibble(x = rnorm(10000, mean = 50, sd = 3))
 ggplot(dat, aes(x)) +
-  geom_histogram(aes(y =..density..)) + # y = ..density.. anger att y-axeln ska vara i andelar
-  stat_function(fun = dnorm, args = list(mean = 50, sd = 3), col = "red", size = 3)
+  geom_histogram(aes(y =..density..)) +
+  stat_function(fun = dnorm, args = list(mean = 50, sd = 3), 
+                col = "red", size = 3)
 ```
+
+Argumentet `y = ..density..` anger att y-axeln ska vara i andelar, istället för antal.
 
 ## Simuleringar
 
