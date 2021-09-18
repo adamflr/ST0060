@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 9 Variansanalys | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 9 Variansanalys | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 9 Variansanalys | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-17" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="next" href="regression-och-korrelation.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -518,7 +518,7 @@ VI
 <p>Datan har 18 observationer av skördvikt och varje observation tillhör någon specifik kvävenivå. Datan kan illustreras med ett spridningsdiagram.</p>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="variansanalys.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y)) <span class="sc">+</span></span>
 <span id="cb289-2"><a href="variansanalys.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-165-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-166-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det finns en tydlig kväveeffekt.</p>
 <p>En anova-modell kan i R skattas med funktionen <code>lm</code> (för linjär modell). Från modellobjektet kan man sedan plocka fram en anova-tabell (som bland annat anger utfallet av F-testet) och genomföra parvisa jämförelser genom <code>emmeans</code>.</p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="variansanalys.html#cb290-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N, <span class="at">data =</span> dat)</span></code></pre></div>
@@ -583,7 +583,7 @@ VI
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="variansanalys.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y, <span class="at">color =</span> B, <span class="at">group =</span> B)) <span class="sc">+</span></span>
 <span id="cb297-2"><a href="variansanalys.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb297-3"><a href="variansanalys.html#cb297-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-170-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-171-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Färg och linje sammanbinder observationer från samma block. Det finns en klar blockeffekt, vilket är särskilt tydligt för block I, som uppvisar klart högre värden än andra block.</p>
 <p>Blockeffekten kan enkelt föras in i modellen genom att lägga till variabeln B i <code>lm</code>-funktionen. Anova-tabellen och parvisa jämförelser kan göras på samma sätt som tidigare, men nu tas blockeffekten i beaktande.</p>
 <div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="variansanalys.html#cb298-1" aria-hidden="true" tabindex="-1"></a>mod_bl <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">+</span> B, <span class="at">data =</span> dat)</span>
@@ -622,7 +622,7 @@ VI
 <span id="cb302-2"><a href="variansanalys.html#cb302-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y, <span class="at">color =</span> B)) <span class="sc">+</span></span>
 <span id="cb302-3"><a href="variansanalys.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
 <span id="cb302-4"><a href="variansanalys.html#cb302-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> V)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-173-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-174-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader sorter, möjligen har sorten Victory givit något lägre skörd än övriga.</p>
 <p>Modellen skattas genom att lägga till variabeln för sort (V för variety) i <code>lm</code>-formeln.</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="variansanalys.html#cb303-1" aria-hidden="true" tabindex="-1"></a>mod_two_fact <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">*</span> V <span class="sc">+</span> B, <span class="at">data =</span> dat)</span></code></pre></div>
@@ -881,7 +881,7 @@ Standard
 <p><span id="hyp:unlabeled-div-62" class="hypothesis"><strong>Lösningsförslag 9.1  (Jämförelse mellan t-test och anova) </strong></span>a.</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="variansanalys.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Behandling, Hållfasthet)) <span class="sc">+</span></span>
 <span id="cb312-2"><a href="variansanalys.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-179-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-180-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>En graf visar på en mycket tydlig behandlingsskillnad. Det finns inga tydliga extremvärden och grupperna verkar ha samma varians inom gruppen.</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="variansanalys.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Hållfasthet <span class="sc">~</span> Behandling, dat, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
@@ -914,9 +914,9 @@ Standard
 <span id="cb317-2"><a href="variansanalys.html#cb317-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb317-3"><a href="variansanalys.html#cb317-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
 <span id="cb317-4"><a href="variansanalys.html#cb317-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-182-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-183-1.png" width="336" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="variansanalys.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-182-2.png" width="336" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-183-2.png" width="336" style="display: block; margin: auto;" /></p>
 <p>Diagnostik-grafer pekar inte på några extrema avvikelser från normalantagandet (punkterna följer den diagonala linjen ganska väl) eller antagandet om lika varianser (de två kolumnerna med punkter har ungefär samma spridning).</p>
 <p>c. F-testet i (b) ger samma p-värde som t-test i (a).</p>
 </div>
@@ -1044,7 +1044,7 @@ D
 <span id="cb319-3"><a href="variansanalys.html#cb319-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb319-4"><a href="variansanalys.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Sort, Angrepp)) <span class="sc">+</span></span>
 <span id="cb319-5"><a href="variansanalys.html#cb319-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-184-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-185-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Vissa tecken på skillnader.</p>
 <p>a.</p>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="variansanalys.html#cb320-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Angrepp <span class="sc">~</span> Sort, dat)</span>
@@ -1061,7 +1061,7 @@ D
 <p>b.</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="variansanalys.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
 <span id="cb322-2"><a href="variansanalys.html#cb322-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-186-1.png" width="336" style="display: block; margin: auto;" />
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-187-1.png" width="336" style="display: block; margin: auto;" />
 Ungefärligt normalfördelat.</p>
 <p>c.</p>
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="variansanalys.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
@@ -1213,7 +1213,7 @@ RC-3
 <span id="cb327-3"><a href="variansanalys.html#cb327-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Hybrid, Avkastning, <span class="at">group =</span> Plats, <span class="at">col =</span> Plats)) <span class="sc">+</span></span>
 <span id="cb327-4"><a href="variansanalys.html#cb327-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb327-5"><a href="variansanalys.html#cb327-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-190-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-191-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Tecken på både platseffekt (nordväst alltid lägst) och hybrideffekt (RC3 lägre än övriga).</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="variansanalys.html#cb328-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Avkastning <span class="sc">~</span> Hybrid <span class="sc">+</span> Plats, dat)</span>
 <span id="cb328-2"><a href="variansanalys.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
@@ -1281,7 +1281,7 @@ RC-3
 <div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="variansanalys.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Maskin, Tid, <span class="at">group =</span> Replikat)) <span class="sc">+</span></span>
 <span id="cb334-2"><a href="variansanalys.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb334-3"><a href="variansanalys.html#cb334-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-193-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-194-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det finns tecken på skillnader i tid (Maskin C ligger lägre).</p>
 <div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="variansanalys.html#cb335-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Tid <span class="sc">~</span> Maskin, dat)</span>
 <span id="cb335-2"><a href="variansanalys.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
@@ -1315,9 +1315,9 @@ RC-3
 <p>c. Modellen bygger på antagandet att residualerna är normalfördelade och att grupperna har samma varians.</p>
 <div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="variansanalys.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
 <span id="cb339-2"><a href="variansanalys.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-196-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-197-1.png" width="336" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="variansanalys.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-196-2.png" width="336" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-197-2.png" width="336" style="display: block; margin: auto;" /></p>
 <p>En graf över residualerna visar inte på några tydliga brister i antaganden.</p>
 <p>d. Replikat används som en block-faktor i försöket. För att R ska tolka variabeln Replikat korrekt ändras dess typ till <code>character</code>.</p>
 <div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="variansanalys.html#cb341-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Replikat =</span> <span class="fu">as.character</span>(Replikat))</span>
@@ -1366,7 +1366,6 @@ RC-3
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1407,7 +1406,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

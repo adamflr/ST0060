@@ -135,7 +135,7 @@ dat <- tibble(x = rnorm(10000, mean = 50, sd = 3))
 ggplot(dat, aes(x)) +
   geom_histogram(aes(y =..density..)) +
   stat_function(fun = dnorm, args = list(mean = 50, sd = 3), 
-                col = "red", size = 3)
+                col = "red", size = 1)
 ```
 
 Argumentet `y = ..density..` anger att y-axeln ska vara i andelar, istället för antal.

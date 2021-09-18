@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 6 Beskrivande statistik | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 6 Beskrivande statistik | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 6 Beskrivande statistik | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-17" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="next" href="ett-stickprov.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -419,7 +419,7 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 <h2><span class="header-section-number">6.5</span> Grafer</h2>
 <p>R har en mängd grundläggande funktioner för grafer. Ett enkelt spridningsdiagram kan till exempel skapas med</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="beskrivande-statistik.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gapminder<span class="sc">$</span>gdpPercap, gapminder<span class="sc">$</span>lifeExp)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-68-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-69-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Tecknet <code>$</code> används hör för att välja en kolumn i en tabell.</p>
 <p>För mer avancerade grafer används dock ofta funktioner ur Rs paketbibliotek. Här illustreras det mest populära - <code>ggplot2</code>. I <code>ggplot2</code> byggs grafer upp med tre grundläggande byggstenar:</p>
 <ul>
@@ -430,25 +430,24 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 <p>En graf skrivs med en startfunktion <code>ggplot</code> som anger namnet på datan och grafens <em>aestethics</em>, och därefter sätts geometriska element genom funktioner som börjar med <code>geom_</code>. Ett spridningsdiagram kan t.ex. skapas med <code>geom_point</code>.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="beskrivande-statistik.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp)) <span class="sc">+</span></span>
 <span id="cb121-2"><a href="beskrivande-statistik.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-69-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-70-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Grafen kan byggas ut genom att sätta <em>aestethics</em> för färg och storlek. Man kan också dela en graf i småfönster med <code>facet_wrap</code> och styra grafens utseende genom att sätta ett tema såsom <code>theme_bw</code>.</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="beskrivande-statistik.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(gdpPercap), <span class="at">y =</span> lifeExp, <span class="at">color =</span> continent, <span class="at">size =</span> pop)) <span class="sc">+</span></span>
 <span id="cb122-2"><a href="beskrivande-statistik.html#cb122-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb122-3"><a href="beskrivande-statistik.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year) <span class="sc">+</span></span>
-<span id="cb122-4"><a href="beskrivande-statistik.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-70-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb122-3"><a href="beskrivande-statistik.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-71-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Här används dessutom log-transformerad bnp per capita för att få en jämnare fördelning i x-axeln.</p>
 <p>Andra graftyper kan skapas med andra <code>geom_</code>-funktioner. För ett linjediagram används <code>geom_line</code>. De observationer som ska ge en specifik linje anges med <code>group</code> i <code>aes</code>-funktionen.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="beskrivande-statistik.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">color =</span> continent, <span class="at">group =</span> country)) <span class="sc">+</span></span>
 <span id="cb123-2"><a href="beskrivande-statistik.html#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-71-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-72-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Stapeldiagram ges av <code>geom_bar</code>. Om diagrammet ska visa ett urval av data kan man skriva grafen som sista steget i en längre pipe, t.ex.</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="beskrivande-statistik.html#cb124-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb124-2"><a href="beskrivande-statistik.html#cb124-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb124-3"><a href="beskrivande-statistik.html#cb124-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">rank</span>(<span class="sc">-</span>pop) <span class="sc">&lt;=</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb124-4"><a href="beskrivande-statistik.html#cb124-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> <span class="fu">reorder</span>(country, pop), <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
 <span id="cb124-5"><a href="beskrivande-statistik.html#cb124-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-72-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-73-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Här ger <code>rank(-pop) &lt;= 20</code> att landets rang, dess värde i storleksordning, är minst 20, <code>reorder(country, pop)</code> att länder skrivs ut i grafen i storleksordning, och <code>stat = "identity"</code> att värdet för pop ska skrivas ut i grafen som det är (utan att transformeras).</p>
 
 </div>
@@ -573,7 +572,7 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="beskrivande-statistik.html#cb128-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">`</span><span class="at">Antal barn</span><span class="st">`</span> <span class="ot">=</span> dat)</span>
 <span id="cb128-2"><a href="beskrivande-statistik.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="st">`</span><span class="at">Antal barn</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb128-3"><a href="beskrivande-statistik.html#cb128-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-75-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-76-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>b.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="beskrivande-statistik.html#cb129-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> <span class="fu">summarise_all</span>(<span class="fu">c</span>(mean, median, var))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
@@ -670,10 +669,10 @@ NA
 ## 1  176.   180  415.</code></pre>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="beskrivande-statistik.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Längd)) <span class="sc">+</span> </span>
 <span id="cb138-2"><a href="beskrivande-statistik.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">10</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-80-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="beskrivande-statistik.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="st">&quot;Självbefruktning&quot;</span>, Längd)) <span class="sc">+</span> </span>
 <span id="cb139-2"><a href="beskrivande-statistik.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-80-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-81-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Storleken på intervallen i histogrammets x-axel kan styras med <code>binwidth</code>.</p>
 </div>
 <div class="exercise">
@@ -829,9 +828,8 @@ Korsbefruktade
 <span id="cb141-4"><a href="beskrivande-statistik.html#cb141-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Metod, m)) <span class="sc">+</span></span>
 <span id="cb141-5"><a href="beskrivande-statistik.html#cb141-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
 <span id="cb141-6"><a href="beskrivande-statistik.html#cb141-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> m <span class="sc">-</span> s, <span class="at">ymax =</span> m <span class="sc">+</span> s), <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb141-7"><a href="beskrivande-statistik.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb141-8"><a href="beskrivande-statistik.html#cb141-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">&quot;Felstapel anger +/- en standardavvikelse&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-82-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb141-7"><a href="beskrivande-statistik.html#cb141-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">&quot;Felstapel anger +/- en standardavvikelse&quot;</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det är inte alltid klart vilket spridningsmått felstaplarna illusterar (vanliga alternativ är standardavvikelsen, medelfelet (standardavvikelsen delat på roten ur stickprovsstorleken) och konfidensintervallet). Det är därför god praxis att skriva ut vad felstaplarna anger.</p>
 </div>
 <div class="exercise">
@@ -845,20 +843,20 @@ Korsbefruktade
 <p><span id="hyp:unlabeled-div-24" class="hypothesis"><strong>Lösningsförslag 6.4  (Animal Crossing) </strong></span>a.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="beskrivande-statistik.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(villagers, <span class="fu">aes</span>(species)) <span class="sc">+</span></span>
 <span id="cb143-2"><a href="beskrivande-statistik.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-84-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>En internetsökning på exempelvis ‘ggplot2 bar order’ kommer ge flera möjliga lösningar - en är att använda <code>fct_reorder</code> från paketet <code>forcats</code>, vilket ordnar en faktor efter antalet förekomster (genom att sätta funktionen till <code>length</code>).
 Överlappande etiketter kan också lösas på ett par olika sätt (lutande etiketter, etiketter på olika nivåer). En enkel lösning är att vrida staplarna och få etiketterna till vänster med <code>coord_flip</code>.</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="beskrivande-statistik.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(villagers, <span class="fu">aes</span>(forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(species, species, <span class="at">.fun =</span> length))) <span class="sc">+</span></span>
 <span id="cb144-2"><a href="beskrivande-statistik.html#cb144-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb144-3"><a href="beskrivande-statistik.html#cb144-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Art&quot;</span>) <span class="sc">+</span></span>
 <span id="cb144-4"><a href="beskrivande-statistik.html#cb144-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-85-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>b.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="beskrivande-statistik.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(villagers, <span class="fu">aes</span>(forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(species, species, <span class="at">.fun =</span> length), <span class="at">fill =</span> personality)) <span class="sc">+</span></span>
 <span id="cb145-2"><a href="beskrivande-statistik.html#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb145-3"><a href="beskrivande-statistik.html#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Art&quot;</span>) <span class="sc">+</span></span>
 <span id="cb145-4"><a href="beskrivande-statistik.html#cb145-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-87-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>c.</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="beskrivande-statistik.html#cb146-1" aria-hidden="true" tabindex="-1"></a>villagers <span class="sc">%&gt;%</span> </span>
 <span id="cb146-2"><a href="beskrivande-statistik.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(song, <span class="at">sort =</span> T)</span></code></pre></div>
@@ -954,13 +952,13 @@ För att beräkna antalet vinster kan man använda <code>sum(hemmamal &gt; borta
 <span id="cb157-6"><a href="beskrivande-statistik.html#cb157-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb157-7"><a href="beskrivande-statistik.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb157-8"><a href="beskrivande-statistik.html#cb157-8" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-92-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-93-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det verkar som att 1-1 är det vanligaste resultatet. För att få en siffra kan man räkna hemma- och bortamål med <code>count</code>, för att sedan plotta med <code>geom_text</code>.</p>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="beskrivande-statistik.html#cb158-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb158-2"><a href="beskrivande-statistik.html#cb158-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(hemmamal, bortamal) <span class="sc">%&gt;%</span> </span>
 <span id="cb158-3"><a href="beskrivande-statistik.html#cb158-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(hemmamal, bortamal, <span class="at">label =</span> n)) <span class="sc">+</span></span>
 <span id="cb158-4"><a href="beskrivande-statistik.html#cb158-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-93-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-94-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det verkar som att 1-1, följt av 2-1 och 1-0 är de vanligaste resultaten.</p>
 </div>
 <div class="exercise">
@@ -996,7 +994,7 @@ För att beräkna antalet vinster kan man använda <code>sum(hemmamal &gt; borta
 <span id="cb162-4"><a href="beskrivande-statistik.html#cb162-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Maxtemperatur =</span> <span class="fu">max</span>(Lufttemperatur)) <span class="sc">%&gt;%</span> </span>
 <span id="cb162-5"><a href="beskrivande-statistik.html#cb162-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(År, Maxtemperatur)) <span class="sc">+</span></span>
 <span id="cb162-6"><a href="beskrivande-statistik.html#cb162-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-96-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-97-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Datan visar på stor variation mellan år.</p>
 <p>c. Likt (b) kan man skapa en årsvariabel och från den beräkna årtionde genom att dela på tio, använda <code>floor</code> för att ta bort decimalen, och sedan multiplicera med tio. Därefter kan man gruppera efter årtionde och summera till medelvärdet.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="beskrivande-statistik.html#cb163-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
@@ -1006,7 +1004,7 @@ För att beräkna antalet vinster kan man använda <code>sum(hemmamal &gt; borta
 <span id="cb163-5"><a href="beskrivande-statistik.html#cb163-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Årtionde, Medeltemperatur, <span class="at">fill =</span> Medeltemperatur)) <span class="sc">+</span></span>
 <span id="cb163-6"><a href="beskrivande-statistik.html#cb163-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
 <span id="cb163-7"><a href="beskrivande-statistik.html#cb163-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;yellow&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-97-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-98-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Temperaturen verkar öka i Falsterbo. Märk att stapeln för 2020-talet bara innefattar ett år.</p>
 </div>
 <div class="exercise">
@@ -1027,20 +1025,20 @@ Illustrera med ett linjediagram.</p>
 ##    &lt;int&gt;  &lt;int&gt;           &lt;int&gt;            &lt;dbl&gt;
 ##  1     1      1               1            1    
 ##  2     2      0               1            0.5  
-##  3     3      0               1            0.333
-##  4     4      1               2            0.5  
-##  5     5      1               3            0.6  
-##  6     6      1               4            0.667
+##  3     3      1               2            0.667
+##  4     4      1               3            0.75 
+##  5     5      1               4            0.8  
+##  6     6      0               4            0.667
 ##  7     7      1               5            0.714
-##  8     8      1               6            0.75 
-##  9     9      1               7            0.778
-## 10    10      0               7            0.7  
+##  8     8      0               5            0.625
+##  9     9      1               6            0.667
+## 10    10      1               7            0.7  
 ## # ... with 990 more rows</code></pre>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="beskrivande-statistik.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Kast, Relativ_frekvens)) <span class="sc">+</span></span>
 <span id="cb166-2"><a href="beskrivande-statistik.html#cb166-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb166-3"><a href="beskrivande-statistik.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.66</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
 <span id="cb166-4"><a href="beskrivande-statistik.html#cb166-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-98-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-99-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Den relativa frekvensen stabiliseras efter ett par hundra kast.</p>
 </div>
 <div class="exercise">
@@ -1049,7 +1047,7 @@ Illustrera med ett linjediagram.</p>
 <pre><code>## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x000000001b8c6e68&gt;
+## &lt;bytecode: 0x000000001b6b0408&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <p>Standardavvikelsen beräknas alltså som kvadratroten (<code>sqrt</code>) av variansen (<code>var</code>). Sedan finns också lite mer avancerad kod för att hantera olika typer av ingångsdata.</p>
 <p>Standardavvikelsen av <span class="math inline">\(n\)</span> datapunkter ges av</p>
@@ -1090,7 +1088,6 @@ Illustrera med ett linjediagram.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1131,7 +1128,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

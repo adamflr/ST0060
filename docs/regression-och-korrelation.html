@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 10 Regression och korrelation | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 10 Regression och korrelation | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 10 Regression och korrelation | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-17" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb345-8"><a href="regression-och-korrelation.html#cb345-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb345-9"><a href="regression-och-korrelation.html#cb345-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> country), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb345-10"><a href="regression-och-korrelation.html#cb345-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-198-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-199-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medelllivslängd. En regressionmodell kan i R skattas med <code>lm</code>-funktionen. Syntaxen är väldigt lik den för anovamodellen, men istället för en faktor som förklarande variabel används nu en kontinuerlig variabel.</p>
 <div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="regression-och-korrelation.html#cb346-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdpPercap, <span class="at">data =</span> dat)</span>
 <span id="cb346-2"><a href="regression-och-korrelation.html#cb346-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -267,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb348-2"><a href="regression-och-korrelation.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb348-3"><a href="regression-och-korrelation.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm) <span class="sc">+</span></span>
 <span id="cb348-4"><a href="regression-och-korrelation.html#cb348-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-200-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-201-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Den blå linjen illustrerar regressionlinjen <span class="math inline">\(72.27 + 0.2146 \cdot x\)</span>.</p>
 <p>Utskriften från <code>summary</code> ger också tester av parametrarna (den högra kolumnen <code>Pr(&gt;|t|)</code> ger p-värdet för ett test där nollhypotesen är att populationsparametern är noll). I det här fallet är både intercept och lutning skilda från noll. Motsvarande F-test för lutningen kan presenteras med en anova-tabell.</p>
 <div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="regression-och-korrelation.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
@@ -284,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="regression-och-korrelation.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">residuals</span>(mod), <span class="at">breaks =</span> <span class="dv">10</span>)</span>
 <span id="cb351-2"><a href="regression-och-korrelation.html#cb351-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod)); <span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span>
 <span id="cb351-3"><a href="regression-och-korrelation.html#cb351-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-204-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna är en teoretisk normalfördelning.</p>
 </div>
 <div id="korrelation" class="section level2" number="10.2">
@@ -417,7 +417,7 @@ Blodtryck
 <span id="cb356-3"><a href="regression-och-korrelation.html#cb356-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Ålder, Blodtryck)) <span class="sc">+</span></span>
 <span id="cb356-4"><a href="regression-och-korrelation.html#cb356-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb356-5"><a href="regression-och-korrelation.html#cb356-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-206-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-207-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det finns ett tydligt positivt samband mellan variablerna.</p>
 <div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="regression-och-korrelation.html#cb357-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Blodtryck <span class="sc">~</span> Ålder, dat)</span>
 <span id="cb357-2"><a href="regression-och-korrelation.html#cb357-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
@@ -449,7 +449,7 @@ Blodtryck
 <p>Ett 95-procentigt konfidensintervall för lutning ges av <span class="math inline">\((1.003, 1.780)\)</span>.</p>
 <p>c. Modellen bygger på normalfördelade residualer och lika varians för skilda nivåer av ålder.</p>
 <div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="regression-och-korrelation.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-209-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-210-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det finns inga extremvärden bland residualer och inga tydliga tecken på skillnader i varians.</p>
 <p>d. Eftersom 1 ligger precis utanför ett 95-procentigt konfidensintervall, bör ett test på femprocentsnivån leda till att man förkastar nollhypotesen att lutningen är 1. Detta kan testas formellt genom <code>emtrends</code> från paketet <code>emmeans</code>.</p>
 <div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="regression-och-korrelation.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="fu">emtrends</span>(mod, <span class="sc">~</span> <span class="dv">1</span>, <span class="st">&quot;Ålder&quot;</span>), <span class="at">null =</span> <span class="dv">1</span>)</span></code></pre></div>
@@ -571,7 +571,7 @@ B
 <span id="cb364-3"><a href="regression-och-korrelation.html#cb364-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Metod, Volym, <span class="at">group =</span> Yta)) <span class="sc">+</span></span>
 <span id="cb364-4"><a href="regression-och-korrelation.html#cb364-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb364-5"><a href="regression-och-korrelation.html#cb364-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-212-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-213-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>a. Ibland behöver man inget test.</p>
 <p>Men en jämförelse mellan två grupper kan förstås tas som ett parat t-test. Man kan först använda <code>pivot_wider</code> för att skriva om data till kolumnform.</p>
 <div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="regression-och-korrelation.html#cb365-1" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
@@ -608,7 +608,7 @@ B
 <p>b.</p>
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="regression-och-korrelation.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_wide, <span class="fu">aes</span>(B, A)) <span class="sc">+</span> </span>
 <span id="cb369-2"><a href="regression-och-korrelation.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-215-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-216-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="regression-och-korrelation.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dat_wide<span class="sc">$</span>A, dat_wide<span class="sc">$</span>B)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
@@ -635,7 +635,7 @@ B
 <span id="cb372-5"><a href="regression-och-korrelation.html#cb372-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb372-6"><a href="regression-och-korrelation.html#cb372-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb372-7"><a href="regression-och-korrelation.html#cb372-7" aria-hidden="true" tabindex="-1"></a>(g1 <span class="sc">+</span> g2) <span class="sc">/</span> (g3 <span class="sc">+</span> g4)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-216-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-217-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Graferna ser olika ut.</p>
 <div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="regression-och-korrelation.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1)</span></code></pre></div>
 <pre><code>## [1] 0.8164205</code></pre>
@@ -680,7 +680,7 @@ B
 <div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="regression-och-korrelation.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb384-2"><a href="regression-och-korrelation.html#cb384-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb384-3"><a href="regression-och-korrelation.html#cb384-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-220-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-221-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Figuren visar att det finns tydliga mönster i flera av grupperna och tydliga skillnader mellan dem.</p>
 </div>
 
@@ -696,7 +696,6 @@ B
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -737,7 +736,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

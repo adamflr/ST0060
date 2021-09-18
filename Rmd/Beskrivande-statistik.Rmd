@@ -158,8 +158,7 @@ Grafen kan byggas ut genom att sätta *aestethics*  för färg och storlek. Man 
 ```{r}
 ggplot(gapminder, aes(x = log(gdpPercap), y = lifeExp, color = continent, size = pop)) +
   geom_point() +
-  facet_wrap(~ year) +
-  theme_bw()
+  facet_wrap(~ year)
 ```
 
 Här används dessutom log-transformerad bnp per capita för att få en jämnare fördelning i x-axeln.

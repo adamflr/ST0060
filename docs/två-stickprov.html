@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 8 Två stickprov | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 8 Två stickprov | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 8 Två stickprov | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-17" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="next" href="variansanalys.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -256,7 +256,7 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="två-stickprov.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(name, value, <span class="at">group =</span> TrädID)) <span class="sc">+</span></span>
 <span id="cb241-2"><a href="två-stickprov.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb241-3"><a href="två-stickprov.html#cb241-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-135-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-136-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Testet för parade stickprov kan antingen utföras som ett enkelt t-test på differensserien</p>
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="två-stickprov.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span> <span class="sc">-</span> dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## 
@@ -382,7 +382,7 @@ B
 <span id="cb247-10"><a href="två-stickprov.html#cb247-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb247-11"><a href="två-stickprov.html#cb247-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb247-12"><a href="två-stickprov.html#cb247-12" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2 <span class="sc">&amp;</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-139-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-140-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Ett t-test för två oberoende stickprov har nollhypotesen att grupperna har samma populationsmedelvärde och alternativhypotesen att populationsmedelvärdena är skilda (för det tvåsidiga fallet):</p>
 <p><span class="math display">\[\mu_1 = \mu_2 \qquad \mu_1 \neq \mu_2.\]</span></p>
 <p>Testet kan utföras i R genom funktionen <code>t.test</code>. Data kan antingen anges som en formel med dess data <code>Vikt ~ Behandling, data = dat</code>, vilket man kan läsa som <em>vikt uppdelat efter behandling</em>, eller som två skilda vektorer. Det förra alternativet är oftast enklare om man har datan på lång form - med en kolumn som anger grupp (i exemplet <em>Behandling</em>) och en kolumn som anger utfallsvärdet (i exemplet <em>Vikt</em>).</p>
@@ -472,7 +472,7 @@ Testet ger ett högt p-värde vilket innebär att nollhypotesen inte förkastas.
 <p>Datan tyder på att förekomst av skadeinsekt är kopplad till en högre skadegrad. En illustration kan göras genom ett stapeldiagram.</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="två-stickprov.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Förekomst, <span class="at">fill =</span> <span class="fu">as.character</span>(Skadegrad))) <span class="sc">+</span></span>
 <span id="cb258-2"><a href="två-stickprov.html#cb258-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>())</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-145-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-146-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Här används <code>as.character(Skadegrad)</code> för att funktionen ska tolka nivåerna i skadegrad som text, vilket krävs för att indelningen av staplar ska bli korrekt. Argumentet <code>position</code> i <code>geom_bar</code> används för att skapa grupperade staplar.</p>
 <p>Ett <span class="math inline">\(\chi^2\)</span>-test på en korstabell har nollhypotesen att det inte finns något samband mellan förekomst och skadegrad. Testet kan enkelt göras med <code>chisq.test</code>.</p>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="två-stickprov.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(dat<span class="sc">$</span>Förekomst, dat<span class="sc">$</span>Skadegrad))</span></code></pre></div>
@@ -585,7 +585,7 @@ Konventionell
 <span id="cb263-5"><a href="två-stickprov.html#cb263-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;Monoglukosid&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb263-6"><a href="två-stickprov.html#cb263-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Odlingstyp, Monoglukosid)) <span class="sc">+</span></span>
 <span id="cb263-7"><a href="två-stickprov.html#cb263-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-149-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-150-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="två-stickprov.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Konventionell, dat<span class="sc">$</span>Ekologisk, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
@@ -774,7 +774,7 @@ Herr
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="två-stickprov.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fortsättning från inläsningen ovan</span></span>
 <span id="cb269-2"><a href="två-stickprov.html#cb269-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_total, <span class="fu">aes</span>(Säsong, Mål, <span class="at">col =</span> Allsvenska)) <span class="sc">+</span></span>
 <span id="cb269-3"><a href="två-stickprov.html#cb269-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-151-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-152-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Allsvenskan för damer har ett högre genomsnittligt antal mål än allsvenskan för herrar.</p>
 <p>b. Konfidensintervall kan beräknas med <code>t.test</code> efter att observationer för damer filtrerats ut.</p>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="två-stickprov.html#cb270-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat_total <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Allsvenska <span class="sc">==</span> <span class="st">&quot;Dam&quot;</span>)</span>
@@ -991,7 +991,7 @@ D
 <span id="cb279-6"><a href="två-stickprov.html#cb279-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(name, value, <span class="at">fill =</span> Färg)) <span class="sc">+</span></span>
 <span id="cb279-7"><a href="två-stickprov.html#cb279-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
 <span id="cb279-8"><a href="två-stickprov.html#cb279-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Reds&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-158-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-159-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-57" class="exercise"><strong>Övning 8.5  (Mer burfågel) </strong></span>En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.</p>
@@ -1167,7 +1167,7 @@ i
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="två-stickprov.html#cb283-1" aria-hidden="true" tabindex="-1"></a>dat_ord <span class="sc">%&gt;%</span></span>
 <span id="cb283-2"><a href="två-stickprov.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Bok, n, <span class="at">fill =</span> Ord)) <span class="sc">+</span></span>
 <span id="cb283-3"><a href="två-stickprov.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_fill</span>(), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-162-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-163-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Röda rummet har större andel förekomster av <em>och</em> och <em>i</em>.</p>
 <p>b. Två <span class="math inline">\(\chi^2\)</span>-test kan användas för att ställa de kända verken mot det okända verket. Detta kan göras genom att välja kolumner från <code>dat_ord_wide</code> med hakparenteser.</p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="två-stickprov.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gösta Berlings saga (kolumn 2) mot okänd text (kolumn 3)</span></span>
@@ -1199,7 +1199,6 @@ i
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1240,7 +1239,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

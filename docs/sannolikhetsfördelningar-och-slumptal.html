@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 5 Sannolikhetsfördelningar och slumptal | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 5 Sannolikhetsfördelningar och slumptal | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 5 Sannolikhetsfördelningar och slumptal | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-17" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="next" href="beskrivande-statistik.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -254,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-12"><a href="sannolikhetsfördelningar-och-slumptal.html#cb45-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-13"><a href="sannolikhetsfördelningar-och-slumptal.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb45-14"><a href="sannolikhetsfördelningar-och-slumptal.html#cb45-14" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Motsvarande funktioner för en normalfördelning ges av <code>dnorm</code> och <code>pnorm</code>. Medelvärde och standardavvikelse kan sättas genom argumenten <code>mean</code> och <code>sd</code>. Här ges ett exempel på en normalfördelning med medelvärdet 50 och standardavvikelse 3.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb46-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">40</span>, <span class="at">to =</span> <span class="dv">60</span>, <span class="at">by =</span> <span class="fl">0.1</span>),</span>
 <span id="cb46-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb46-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">f =</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
@@ -269,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-11"><a href="sannolikhetsfördelningar-och-slumptal.html#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Fördelningsfunktion, F(x)&quot;</span>)</span>
 <span id="cb46-12"><a href="sannolikhetsfördelningar-och-slumptal.html#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-13"><a href="sannolikhetsfördelningar-och-slumptal.html#cb46-13" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Fördelningsfunktionen anger sannolikheten att ett utfall ligger under värdet <span class="math inline">\(x\)</span>. Om man vill beräkna det omvända fallet - ett x-värde sådant att sannolikheten att ligga under det värdet är en viss sannolikhet <span class="math inline">\(p\)</span> - använder man <em>kvantilfunktionen</em>. Som exempel beräknas ett värde på x-axeln sådant att en fjärdedel ligger under det värdet i en normalfördelning med <span class="math inline">\(\mu = 50\)</span> och <span class="math inline">\(\sigma = 3\)</span>.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.25</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 47.97653</code></pre>
@@ -287,14 +287,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb49-11"><a href="sannolikhetsfördelningar-och-slumptal.html#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Fördelningsfunktion, F(x)&quot;</span>)</span>
 <span id="cb49-12"><a href="sannolikhetsfördelningar-och-slumptal.html#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-13"><a href="sannolikhetsfördelningar-och-slumptal.html#cb49-13" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Utöver sannolikhetsberäkningar har R funktioner för att skapa slumptal från en angiven fördelning. Dessa anges genom bokstaven <code>r</code> (för <em>random</em>) följt av fördelningens namn, t.ex. <code>rnorm</code> för normalfördelningen och <code>rbinom</code> för binomialfördelningen. I exemplet nedan dras tiotusen observationer från en normalfördelning. Histogrammet visar att slumptalen ungefär följer den teoretiska fördelningen (här utritad med funktionen <code>stat_function</code>).</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb50-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">3</span>))</span>
 <span id="cb50-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb50-3"><a href="sannolikhetsfördelningar-och-slumptal.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span>..density..)) <span class="sc">+</span></span>
 <span id="cb50-4"><a href="sannolikhetsfördelningar-och-slumptal.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">3</span>), </span>
-<span id="cb50-5"><a href="sannolikhetsfördelningar-och-slumptal.html#cb50-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb50-5"><a href="sannolikhetsfördelningar-och-slumptal.html#cb50-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Argumentet <code>y = ..density..</code> anger att y-axeln ska vara i andelar, istället för antal.</p>
 </div>
 <div id="simuleringar" class="section level2" number="5.2">
@@ -309,11 +309,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Eftersom standardavvikelsen i den ursprungliga dragningen var 1 (<span class="math inline">\(\sigma = 1\)</span>) bör standardavvikelsen i ett medelvärde av 16 observationer vara 0.25 (<span class="math inline">\(\sigma / \sqrt{16} = 1 / 4 = 0.25\)</span>). Det testas genom att beräkna tiotusen medelvärden (genom <code>replicate</code>) och beräkna standardavvikelsen i den serien av medelvärden.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb52-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">mean_of_n_obs</span>(<span class="at">n =</span> <span class="dv">16</span>))</span>
 <span id="cb52-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(means)</span></code></pre></div>
-<pre><code>## [1] 0.2510697</code></pre>
+<pre><code>## [1] 0.2502366</code></pre>
 <p>Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra observationer bör ge ett värde kring 0.1 (eftersom <span class="math inline">\(\sigma / \sqrt{100} = 1 / 10 = 0.1\)</span>).</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb54-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">mean_of_n_obs</span>(<span class="at">n =</span> <span class="dv">100</span>))</span>
 <span id="cb54-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(means)</span></code></pre></div>
-<pre><code>## [1] 0.0997057</code></pre>
+<pre><code>## [1] 0.09977399</code></pre>
 <p>Sannolikhetsteorin viktigaste resultat är <em>centrala gränsvärdesatsen</em>, som säger att medelvärden av flera lika slumpvariabler är ungeäfrligt normalfördelade även om den ursprungliga slumpvariabeln inte är det. Detta kan illustreras genom att dra slumptal från <em>någon</em> fördelning, beräkna medelvärden av de slumptalen, och sedan titta på fördelningen för de medelvärdena. Ett första steg kan vara att skriva en funktion som drar slumptal och beräknar ett medelvärde.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb56-1" aria-hidden="true" tabindex="-1"></a>draw_random_calculate_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb56-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">16</span>)</span>
@@ -324,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb57-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">draw_random_calculate_mean</span>()))</span>
 <span id="cb57-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(means, <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb57-3"><a href="sannolikhetsfördelningar-och-slumptal.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Medelvärdena följer en ungefärlig normalfördelning trots att den ursprungliga variabeln följer en likformig fördelning.</p>
 
 </div>
@@ -374,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb64-9"><a href="sannolikhetsfördelningar-och-slumptal.html#cb64-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> Sannolikhetsfunktion, <span class="at">yend =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb64-10"><a href="sannolikhetsfördelningar-och-slumptal.html#cb64-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;purple&quot;</span>), </span>
 <span id="cb64-11"><a href="sannolikhetsfördelningar-och-slumptal.html#cb64-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Illustration av fördelningsfunktionen (som vita staplar) med sannolikhetsfunktionen inritad som smala streck. Exempel på argument för val av färger för geom och tema.</p>
 </div>
 <div class="exercise">
@@ -434,7 +434,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb81-6"><a href="sannolikhetsfördelningar-och-slumptal.html#cb81-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> Sannolikhetsfunktion, <span class="at">ymin =</span> <span class="dv">0</span>), </span>
 <span id="cb81-7"><a href="sannolikhetsfördelningar-och-slumptal.html#cb81-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x <span class="sc">&gt;</span> <span class="fl">2.30</span> <span class="sc">&amp;</span> x <span class="sc">&lt;</span> <span class="fl">2.45</span>),</span>
 <span id="cb81-8"><a href="sannolikhetsfördelningar-och-slumptal.html#cb81-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;turquoise&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-46-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Den turkosa ytan motsvarar sannolikheten att <span class="math inline">\(X\)</span> ger ett utfall mellan <span class="math inline">\(2.30\)</span> och <span class="math inline">\(2.45\)</span>, sannolikheten uträknad i (d).</p>
 </div>
 <div class="exercise">
@@ -466,7 +466,7 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb84-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> Binomial), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
 <span id="cb84-3"><a href="sannolikhetsfördelningar-och-slumptal.html#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> Poisson), <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-47-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Fördelningarna är ganska lika. Relativt binomialen överskattar poissonfördelningen sannolikheten att få exakt 0 och överskattar sannolikheten att få exakt 1.</p>
 </div>
 <div class="exercise">
@@ -483,7 +483,7 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
 <span id="cb85-7"><a href="sannolikhetsfördelningar-och-slumptal.html#cb85-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, Snlh), <span class="at">data =</span> dat_norm, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
 <span id="cb85-8"><a href="sannolikhetsfördelningar-och-slumptal.html#cb85-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span>Snlh), </span>
 <span id="cb85-9"><a href="sannolikhetsfördelningar-och-slumptal.html#cb85-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> dat_bin, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-49-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Normalkurvan (blå kontinuerlig linje) följer binomalfördelningen (röda staplar). Man kan också jämföra specifika sannolikheter, till exempel</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exakt 35 i binomialen</span></span>
 <span id="cb86-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">35</span>, <span class="dv">100</span>, <span class="fl">0.4</span>) <span class="co"># 0.0491</span></span></code></pre></div>
@@ -510,7 +510,7 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
 <span id="cb90-10"><a href="sannolikhetsfördelningar-och-slumptal.html#cb90-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb90-11"><a href="sannolikhetsfördelningar-och-slumptal.html#cb90-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb90-12"><a href="sannolikhetsfördelningar-och-slumptal.html#cb90-12" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div class="exercise">
 <p><span id="exr:unlabeled-div-13" class="exercise"><strong>Övning 5.7  (Centrala gränsvärdesatsen) </strong></span>Centrala gränsvärdesatsen ger att summor (och medelvärden) av flera likadana slumpvariabler följer en ungefärlig normalfördelning. Skriv en funktion som drar 10 observation från en log-normal fördelning och beräknar ett medelvärde. Dra 10000 upprepningar från den fördelningen och se om medelvärdena följer en normalfördelning. Gör samma sak men skriv funktionen så att den drar 1000 observationer och tar ett medelvärde.</p>
@@ -529,7 +529,7 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
 <span id="cb91-9"><a href="sannolikhetsfördelningar-och-slumptal.html#cb91-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-10"><a href="sannolikhetsfördelningar-och-slumptal.html#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Mean_values)) <span class="sc">+</span></span>
 <span id="cb91-11"><a href="sannolikhetsfördelningar-och-slumptal.html#cb91-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Histogrammet visar en klar skevhet.</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb92-1" aria-hidden="true" tabindex="-1"></a>mean_of_thousand <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb92-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="dv">1000</span>)</span>
@@ -542,7 +542,7 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
 <span id="cb92-9"><a href="sannolikhetsfördelningar-och-slumptal.html#cb92-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb92-10"><a href="sannolikhetsfördelningar-och-slumptal.html#cb92-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Mean_values)) <span class="sc">+</span></span>
 <span id="cb92-11"><a href="sannolikhetsfördelningar-och-slumptal.html#cb92-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">60</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-53-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Histogrammet ligger närmare en typisk normalfördelning.</p>
 </div>
 <div class="exercise">
@@ -561,20 +561,20 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
 <pre><code>## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1  79.9  80.1  80.1      160.       160.</code></pre>
+## 1  80.0  80.0  80.0      160.       160.</code></pre>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb95-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb95-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(sd)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
-## 1  3.98  4.00  4.01      7.95       5.67</code></pre>
+## 1  3.99  4.01  4.09      7.98       5.74</code></pre>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="sannolikhetsfördelningar-och-slumptal.html#cb97-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
 <span id="cb97-2"><a href="sannolikhetsfördelningar-och-slumptal.html#cb97-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Mult_by_2, Sum_of_two) <span class="sc">%&gt;%</span> </span>
 <span id="cb97-3"><a href="sannolikhetsfördelningar-och-slumptal.html#cb97-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb97-4"><a href="sannolikhetsfördelningar-och-slumptal.html#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, <span class="at">fill =</span> name)) <span class="sc">+</span></span>
 <span id="cb97-5"><a href="sannolikhetsfördelningar-och-slumptal.html#cb97-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb97-6"><a href="sannolikhetsfördelningar-och-slumptal.html#cb97-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> name)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-53-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-54-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Stapeldiagrammet för fallet med en variabel multiplicerad med två ger högre staplar och större spridning än stapeldiagrammet med två summerade variabler. Diagrammet visar också hur vissa utfall inte kan inträffa i fallet med multiplikation, eftersom bara jämna utfall kan inträffa. Intuitivt kan man förstå den mindre spridningen för två summerade variabler med att ovanligt låga eller höga värden ofta kommer kvittas ut mot ett <em>vanligt</em> värde.</p>
 <p>Skillnaden märks också i beräkning av standardavvikelse. Den ursprungliga variabeln har en varians på <span class="math inline">\(np(1-p) = 100 \cdot 0.8 \cdot 0.2 = 16\)</span> och därmed en standardavvikelse på<span class="math inline">\(\sqrt{16} = 4\)</span>. Multiplikation med två ger en slumpvariabel med den dubbla standardavvikelsen, alltså 8, medan addition av två likadana slumpvariabler ger en lägre standardavvikelse. För summor gäller att <em>variansen av summan är summan av varianserna</em> (detta antar dock oberoende slumpvariabler) - här fås alltså att variansen av summan är <span class="math inline">\(16+16=32\)</span> och att standardavvikelsen är <span class="math inline">\(\sqrt{32} = 5.6569\)</span>. Värdet i datan kommer förstås avvika något från den teoretiska beräkningen, eftersom det är slumptal.</p>
 </div>
@@ -591,7 +591,6 @@ Beräkna sannolikheter från binomialfördelningen och motsvarande poissonförde
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -632,7 +631,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
