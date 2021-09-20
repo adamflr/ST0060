@@ -47,7 +47,7 @@ eller som ett t-test för två stickprov där man särskilt anger att datan är 
 t.test(dat$`Tidpunkt 1`, dat$`Tidpunkt 2`, paired = T)
 ```
 
-För det senare alternativet måste datan vara ordnad så att de två vektorerna matchar varandra parvis. Notera att ordningen på vektorerna påverkar konfidensintervall men inte p-värdet (i fallet med en tvåsidig mothypotes). Här är det naturligt att ta den andra mätningen först eftersom konfidensintervallet då blir ett intervall för medelvärdesökningen efter behandling. Ett p-värde på $0.0987$ ger att man inte förkastar vid en signifikansnivå på fem procent.
+För bägge alternativen måste datan vara ordnad så att de två vektorerna matchar varandra parvis. Notera att ordningen på vektorerna påverkar konfidensintervall men inte p-värdet (i fallet med en tvåsidig mothypotes). Här är det naturligt att ta den andra mätningen först eftersom konfidensintervallet då blir ett intervall för medelvärdesökningen efter behandling. Ett p-värde på $0.0987$ ger att man inte förkastar vid en signifikansnivå på fem procent.
 
 ### t-test för två oberoende stickprov
 
@@ -73,14 +73,14 @@ g2 <- dat %>%
   geom_errorbar(aes(ymin = m - s, ymax = m + s), width = 0.1)
 
 library(patchwork)
-g1 + g2 & theme_bw()
+g1 + g2
 ```
 
 Ett t-test för två oberoende stickprov har nollhypotesen att grupperna har samma populationsmedelvärde och alternativhypotesen att populationsmedelvärdena är skilda (för det tvåsidiga fallet):
 
 $$\mu_1 = \mu_2 \qquad \mu_1 \neq \mu_2.$$
 
-Testet kan utföras i R genom funktionen `t.test`. Data kan antingen anges som en formel med dess data `Vikt ~ Behandling, data = dat`, vilket man kan läsa som *vikt uppdelat efter behandling*, eller som två skilda vektorer. Det förra alternativet är oftast enklare om man har datan på lång form - med en kolumn som anger grupp (i exemplet *Behandling*) och en kolumn som anger utfallsvärdet (i exemplet *Vikt*).
+Testet kan utföras i R genom funktionen `t.test`. Data kan antingen anges som en formel med dess data `Vikt ~ Behandling, data = dat` (vilket man kan läsa som *vikt uppdelat efter behandling*) eller som två skilda vektorer. Det förra alternativet är oftast enklare om man har datan på lång form - med en kolumn som anger grupp (i exemplet *Behandling*) och en kolumn som anger utfallsvärdet (i exemplet *Vikt*).
 
 ```{r}
 # Formelskrivning

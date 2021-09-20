@@ -11,7 +11,7 @@ Någon mäter smältpunkter för legeringar av metall och får följande värden
 
 ```{r, echo = F, results='markup'}
 dat <- readxl::read_excel("Data/Uppgiftsdata.xlsx", sheet = "Smältpunkt")
-paste0(dat$Smältpunkt, collapse = ", ")
+kable(matrix(dat$Smältpunkt, 2, byrow = T))
 ```
 
 a\. Beräkna ett 95-procentigt konfidensintervall för medelvärdet.
@@ -35,7 +35,7 @@ t.test(dat$Smältpunkt, mu = 1050)
 
 I bilden är varje svart punkt en observation och den röda punkten är nollhypotesens värde.
 
-Testet ger ett högt p-värde, vilket tyder på att nollhypotesen inte bör förkastar. Ett 95-procentigt konfidensintervall ges av $(1047.08, 1052.76)$.
+Testet ger ett högt p-värde, vilket tyder på att nollhypotesen inte bör förkastar. Ett 95-procentigt konfidensintervall ges av $(1047.08, 1052.76)$. Notera att det täcker nollhypotesens värde på 1050.
 :::
 
 ::: {.exercise name="Väderstation Falsterbo. Test och konfidensintervall"}
@@ -56,6 +56,7 @@ dat_temp <- dat %>%
   group_by(År) %>% 
   summarise(Medeltemperatur = mean(Lufttemperatur)) %>% 
   mutate(Medeltemperatur = round(Medeltemperatur, 2))
+
 kable(dat_temp)
 ```
 
@@ -75,13 +76,13 @@ t.test(dat_temp$Medeltemperatur)
 
 Intervallet ges av $(9.06, 9.62)$. Populationsmedelvärdet för 2000-2009 ligger med 95-procents konfidens i det intervallet.
 
-b\. Funktionen `t.test` kan användas med nollhypotesens värde angiven med argumentet `mu`. Nollhypotesen är att populationsmedelvärdet $\mu$ är 8.42.
+b\. Funktionen `t.test` kan användas med nollhypotesens värde angivet med argumentet `mu`. Nollhypotesen är att populationsmedelvärdet $\mu$ är 8.42.
 
 ```{r}
 t.test(dat_temp$Medeltemperatur, mu = 8.42)
 ```
 
-Det låga värdet ger att nollhypotesen förkastas, vilket tyder på att medeltemperaturen 2000-2009 är skild från 8.42.
+Det låga p-värdet ger att nollhypotesen förkastas, vilket tyder på att medeltemperaturen 2000-2009 är skild från 8.42.
 
 c\. Man kan räkna antal observationer per dag med `count` och göra en linjegraf med `ggplot` och `geom_line`.
 
@@ -89,7 +90,7 @@ c\. Man kan räkna antal observationer per dag med `count` och göra en linjegra
 dat %>% count(Datum) %>% ggplot(aes(Datum, n)) + geom_line()
 ```
 
-Antal observationer per dag är inte konstant. Om vissa dagar är uppmätta vid tider på dygnet då det är kallare eller varmare kan det ge en skevhet i mätningarna, vilket gör att jämförelsen mellan olika tider inte är rättvis. En lösning skulle kunna vara att ta värdet en viss tid på dygnet, en tid då det finns observationer för samtliga dagar.
+Antal observationer per dag är inte konstant. Om vissa dagar är uppmätta vid tider på dygnet då det är kallare eller varmare kan det ge en skevhet i mätningarna, vilket gör att jämförelsen mellan olika tider inte är rättvis. En lösning skulle kunna vara att ta värdet en viss tid på dygnet, en tid då det finns observationer för samtliga dagar. Det finns förstås också andra möjliga felkällor som påverkar en jämförelse över tid, t.ex. ändrade mätinstrument, små positionsförändringar, förändringar i kringliggande bebyggelse).
 :::
 
 ::: {.exercise name="Äppelträd"}
@@ -138,7 +139,7 @@ Konfidensintervallet ges av $(-73.46, 11.29)$. Den sanna behandlingsskillnaden l
 ::: {.exercise name="Simulering, hypotestest"}
 Slumptal kan användas för att undersöka hypotestestens egenskaper. Skriv en funktion som genererar 100 slumptal från en normalfördelning med populationsmedelvärdet 0, testar mot nollhypotesen $\mu_0 = 0$ i ett t-test, och ger ut p-värdet från det testet. Generera 10000 körningar av funktionen och illustrera p-värdena med ett histogram.
 
-Upprepa samma procedur men dra denna gång slumptal från en normalfördelning med populationsmedelvärdet 0.1 (anvnäds samma nollhypotes som tidigare $\mu_0 = 0$). Hur stor andel av de 10000 simuleringarna resulterar i ett p-värde under 0.05?
+Upprepa samma procedur men dra denna gång slumptal från en normalfördelning med populationsmedelvärdet 0.1 (använs samma nollhypotes som tidigare $\mu_0 = 0$). Hur stor andel av de 10000 simuleringarna resulterar i ett p-värde under 0.05?
 :::
 
 ::: {.hypothesis name="Simulering hypotestest"}
@@ -178,7 +179,7 @@ ggplot(dat, aes(p_values)) +
 mean(p_values < 0.05)
 ```
 
-När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer.
+När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
 :::
 
 ::: {.exercise name="Jurysystemet"}
@@ -200,7 +201,7 @@ En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar sk
 :::
 
 ::: {.hypothesis name="Guldfiskgenetik"}
-Frågan kan hanteras med ett $\chi^2$-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är tre fjärdedelar. Notera att funktionen anges både med antalet (och andelen under nollhypotesen) med genomskinliga fjäll och antalet med färglagda fjäll.
+Frågan kan hanteras med ett $\chi^2$-test, ett z-test eller ett binomialtest. Här ges exempel på det första. Nollhypotesen är att sannolikheten för genomskinliga fjäll är tre fjärdedelar. Notera att funktionen anges både med antalet (och andelen under nollhypotesen) med genomskinliga fjäll och antalet med färglagda fjäll.
 
 ```{r}
 chisq.test(c(90, 10), p = c(0.75, 0.25))
@@ -220,11 +221,11 @@ Frågan kan hanteras med ett $\chi^2$-test. Nollhypotesen är att sannolikheten 
 chisq.test(c(90, 10), p = c(15/16, 1/16))
 ```
 
-Nollhypotesen att sannolikheten för genomskinliga fjäll är femton sextondelar, $p = 15/16$, kan ej förkastas.
+Nollhypotesen att sannolikheten för genomskinliga fjäll är femton sextondelar, $p = 15/16$, kan ej förkastas, eftersom testet ger ett p-värde över de vanliga signifikansnivåerna.
 :::
 
 ::: {.exercise name="Simulering konfidensintervall"}
-Konfidensinterval konstrueras så att det sanna parametervärden ingår i intervall med en viss konfidensgrad (oftast 95 procent). Skriv en funktion som drar 10 slumptal från en normalfördelning med medelvärdet 9 och beräknar konfidensintervall. Upprepa funktionen 10000 gånger. Hur ofta täcker intervallet 9?
+Konfidensinterval konstrueras så att det sanna parametervärdet ingår i intervallet med en viss konfidensgrad (oftast 95 procent). Skriv en funktion som drar 10 slumptal från en normalfördelning med medelvärdet 9 och beräknar konfidensintervall. Upprepa funktionen 10000 gånger. Hur ofta täcker intervallet 9?
 
 Notera att detta är en svårare uppgift.
 :::
@@ -248,7 +249,7 @@ mean(intervals$Undre > 9)
 mean(intervals$Övre < 9)
 ```
 
-Värdet 9 ligger under den övre gränsen ungeför 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
+Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
 
 En illustration med 100 simulerade fall.
 
@@ -264,7 +265,9 @@ intervals %>%
          Täcker_9 = Undre < 9 & Övre > 9) %>% 
   ggplot(aes(x = Undre, xend = Övre, y = id, yend = id, col = Täcker_9)) +
   geom_segment() +
-  geom_vline(xintercept = 9)
+  geom_point(aes(x = (Övre + Undre) / 2, id)) +
+  geom_vline(xintercept = 9) +
+  theme(legend.position = "none")
 ```
 
 Varje streck motsvarar konfidensintervallet från en simulering. Intervallet väntas täcka 9 i 95 av hundra fall, men det kan förstås variera eftersom det beror på slumptalen.

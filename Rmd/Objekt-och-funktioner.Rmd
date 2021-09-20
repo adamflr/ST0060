@@ -5,7 +5,7 @@ editor_options:
 ---
 # Objekt och funktioner
 
-Ett *objekt* i R är en namngiven informationsmängd. Objekt kan se ut på många olika sätt - under kursens gång kommer vi se objekt som består av insamlad data (konstruerade som vektorer eller tabeller), objekt som är statistiska modeller, och flera andra former. I vårt tidigare exempel hade vi raden
+Ett *objekt* i R är en namngiven informationsmängd. Objekt kan se ut på många olika sätt - under kursens gång används objekt som består av insamlad data (konstruerade som vektorer eller tabeller), objekt som är statistiska modeller, och flera andra former. I ett tidigare exempel fanns raden
 
 ```{r}
 a <- 5
@@ -18,9 +18,9 @@ Ett lite mer komplicerat exempel på ett objekt ges av
 b <- c(3, 1, 4, 1, 5, 9)
 ```
 
-Här skapas ett objekt `b` som innehåller en serie numeriska värden (en *vektor*).
+Här skapas ett objekt `b` som innehåller en *serie* numeriska värden (en *vektor*).
 
-Objekt kan sedan manipuleras genom att tillämpa funktioner. En funktion tar oss från någon ingående data till något utgående resultat. Funktioner anges genom att skriva funktionens namn följt av ingående data inom parenteser, och resultatet kan antingen skrivas ut i konsollen eller sparas som ett nytt objekt. En grundinstallation av R innehåller en mängd färdiga funktioner, t.ex.
+Objekt kan sedan manipuleras genom att tillämpa *funktioner.* En funktion tar någon ingående data och ger något utgående resultat. Funktioner anges genom att skriva funktionens namn följt av ingående data inom parenteser, och resultatet kan antingen skrivas ut i konsollen eller sparas som ett nytt objekt. En grundinstallation av R innehåller en mängd färdiga funktioner, t.ex.
 
 ```{r}
 sum(b)
@@ -38,11 +38,11 @@ som ger en simpel graf, och
 sqrt(b)
 ```
 
-som beräknar kvadratroten.
+som beräknar kvadratroten för varje element i vektorn.
 
-När vi konstruerade vektorn använde vi också en grundläggande funktion - funktionen `c` som tar en serie värden och skapar en sammanhängande vektor av värden.
+Vid konstruktionen av vektorn användes också en grundläggande funktion - funktionen `c` som tar en serie värden och skapar en sammanhängande vektor av värden.
 
-Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. `?sum`. Från hjälpfilen ser vi att `sum` tar numeriska vektorer som ingående värde och beräknar summan. Vi ser också att man kan styra funktionens beteende genom att sätta ett argument `na.rm` (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på
+Alla R-funktioner har en tillhörande hjälpfil som kan plockas fram genom att skriva frågetecken följt av funktionsnamnet, t.ex. `?sum`. Från hjälpfilen får man att `sum` tar numeriska vektorer som ingående värde och beräknar summan. Man kan styra funktionens beteende genom att sätta ett argument `na.rm` (vilket här styr hur funktionen hanterar saknade värden). Som illustration kan man titta på
 
 ```{r}
 b <- c(3, 1, 4, 1, 5, 9, NA)  # Lägger till ett saknat värde
@@ -54,7 +54,7 @@ Det första försöket `sum(b)` ger utfallet `NA`, men om man sätter `na.rm = T
 
 ## Sekvenser av funktioner
 
-Ofta vill man genomföra flera operationer på ett objekt. Man behöver då genomföra en sekvens av funktionssteg. Säg till exempel att man vill ta absolutvärde (vilket gör negativa tal till motsvarande positiva tal) och sedan summera.
+Ofta vill man genomföra flera operationer på ett objekt. Man behöver då genomföra en sekvens av funktionssteg. Säg till exempel att man har värdena $$(-4, -2, -1, 1, 2, 4)$$ och vill ta absolutvärde (vilket gör negativa tal till motsvarande positiva tal) och sedan summera.
 Den typen av sekvenser kan genomföras på ett par olika sätt. Ett första sätt är att spara resultatet i varje steg och sedan använda utfallet i nästa steg:
 
 ```{r}
@@ -64,9 +64,9 @@ sum(c)
 ```
 
 Här skapas ett objekt `c` som innehåller en vektor där några tal är negativa. I nästa rad används `abs` för att skapa absolutvärden. Slutligen summeras absolutvärdena med `sum`.
-Notera för övrigt att vi kunde skapa ett objekt med namnet `c` trots att det redan är namnet på en funktion - R förstår ur sammanhanget vilket objekt som behövs.
+Notera för övrigt att det är möjligt att skapa ett objekt med namnet `c` trots att det redan är namnet på en funktion - R förstår ur sammanhanget vilket objekt som behövs.
 
-Ett alternativ är att skriva en senare funktion *runt* en tidigare funktion. Det fungerar för att R utvärderar funktioner inifrån-ut. Med samma exempel som tidigare får vi då
+Ett alternativ är att skriva en senare funktion *runt* en tidigare funktion. Det fungerar för att R utvärderar funktioner inifrån-ut. Med samma exempel som tidigare får man
 
 ```{r}
 sum(abs(c(-4, -2, -1, 1, 2, 4)))

@@ -35,12 +35,16 @@ dat %>%
                values_to = "Monoglukosid") %>% 
   ggplot(aes(Odlingstyp, Monoglukosid)) +
   geom_point()
+```
 
+a\. Eftersom det inte finns någon koppling mellan odlare är ett t-test för två oberoende stickprov ett lämpligt test. Testet kan genomföras med eller utan ett antagande om lika varianser inom grupperna.
+
+```{r}
 t.test(dat$Konventionell, dat$Ekologisk, var.equal = T)
 t.test(dat$Konventionell, dat$Ekologisk, var.equal = F)
 ```
 
-a\. Hypotestestet (ett t-test för två oberoende stickprov) ger ett p-värde på $0.0439$ eller $0.0503$, beroende på om varianser inom grupperna antas lika eller ej.
+Hypotestestet (ett t-test för två oberoende stickprov) ger ett p-värde på $0.0439$ eller $0.0503$, beroende på om varianser inom grupperna antas lika eller ej.
 
 b\. Om varianser antas lika ges ett 95-procentigt konfidensintervall av $(-70.9, -1.4)$. Notera att ett 95-procentigt intervall inte täcker noll, vilket är i linje med att p-värdet är mindre än 5 procent.
 :::
@@ -71,7 +75,7 @@ dat_total <- dat_dam_medel %>%
 
 dat_total %>% 
   pivot_wider(values_from = Mål, names_from = Allsvenska) %>% 
-  kable()
+  kable(digits = 2)
 ```
 
 a\. Jämför serierna med en lämplig graf.
@@ -243,7 +247,7 @@ b\. Genomför två $\chi^2$-test för att se vilken av Gösta Berlings saga och 
 ::: {.hypothesis name="Röda rummet, Gösta Berlings saga, och okänd"}
 a\. En möjlig illustration är ett stapeldiagram för proportion av varje ord inom respektive text.
 
-```{r}
+```{r, fig.height=6}
 dat_ord %>%
   ggplot(aes(Bok, n, fill = Ord)) +
   geom_bar(stat = "identity", position = position_fill(), col = "black")

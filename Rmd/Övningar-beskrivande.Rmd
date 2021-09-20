@@ -14,7 +14,7 @@ library(tidyverse)
 ::: {.exercise name="Antal barn"}
 Antal barn per familj för 30 familjer är
 
-```{r}
+```{r, echo = F}
 dat <- c(4,3,0,0,0,1,5,2,2,8,3,1,0,1,2,1,1,4,1,0,2,2,3,0,4,1,5,1,1,3)
 kable(matrix(dat, 3))
 ```
@@ -33,11 +33,17 @@ Datan kan illustreras med ett stapeldiagram och beskrivande statistik kan beräk
 
 a\.
 ```{r}
+dat <- c(4,3,0,0,0,1,5,2,2,8,3,1,0,1,2,1,1,4,1,0,2,2,3,0,4,1,5,1,1,3)
 table(dat)
 
 dat <- tibble(`Antal barn` = dat)
 ggplot(dat, aes(`Antal barn`)) +
-  geom_bar()
+  geom_bar() +
+  scale_x_continuous(breaks = 0:8) +
+  scale_y_continuous(breaks = 0:10) +
+  ylab("Frekvens") +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank())
 ```
 
 b\.
@@ -62,9 +68,9 @@ Medelvärde ökar med ungefär 1, medianen är densamma (varför?) och variansen
 ::: {.exercise name="Darwindata"}
 Följande data gäller längden (i tum) hos 15 stycken plantor som fortplantats genom självbefruktning:
 
-```{r}
+```{r, echo = F}
 dat <- c(174,204,200,200,184,186,186,153,165,180,163,180,128,155,180, NA) / 10
-kable(matrix(dat, 2, byrow = T))
+kable(matrix(dat, 3, byrow = T))
 ```
 
 a\. Beräkna medelvärdet.
@@ -90,17 +96,18 @@ dat %>%
 ggplot(dat, aes(Längd)) + 
   geom_histogram(bins = 10)
 
-ggplot(dat, aes("Självbefruktning", Längd)) + 
-  geom_boxplot()
+ggplot(dat, aes(Längd, "Självbefruktning")) + 
+  geom_boxplot() +
+  ylab("")
 ```
 
-Storleken på intervallen i histogrammets x-axel kan styras med `binwidth`.
+Storleken på intervallen i histogrammets x-axel kan styras med `binwidth`. Med så få observationer är histogram sällan informativt.
 :::
 
 ::: {.exercise name="Stapeldiagram med felstaplar"}
 Darwins studie gav följande data:
 
-```{r}
+```{r, echo = F}
 dat <- readxl::read_excel("Data/Uppgiftsdata.xlsx", sheet = "Darwin")
 
 dat %>% 
@@ -111,12 +118,15 @@ dat %>%
 ```
 
 Konstruera ett stapeldiagram med felstaplar där stapelns höjd ges av medelvärdet inom gruppen och felstapelns längd av standardavvikelsen inom gruppen.
+
+Datan finns tillgänglig i arket *Darwin* i excelfilen *Uppgiftsdata.xlsx*. Exceldata kan läsas in med funktionen `read_excel` från paketet `readxl`.
 :::
 
 ::: {.hypothesis name="Stapeldiagram med felstaplar"}
-Felstaplar kan konstrueras genom att beräkna medelvärde och standardavvikelse, och sedan *pipa* in i en plot där staplar konstrueras med `geom_bar` och felstaplar med `geom_errorbar`.
+Felstaplar kan konstrueras genom att beräkna medelvärde och standardavvikelse, och sedan *pipa* (`%>%`) in i en plot där staplar konstrueras med `geom_bar` och felstaplar med `geom_errorbar`.
 
 ```{r}
+dat <- readxl::read_excel("Data/Uppgiftsdata.xlsx", sheet = "Darwin")
 dat %>% 
   group_by(Metod) %>% 
   summarise(m = mean(Utfall), s = sd(Utfall)) %>% 
@@ -130,7 +140,7 @@ Det är inte alltid klart vilket spridningsmått felstaplarna illusterar (vanlig
 :::
 
 ::: {.exercise name="Animal Crossing"}
-TidyTuesday (https://github.com/rfordatascience/tidytuesday) är ett R-kopplat projekt som varje vecka släpper ett nytt dataset, med tanken att vemsomhelst kan analysera datan och publicera informativa grafer. Ta gärna titt på Twitter under taggen *tidytuesday*. Ett dataset från TidyTuesday täcker bybor från spelserien *Animal Crossing*. Datan kan läsas in med
+TidyTuesday (https://github.com/rfordatascience/tidytuesday) är ett R-kopplat projekt som varje vecka släpper ett nytt dataset, med tanken att vemsomhelst kan analysera datan och publicera informativa grafer. Ta gärna titt på Twitter under *#tidytuesday* (helst på en tisdag förstås). Ett dataset från TidyTuesday täcker bybor från spelserien *Animal Crossing*. Datan kan läsas in med
 
 ```{r}
 villagers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv')
@@ -153,7 +163,7 @@ ggplot(villagers, aes(species)) +
 En internetsökning på exempelvis 'ggplot2 bar order' kommer ge flera möjliga lösningar - en är att använda `fct_reorder` från paketet `forcats`, vilket ordnar en faktor efter antalet förekomster (genom att sätta funktionen till `length`).
 Överlappande etiketter kan också lösas på ett par olika sätt (lutande etiketter, etiketter på olika nivåer). En enkel lösning är att vrida staplarna och få etiketterna till vänster med `coord_flip`.
 
-```{r, fig.height=4}
+```{r, fig.height=5}
 ggplot(villagers, aes(forcats::fct_reorder(species, species, .fun = length))) +
   geom_bar() +
   xlab("Art") +
@@ -161,7 +171,7 @@ ggplot(villagers, aes(forcats::fct_reorder(species, species, .fun = length))) +
 ```
 
 b\.
-```{r, fig.height=4}
+```{r, fig.height=5}
 ggplot(villagers, aes(forcats::fct_reorder(species, species, .fun = length), fill = personality)) +
   geom_bar() +
   xlab("Art") +
@@ -244,11 +254,11 @@ g1 + g2
 
 Det verkar som att 1-1 är det vanligaste resultatet. För att få en siffra kan man räkna hemma- och bortamål med `count`, för att sedan plotta med `geom_text`.
 
-```{r}
+```{r, fig.height = 6}
 dat %>% 
   count(hemmamal, bortamal) %>% 
   ggplot(aes(hemmamal, bortamal, label = n)) +
-  geom_text()
+  geom_text(size = 3)
 ```
 
 Det verkar som att 1-1, följt av 2-1 och 1-0 är de vanligaste resultaten.
@@ -307,7 +317,7 @@ Temperaturen verkar öka i Falsterbo. Märk att stapeln för 2020-talet bara inn
 :::
 
 ::: {.exercise name="Relativ frekvens"}
-Säg att man kastar ett häftstift och att sannolikheten att stiftet stannar spetsen upp är 0.66. Simulera tusen häftstiftskast och beräkna den relativa frekvensen häftstiften hamnat med spetsen uppåt. Den relativa frekvensen för en serie värden ges av antalet positiva utfall delat på antalet kast för varje kast. Den relativa frekvensen efter 35 kast är till exempel antalet positiva utfall bland de 35, delat på 35.
+Säg att man kastar ett häftstift och att sannolikheten att stiftet stannar med spetsen upp är 0.66. Simulera tusen häftstiftskast och beräkna den relativa frekvensen häftstiften hamnat med spetsen uppåt. Den relativa frekvensen för en serie värden ges av antalet positiva utfall delat på antalet kast för varje kast. Den relativa frekvensen efter 35 kast är till exempel antalet positiva utfall bland de 35, delat på 35.
 Illustrera med ett linjediagram.
 
 Ledning: tusen kast kan simuleras med `rbin(1000, 1, 0.66)`, vilket skapar tusen slumptal från en binomialfördelning där $n = 1$ och $p = 0.67$.

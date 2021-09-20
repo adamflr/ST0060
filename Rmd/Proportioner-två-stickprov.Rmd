@@ -15,5 +15,5 @@ I R kan testet genomföras med `prop.test`-funktionen. Funktionens första argum
 prop.test(c(17, 26), c(50, 60), correct = F)
 ```
 
-Notera att funktionen inte ger ett z-värde utan ett $\chi^2$-värde (utskrivet `X-squared`). Det beror på att funktionen beräknar z-testet som ett likvärdigt $\chi^2$-test.
+Notera att funktionen inte ger ett z-värde utan ett $\chi^2$-värde (utskrivet `X-squared`). Det beror på att funktionen beräknar z-testet som ett likvärdigt $\chi^2$-test. Det z-värde man får om man genomför testet som ett z-test är detsamma som roten ur utskriftens $\chi^2$-värde.
 Testet ger ett högt p-värde vilket innebär att nollhypotesen inte förkastas.

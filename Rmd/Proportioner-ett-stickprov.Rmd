@@ -5,7 +5,7 @@ editor_options:
 ---
 ## Binär data. Proportioner
 
-Ett binomialtest eller z-test kan användas för att testa en skattad proportion mot en nollhypotes. Ta som exempel att man samlar data om antal infekterade plantor i ett slumpmässigt urval av 50 och finner att 17 är infektera. Man kan då testa nollhypotesen att den sanna populationsproportionen är 0.5,
+En skattad proportion kan ställas mot en nollhypotes genom ett *binomialtest* eller *z-test*. Ta som exempel att man samlar data om antal infekterade plantor i ett slumpmässigt urval av 50 och finner att 17 är infekterade. Man kan då testa nollhypotesen att den sanna populationsproportionen är 0.5,
 
 $$H_0: p = 0.5 \qquad H_1: p \neq 0.5.$$
 
@@ -26,3 +26,9 @@ Utskrifterna ger också konfidensintervall, och precis som p-värden beror inter
 library(binom)
 binom.confint(17, 50, methods = "asymp")
 ```
+
+Det interval som ges är kan beräknas genom att sätta $\hat p = 17/50$ i uttrycket
+
+$$\hat p \pm 1.96 \sqrt{\frac{\hat p (1 - \hat p)}{50}},$$
+
+med ett litet avrundningsfel eftersom $1.96$ är avrundat.

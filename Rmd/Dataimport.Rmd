@@ -5,9 +5,9 @@ editor_options:
 ---
 # Dataimport
 
-Det första steget i en statistisk analys är att importera sin data. I R kan det göras genom att direkt skriva in sin data och spara som ett nytt objekt, men ett bättre och vanligare sätt är att importera sin data från en extern fil eller databas. Om man arbetar med små datamängder har man ofta sin data i en Excelfil.
+Det första praktiska steget i en statistisk analys är att importera data. I R kan det göras genom att direkt skriva in sin data och spara som ett nytt objekt, men ett bättre och vanligare sätt är att importera sin data från en extern fil eller databas. Om man arbetar med små datamängder har man ofta sin data i en excelfil.
 
-Som exempel används följande data från ett försök på purjolök.
+Som exempel används här följande data från ett försök på purjolök.
 
 ```{r, echo = F}
 dat <- data.frame(Vecka = rep(c(7, 11), each = 6),
@@ -17,10 +17,10 @@ dat <- data.frame(Vecka = rep(c(7, 11), each = 6),
                   N = c(2.63, 2.90, 2.99, 3.54, 3.30, 
                         2.85, 1.53, 1.90, NA, 2.58, NA, NA))
 
-kable(dat)
+kable(dat, )
 ```
 
-Notera att det finns saknade värde i kolumnen N.
+Notera att det finns saknade värden i kolumnen N.
 
 ## Direkt inskrivning av data
 
@@ -50,7 +50,7 @@ dat <- read_excel("Data/Purjolök.xlsx")
 dat
 ```
 
-För att identifiera en fil behövs filens namn och placering. När man arbetar i R finns ett *working directory*, en mapp på datorn som R-session för tillfället är kopplad till. Man kan se sitt *working directory* genom att titta längst upp i konsollfönstret eller genom att köra `getwd()`. Ett filnamn kan anges relativt sessionens *working directory*. Om man till exempel vill importera en fil som ligger i *working directory* kan man ange filens namn direkt. I exemplet ovan låg Excelfilen i en mapp *Data* - filen måste därför anges som `Data/Purjolök.xlsx`.
+För att identifiera en fil behövs filens namn och placering. När man arbetar i R finns ett *working directory*, en mapp på datorn som R-session för tillfället är kopplad till. Man kan se sitt *working directory* genom att titta längst upp i konsollfönstret eller genom att köra `getwd()`. Ett filnamn kan anges relativt sessionens *working directory*. Om man till exempel vill importera en fil som ligger i *working directory* kan man ange filens namn direkt. I exemplet ovan låg excelfilen i en mapp *Data* - filen måste därför anges som `Data/Purjolök.xlsx`.
 
 Notera också att utskriften av den importerade datan inte ser likadan ut som utskriften av den inskrivna datan. Det beror på att `read_excel` importerat datan som en *tibble* - ett dataformat som har lite mer avancerade egenskaper är det ursprungliga dataformatet `data.frame`, till exempel ger en utskriven *tibble* information om tabellens storlek och kolumnernas datatyper.
 
