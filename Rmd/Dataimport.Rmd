@@ -9,7 +9,7 @@ Det första praktiska steget i en statistisk analys är att importera data. I R 
 
 Som exempel används här följande data från ett försök på purjolök.
 
-```{r, echo = F}
+```{r import, echo = F}
 dat <- data.frame(Vecka = rep(c(7, 11), each = 6),
                   Behandling = c(0,0,0,1,1,1,0,0,0,1,1,1),
                   Vikt = c(232, 161, 148, 368, 218, 257, 
@@ -17,7 +17,7 @@ dat <- data.frame(Vecka = rep(c(7, 11), each = 6),
                   N = c(2.63, 2.90, 2.99, 3.54, 3.30, 
                         2.85, 1.53, 1.90, NA, 2.58, NA, NA))
 
-kable(dat, )
+kable(dat)
 ```
 
 Notera att det finns saknade värden i kolumnen N.

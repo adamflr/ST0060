@@ -12,7 +12,7 @@ R kommer med en stor mängd funktioner för att beräkna sannolikheter ur kända
 
 För en *likformig fördelning* gäller att alla utfall mellan 0 och 1 är lika sannolika. Som exempel kan man tänka sig att man stoppar ett tidtagarur vid ett slumpmässigt tillfälle och tittar på utfallets decimaler - de kommer ge ett värde mellan 0 och 1 och det finns ingen anledning att tro att vissa värden är mer sannolika än andra. Sannolikhetsfunktionen $f(x)$ kan beräknas genom $dunif$, där `d` står för *density* (täthet) och `unif` anger en *uniform* fördelning. Fördelningens sannolikhetsfunktion är 0 för värden på $x$ under 0 eller över 1, och däremellan är sannolikhetsfunktionen 1.
 
-```{r}
+```{r dunif}
 dunif(-0.1)
 dunif(0.1)
 dunif(1.1)

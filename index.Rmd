@@ -25,9 +25,11 @@ select <- dplyr::select
 library(knitr)
 library(kableExtra)
 
-kable <- . %>% 
-  kbl(booktabs = T) %>% 
-  kable_styling(full_width = F)
+kable <- function(x, digits = 4){
+  x %>% 
+    kbl(booktabs = T, digits = digits) %>% 
+    kable_styling(full_width = F)
+}
 ```
 
 ```{r, echo = F}
