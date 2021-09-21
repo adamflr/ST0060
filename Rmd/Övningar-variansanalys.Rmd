@@ -11,9 +11,10 @@ Detta är ett datamaterial som jämför hållfastheten hos murbruk för två obe
 
 ```{r, echo = F}
 dat <- tibble(Behandling = rep(c("Ny", "Standard"), each = 10),
-              Hållfasthet = c(1685,1640,1721,1636,1652,1704,1696,
-                              1715,1659,1657,1750,1763,1825,1800,
-                              1786,1775,1822,1790,1796,1815) / 100)
+              Hållfasthet = c(16.85,16.40,17.21,16.36,16.52,
+                              17.04,16.96,17.15,16.59,16.57,
+                              17.50,17.63,18.25,18.00,17.86,
+                              17.75,18.22,17.90,17.96,18.15))
 kable(dat)
 ```
 
@@ -27,6 +28,12 @@ c\. Jämför resultaten i (a) och (b).
 ::: {.hypothesis name="Jämförelse mellan t-test och anova"}
 a\.
 ```{r}
+dat <- tibble(Behandling = rep(c("Ny", "Standard"), each = 10),
+              Hållfasthet = c(16.85,16.40,17.21,16.36,16.52,
+                              17.04,16.96,17.15,16.59,16.57,
+                              17.50,17.63,18.25,18.00,17.86,
+                              17.75,18.22,17.90,17.96,18.15))
+
 ggplot(dat, aes(Behandling, Hållfasthet)) +
   geom_point()
 ```
@@ -39,7 +46,7 @@ t.test(Hållfasthet ~ Behandling, dat, var.equal = T)
 
 Ett mycket lågt p-värde tyder på att det finns en skillnad mellan grupperna.
 
-b\.
+b\. Modellen kan skattas med `lm`. Modellekvationen ges av `Hållbarhet ~ Behandling`, vilket kan utläsas som *hållbarhet beroende på behandling*.
 
 ```{r}
 mod <- lm(Hållfasthet ~ Behandling, dat)
@@ -50,9 +57,9 @@ Anova(mod)
 
 Ett mycket lågt p-värde tyder på att det finns en skillnad mellan grupperna.
 
-```{r, fig.height=3, fig.width=3.5}
-dat_res <- tibble(res = residuals(mod))
+Modellantaganden (normalfördelning och lika varianser inom grupper) kan undersökas med diagnosplottar. QQ-grafen visar eventuella avvikelser från en normalfördelning (om data är normalfördelad följer punkterna diagonalen) och spridningsdiagram visar eventuella skillnader i spridning.
 
+```{r, fig.height=3, fig.width=3.5}
 qqnorm(residuals(mod))
 qqline(residuals(mod))
 
@@ -93,7 +100,7 @@ ggplot(dat, aes(Sort, Angrepp)) +
   geom_point()
 ```
 
-Vissa tecken på skillnader.
+Grafen visar svaga tecken på skillnader, men inga *tydliga* mönster.
 
 a\.
 ```{r}
@@ -102,7 +109,8 @@ mod <- lm(Angrepp ~ Sort, dat)
 library(car)
 Anova(mod)
 ```
-Ingen signifikant skillnad mellan sorter.
+
+F-testet testar nollhypotesen att alla grupper har samma populationsmedelvärde. Det höga p-värdet ger att det inte finns signifikanta skillnader mellan sorter.
 
 b\.
 ```{r, fig.height=3, fig.width=3.5}
@@ -166,18 +174,18 @@ Klart signifikanta skillnader mellan hybrider. Post-hoc-tester ger att RC-3 har 
 :::
 
 ::: {.exercise name="Maskiner med och utan block"}
-För att undersöka hur mycket vatten ett material kan tåla observerar man hur lång tid det tar innan vatten börjar droppa från en trasa av materialet. I fabriken finns tre olika maskiner i produktionen och man vill undersöka om det är en skillnad mellan dessa. Resultatet ges nedan.
+I en fabrik testas tre olika maskiner i produktionen. Utfallsvariabeln är hur mycket tid maskinen behöver för tryckpressa en stol. Man vill undersöka om det är en skillnad mellan maskiner. Resultatet ges nedan.
 
-```{r}
+```{r, echo = F}
 dat <- tibble(Maskin = rep(c("A", "B", "C"), each = 6),
               Replikat = rep(1:6, 3),
               Tid = c(34,38,32,41,41,36,
                       30,31,33,40,39,35,
                       27,30,29,31,36,32))
-dat
+kable(dat %>% pivot_wider(names_from = Replikat, values_from = Tid))
 ```
 
-a\. Antag att den person som gjorde experimentet randomiserade ordningen på de 18 försöken och gjorde alla under en dag. Analysera försöket med envägs anova-modell för att se om det är någon skillnad mellan maskinerna.
+a\. Antag att den som gjorde experimentet randomiserade ordningen på de 18 försöken och gjorde alla under en dag. Analysera försöket med envägs anova-modell för att se om det är någon skillnad mellan maskinerna.
 
 b\. Om där är en skillnad, vilka maskiner skiljer sig åt?
 
@@ -187,15 +195,23 @@ d\. Någon säger att försöket inte är gjort under en dag utan att replikat i
 :::
 
 ::: {.hypothesis name="Maskiner med och utan block"}
-a\.
+Datan kan skrivas in som en `tibble` och illustreras med ett enkelt spridningsdiagram.
 
 ```{r}
+dat <- tibble(Maskin = rep(c("A", "B", "C"), each = 6),
+              Replikat = rep(1:6, 3),
+              Tid = c(34,38,32,41,41,36,
+                      30,31,33,40,39,35,
+                      27,30,29,31,36,32))
+
 ggplot(dat, aes(Maskin, Tid, group = Replikat)) +
   geom_point() +
   geom_line()
 ```
 
 Det finns tecken på skillnader i tid (Maskin C ligger lägre).
+
+a\. En enkel anova-modell skattas för att testa eventuella maskinskillnader.
 
 ```{r}
 mod <- lm(Tid ~ Maskin, dat)
@@ -217,10 +233,11 @@ c\. Modellen bygger på antagandet att residualerna är normalfördelade och att
 ```{r, fig.height=3, fig.width=3.5}
 qqnorm(residuals(mod))
 qqline(residuals(mod))
+
 plot(residuals(mod) ~ fitted(mod))
 ```
 
-En graf över residualerna visar inte på några tydliga brister i antaganden. 
+En graf över residualerna visar inte på några tydliga brister i antaganden.
 
 d\. Replikat används som en block-faktor i försöket. För att R ska tolka variabeln Replikat korrekt ändras dess typ till `character`.
 

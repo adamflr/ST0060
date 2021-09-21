@@ -8,11 +8,11 @@ editor_options:
 
 Variansanalys (eller *anova-modellen*) är en statistisk modell där medelvärdet varierar beroende på en behandling och ett normalfördelat slumpfel. Från en anova-modell kan man beräkna ett F-test, som testar om det finns någon övergripande gruppskillnad, och post-hoc-test, som jämför specifika grupper med varandra.
 
-Den specifika modellen beror på försöksupplägget. Här ges exempel på variansanalys med en faktor, en faktor med block, och två faktorer,
+Den specifika modellen beror på försöksupplägget. Här ges exempel på variansanalys med en faktor, en faktor med block, och två faktorer.
 
 ## Variansanalys. En faktor
 
-Vid variansanalys med en faktor har man ett upplägg där varje observation av en kontinuerlig utfallsvariabel är kopplad till en specifik grupp. Som exempel används en datamängd från ett odlingsförsök på havre. Försöket är ett två-faktoriellt försök med block. Faktorerna ges av havresort och kvävetillsättning; utfallsvariabeln är skördvikt. Som första exempel ignoreras sortvariabeln genom att beräkna medelvärde per block och kvävenivå.
+Vid variansanalys med en faktor har man ett upplägg där varje observation av en kontinuerlig utfallsvariabel är kopplad till en specifik grupp. Som exempel används en datamängd från ett odlingsförsök på havre. Datan finns tillgänglig i paketet `MASS` som `oats`. Försöket är ett två-faktoriellt försök med block. Faktorerna ges av havresort och kvävetillsättning; utfallsvariabeln är skördvikt. Som första exempel ignoreras sortvariabeln genom att beräkna medelvärde per block och kvävenivå.
 
 ```{r}
 dat <- MASS::oats
@@ -22,7 +22,8 @@ dat <- dat %>%
   ungroup() %>% 
   as_tibble()
 
-kable(dat)
+kable(dat %>% pivot_wider(names_from = N, values_from = Y), 
+      digits = 1)
 ```
 
 Datan har 18 observationer av skördvikt och varje observation tillhör någon specifik kvävenivå. Datan kan illustreras med ett spridningsdiagram.
@@ -34,13 +35,13 @@ ggplot(dat, aes(N, Y)) +
 
 Det finns en tydlig kväveeffekt.
 
-En anova-modell kan i R skattas med funktionen `lm` (för linjär modell). Från modellobjektet kan man sedan plocka fram en anova-tabell (som bland annat anger utfallet av F-testet) och genomföra parvisa jämförelser genom `emmeans`.
+En anova-modell kan i R skattas med funktionen `lm` (för *linjär modell*). Från modellobjektet kan man sedan plocka fram en anova-tabell (som bland annat anger utfallet av F-testet) och genomföra parvisa jämförelser genom `emmeans`.
 
 ```{r}
 mod <- lm(Y ~ N, data = dat)
 ```
 
-Modellen anges som en formel `Y ~ N`, vilket kan utläsas Y beroende på faktorn N. Detta följs av ett argument för det objekt som innehåller datan i kolumner (här `dat`).
+Modellen anges som en formel `Y ~ N`, vilket kan utläsas *Y beroende på faktorn N*. Detta följs av ett argument för det objekt som innehåller datan i kolumner (här `dat`).
 
 För anova-tabellen används funktionen `Anova` från paketet `car`.
 
@@ -60,7 +61,7 @@ emmeans(mod, pairwise ~ N)
 
 I den nedre tabellen med jämförelser ges alla parvisa jämförelser. Nollhypotesen är att de två grupper som jämförs har samma medelvärde - ett lågt p-värde tyder alltså på att de två grupperna är signifikant skilda. Notera också att p-värden justeras med tukey-metoden, även känt som Tukeys HSD.
 
-Parvisa jämförelser presenteras ofta med signifikansbokstäver (en *compact letter display, cld*). Denna kan plockas från med `multcomp`-paketet.
+Parvisa jämförelser presenteras ofta med signifikansbokstäver (en *compact letter display, cld*). Dessa kan plockas fram med `multcomp`-paketet.
 
 ```{r}
 em <- emmeans(mod, pairwise ~ N)
@@ -69,7 +70,7 @@ library(multcomp)
 cld(em, Letters = letters)
 ```
 
-Tolkning av grupperingen till höger är att grupper som delar en bokstav inte är signifikant skilda. I det här fallet är den lägsta nivån skild från de två högsta. I övrigt finns inga signifikanta skillnader. Jämför gärna med p-värdena från tabellen med parvisa jämförelser.
+Tolkning av grupperingen till höger är att grupper som delar en bokstav inte är signifikant skilda. I det här fallet är den lägsta nivån skild från de två högsta. I övrigt finns inga signifikanta skillnader. Jämför gärna med p-värdena från tabellen med parvisa jämförelser. Man bör se att parvisa jämförelser med ett p-värde under fem procent motsvaras av att de behandlingarna inte delar någon bokstav i bokstavstabellen.
 
 ## Variansanalys. En faktor med block
 
@@ -110,7 +111,7 @@ ggplot(dat, aes(N, Y, color = B)) +
   facet_wrap(~ V)
 ```
 
-Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader sorter, möjligen har sorten Victory givit något lägre skörd än övriga.
+Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns också en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
 
 Modellen skattas genom att lägga till variabeln för sort (V för variety) i `lm`-formeln.
 
@@ -120,7 +121,7 @@ mod_two_fact <- lm(Y ~ N * V + B, data = dat)
 
 Formeln är nu `Y ~ N * V + B`. Stjärnan mellan N och V anger modellen med en interaktion mellan sort och kväve. Eftersom varje kombination av sort och kväve förekommer en gång i varje block, är det inte möjligt att skatta någon interaktionseffekt med blockfaktorn - blocket är då istället en *additiv effekt*.
 
-Anovatabellen kan plockas på samma sätt som tidigare.
+Anovatabellen kan plockas fram på samma sätt som tidigare.
 
 ```{r}
 Anova(mod_two_fact)
@@ -141,4 +142,3 @@ emmeans(mod_two_fact, ~ N | V)
 ```{r, echo = F, eval = F}
 cld(emmeans(mod_two_fact, ~ N | V), Letters = letters)
 ```
-

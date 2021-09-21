@@ -12,7 +12,7 @@ editor_options:
 Detta dokument är en kort introduktion till R för en kurs i grundläggande statistik.
 
 ```{r, echo = F}
-knitr::opts_chunk$set(eval = T, message = F, warning = F, error = F, fig.height = 2.5, fig.align = "center")
+knitr::opts_chunk$set(eval = T, message = F, warning = F, error = F, fig.height = 3.5, fig.align = "center")
 ```
 
 ```{r, echo = F}

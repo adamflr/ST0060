@@ -55,7 +55,7 @@ Ett 95-procentigt konfidensintervall för lutning ges av $(1.003, 1.780)$.
 
 c\. Modellen bygger på normalfördelade residualer och lika varians för skilda nivåer av ålder.
 
-```{r}
+```{r, fig.height = 5}
 plot(residuals(mod) ~ fitted(mod))
 ```
 
@@ -106,7 +106,7 @@ dat_wide <- dat %>%
 t.test(dat_wide$A, dat_wide$B, paired = T)
 ```
 
-Parad data kan också ses som det enklaste exemplet på ett block, och analyserad som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med `as.character`.
+Parad data kan också ses som det enklaste exemplet på ett block, och analyseras som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med `as.character`.
 
 ```{r}
 dat <- dat %>% mutate(Yta = as.character(Yta))
@@ -173,18 +173,18 @@ b\. Illustrera materialet med en lämplig graf, t.ex. ett spridningsdiagram mell
 :::
 
 ::: {.hypothesis name="Datasaurus Dozen"}
-a\. Punkskattningar kan beräknas genom att grupper enligt `dataset` och summera med lämpliga funktioner (`mean`, `sd` och `cor`).
+a\. Punkskattningar kan beräknas genom att gruppera enligt `dataset` och summera med lämpliga funktioner (`mean`, `sd` och `cor`).
 ```{r}
 dat %>%
   group_by(dataset) %>% 
   summarise(mean(x), mean(y), sd(x), sd(y), cor(x,y))
 ```
 
-Grupperna har samma medelvärde och standardavvikelser i x och y. Korrelation mellan x och y är mycket lika.
+Grupperna har samma medelvärde och standardavvikelser i x och y. Korrelationerna mellan x och y är mycket lika.
 
 b\. Datan kan illustreras med ett spridningsdiagram. Funktionen `facet_wrap` kan användas för separata fönster för skilda grupper.
 
-```{r, fig.height=4.3}
+```{r, fig.height=6}
 ggplot(dat, aes(x, y)) +
   geom_point() +
   facet_wrap(~ dataset)
