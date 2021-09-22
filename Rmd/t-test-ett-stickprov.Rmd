@@ -18,9 +18,9 @@ $$t = \frac{\bar x - \mu_0}{s / \sqrt n}$$
 
 och beräkna ett p-värde som sannolikheten i svansarna bortom det t-värdet, i en t-fördelning med $n-1$ frihetsgrader.
 
-Som exempel ges följande data på 8 observationer av havreskörd
+Som exempel ges följande data på 8 observationer av havreskörd.
 
-```{r}
+```{r, echo = F}
 dat <- c(49.8, 58.4, 49.4, 57.1, 52.2, 49.1, 44.6, 55.4)
 kable(matrix(dat, 2, byrow = T))
 ```
