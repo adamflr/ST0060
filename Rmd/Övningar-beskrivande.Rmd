@@ -16,7 +16,7 @@ Antal barn per familj för 30 familjer är
 
 ```{r, echo = F}
 dat <- c(4,3,0,0,0,1,5,2,2,8,3,1,0,1,2,1,1,4,1,0,2,2,3,0,4,1,5,1,1,3)
-kable(matrix(dat, 3))
+kable(matrix(dat, 3, byrow = T))
 ```
 
 a\. Sammanfatta materialet i en frekvenstabell och illustrera materialet med ett lämpligt diagram.
@@ -69,7 +69,7 @@ Medelvärde ökar med ungefär 1, medianen är densamma (varför?) och variansen
 Följande data gäller längden (i tum) hos 15 stycken plantor som fortplantats genom självbefruktning:
 
 ```{r, echo = F}
-dat <- c(174,204,200,200,184,186,186,153,165,180,163,180,128,155,180, NA) / 10
+dat <- c(174,204,200,200,184,186,186,153,165,180,163,180,128,155,180) / 10
 kable(matrix(dat, 3, byrow = T))
 ```
 

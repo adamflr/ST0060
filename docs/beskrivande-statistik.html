@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-21" />
+<meta name="date" content="2021-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -449,14 +449,40 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 4
 </td>
 <td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
 5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
 </td>
 <td style="text-align:right;">
 8
 </td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
 <td style="text-align:right;">
 0
 </td>
@@ -464,10 +490,13 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 1
 </td>
 <td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-2
+1
 </td>
 <td style="text-align:right;">
 4
@@ -475,66 +504,37 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 <td style="text-align:right;">
 1
 </td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
 <td style="text-align:right;">
 0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
 0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
 </td>
 <td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
+1
 </td>
 <td style="text-align:right;">
 5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
 </td>
 <td style="text-align:right;">
 3
@@ -597,16 +597,16 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 20.0
 </td>
 <td style="text-align:right;">
-20
+20.0
 </td>
 <td style="text-align:right;">
 18.4
 </td>
+</tr>
+<tr>
 <td style="text-align:right;">
 18.6
 </td>
-</tr>
-<tr>
 <td style="text-align:right;">
 18.6
 </td>
@@ -617,16 +617,16 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 16.5
 </td>
 <td style="text-align:right;">
-18
+18.0
 </td>
+</tr>
+<tr>
 <td style="text-align:right;">
 16.3
 </td>
 <td style="text-align:right;">
 18.0
 </td>
-</tr>
-<tr>
 <td style="text-align:right;">
 12.8
 </td>
@@ -635,15 +635,6 @@ Den typen av beräkningar kan göras som ett nytt steg i en pipe med hjälp av f
 </td>
 <td style="text-align:right;">
 18.0
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-17.4
-</td>
-<td style="text-align:right;">
-20.4
 </td>
 </tr>
 </tbody>
@@ -1017,15 +1008,15 @@ Illustrera med ett linjediagram.</p>
 ##     Kast Utfall Antal_spets_upp Relativ_frekvens
 ##    &lt;int&gt;  &lt;int&gt;           &lt;int&gt;            &lt;dbl&gt;
 ##  1     1      1               1            1    
-##  2     2      1               2            1    
-##  3     3      0               2            0.667
-##  4     4      0               2            0.5  
-##  5     5      1               3            0.6  
-##  6     6      1               4            0.667
-##  7     7      1               5            0.714
-##  8     8      1               6            0.75 
-##  9     9      1               7            0.778
-## 10    10      1               8            0.8  
+##  2     2      0               1            0.5  
+##  3     3      0               1            0.333
+##  4     4      0               1            0.25 
+##  5     5      1               2            0.4  
+##  6     6      1               3            0.5  
+##  7     7      1               4            0.571
+##  8     8      0               4            0.5  
+##  9     9      1               5            0.556
+## 10    10      1               6            0.6  
 ## # ... with 990 more rows</code></pre>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="beskrivande-statistik.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Kast, Relativ_frekvens)) <span class="sc">+</span></span>
 <span id="cb90-2"><a href="beskrivande-statistik.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
@@ -1040,7 +1031,7 @@ Illustrera med ett linjediagram.</p>
 <pre><code>## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## &lt;bytecode: 0x00000000256efbc0&gt;
+## &lt;bytecode: 0x0000000025706a60&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <p>Standardavvikelsen beräknas alltså som kvadratroten (<code>sqrt</code>) av variansen (<code>var</code>). Sedan finns också lite mer avancerad kod för att hantera olika typer av ingångsdata.</p>
 <p>Standardavvikelsen av <span class="math inline">\(n\)</span> datapunkter ges av</p>

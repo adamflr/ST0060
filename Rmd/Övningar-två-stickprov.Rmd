@@ -262,7 +262,7 @@ Testet pekar på en skillnad i proportionen höger- respektive vänstergående m
 ::: {.exercise name="Burfågel"}
 I en undersökning av lungcancerpatienter finner man följande antal.
 
-```{r}
+```{r, echo = F}
 dat <- tibble(` ` = c("Burfågel", "Ej burfågel"),
               Lungcancer = c(98, 141),
               `Ej lungcancer` = c(101, 328))
