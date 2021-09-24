@@ -117,6 +117,148 @@ Det låga p-värdet ger att nollhypotesen bör förkastas - man kan dra slutsats
 I det här fallet kan man diskutera om det inte är mer lämpligt att använda ett t-test för parade observation, eftersom det är två observationer per år. Ett argument mot det är att det inte finns någon egentlig anledning att tro att det skulle finnas något samband mellan antal mål för damer respektive för herrar ett visst år.
 :::
 
+::: {.exercise name="Nature's mosquito"}
+En viktig del i arbetet mot spridning av malaria är att förstå myggors reaktion på dofter. Ett vanligt sätt att undersöka detta är att följa flyktmönster i en sluten vindtunnel. I ett försök har man en vindtunnel med måtten 60 x 30 x 100 cm (bredd, höjd, djup). I den ena änden finns två doftkällor placerade i jämn höjd, med 30 centimeters mellanrum. I den andra änden släpper man en mygga i taget och genom videoinspelning kan man beräkna dess position varje tiondels sekund. Försöket omfattar 60 individer av två arter. Datan finns tillgänglig bland kursdatan i filen *Mosquitos.csv*.
+
+a\. Illustrera en eller flera myggors flykt med ett passande diagram. En möjlighet är att ha z-koordinaten på den horisontella axeln och x-koordinaten på den vertikala axeln och göra en spårlinje med `geom_path`. Den linjen motsvarar då flykten sedd från ovan. Eftersom flykten anges med x-, y- och z-koordinater kan man även illustrera det som en tre-dimensionell graf, till exempel med `rgl`-paketet.
+
+b\. Det är möjligt att ta fram myggornas landningspunkt på bortre änden genom att filtera på värden där `Proportional_time` är 1. Man får då följande värden på x-koordinaten.
+
+```{r, echo = F}
+dat <- read_csv("Data/Mosquitos.csv")
+
+dat_endtime <- dat %>% filter(Proportional_time == 1)
+
+dat_endtime %>% 
+  select(Species, x) %>%
+  mutate(id = rep(1:30, 2)) %>% 
+  pivot_wider(names_from = Species, values_from = x) %>% 
+  select(-id) %>% 
+  kable()
+```
+
+Konstruera ett lådagram över x-koordinaterna för de 60 individerna vid landningstillfället. Dela grafen så att arterna visas i skilda lådagram. Finns det tecken på skillnader i landningspunkt?
+
+c\. Genomför ett lämpligt t-test för att se om det finns skillnader mellan arterna, med avseende på x-koordinat vid landningstillfället.
+
+d\. Konstruera ett konfidensintervall för medelvärdet av x-koordinaten vid landning för *Aedes aegypti*. Använd intervallet för att se om medelvärdet är statistiskt signifikant skilt från 0.
+
+e\. Om man bara sorterar individed efter om de landar på den högra eller vänstra halvan av den borde änden kan man ställa upp följande korstabell.
+
+```{r, echo = F}
+dat_endtime %>% 
+  count(Species, Direction = ifelse(x < 0, "Left", "Right")) %>% 
+  pivot_wider(names_from = Direction, values_from = n) %>% 
+  kable()
+```
+
+Genomför ett lämpligt z-test eller $\chi^2$-test för att se om det finns en statistiskt säkerställd skillnad i landningsposition mellan arterna.
+:::
+
+::: {.hypothesis name="Nature's mosquito"}
+Datan importas med `read_csv`.
+
+```{r}
+dat <- read_csv("Data/Mosquitos.csv")
+```
+
+a\. En passande graf kan konstrueras med `ggplot2` och `geom_path`. Med två grafer kan man illustrera flykten från sidan och från ovan. Färger kan separera arterna. Den specifika individen måste sättas med `group = id` för att den enskilda flykten ska bli en egen linje.
+
+Ett exempel på en enskild individ.
+
+```{r}
+dat_ind1 <- dat %>% filter(id == 1)
+
+g1 <- ggplot(dat_ind1, aes(z, y, group = id, col = Species)) + 
+  geom_path() +
+  labs(title = "Från sidan")
+
+g2 <- ggplot(dat_ind1, aes(z, x, group = id, col = Species)) + 
+  geom_path() +
+  labs(title = "Från ovan")
+
+library(patchwork)
+g1 / g2
+```
+
+Ett exempel med samtliga individer i en (rörig) illustration.
+
+```{r}
+g1 <- ggplot(dat, aes(z, y, group = id, col = Species)) + 
+  geom_path(alpha = 0.5) +
+  labs(title = "Från sidan")
+
+g2 <- ggplot(dat, aes(z, x, group = id, col = Species)) + 
+  geom_path(alpha = 0.5) +
+  labs(title = "Från ovan")
+
+library(patchwork)
+g1 / g2
+```
+
+R har paket med funktioner för tre-dimensionella grafer. Ett exempel är genom paketet `rgl` och funktionerna `plot3d` och `lines3d`.
+
+```{r, eval = F}
+# install.packages(rgl)
+library(rgl)
+# En enskild mygga plottad med plot3d
+# Det första argumentet är de tre koordinatvariablerna efter filter på första individen
+plot3d(dat %>% filter(id == 1) %>% select(z, x, y), type = "l", asp = F, col = "blue", alpha = 0.15)
+
+# Övriga flykter tillagda med lines3d i en for-loop
+# Loopen går inom samtliga individer och lägger till linjen till 3d-grafen
+for(i in 1:60){
+  lines3d(dat %>% filter(id == i) %>% select(z, x, y), 
+          col = ifelse(dat %>% filter(id == i) %>% pull(Species) == "Aedes africanus", "blue", "red"),
+          alpha = 0.15)
+}
+
+# Skapa punkter för landningsplatsen
+points3d(dat %>% filter(Proportional_time == 1) %>% select(z, x, y), size = 6, 
+         col = ifelse(dat %>% filter(Proportional_time == 1) %>% pull(Species) == "Aedes africanus", "blue", "red"))
+```
+
+b\. För att titta på landningsplatser filtreras på de observationer där den proportionella observationstiden är 1 (den sista observationen). Därefter kan en lämplig graf skapas med `geom_boxplot` med art på x-axeln och x-koordinaten på grafens y-axel.
+
+```{r}
+dat_endtime <- dat %>% filter(Proportional_time == 1)
+
+ggplot(dat_endtime, aes(Species, x)) + geom_boxplot()
+```
+
+*Aedes aegypti* uppvisar högre x-koordinater, vilket tyder på att den arten varit mer lockad av doftämnet till höger.
+
+c\. Ett t-test för oberoende stickprov kan genomföras genom att ta x-koordinaten som utfallsvariabel och arterna som de två grupperna. Testet kan genomföras med eller utan antaganden om lika varianser inom grupperna. Nollhypotesen är arterna har samma populationsmedelvärde i x-koordinaten vid landningstillfället.
+
+```{r}
+t.test(x ~ Species, dat_endtime)
+t.test(x ~ Species, dat_endtime, var.equal = T)
+```
+
+Bägge testet ger stark signifikans. Man drar slutsatsen att det finns en skillnad mellan arterna.
+
+d\. Ett konfidensintervall kan tas fram med `t.test` efter filtrering på art så att enbart *aegypti* förekommer i datan. 
+
+```{r}
+dat_endtime_aegypti <- dat_endtime %>% filter(Species == "Aedes aegypti")
+t.test(dat_endtime_aegypti$x)
+```
+
+Intervallet ges av $(0.92, 5.30)$. Eftersom 0 inte ingår i det 95-procentiga konfidensintervallet är det statistiskt signifikant (på 5-procentsnivån) att populationsmedelvärdet skiljer sig från 0.
+
+e\. Antalet kan antingen skrivas in från siffrorna i uppgiften eller beräknas från data genom att koda om x-koordinaten till höger respektive vänster beroende på om x är större eller mindre än 0. Därefter kan ett test genomföras med `chisq.test`. Nollhypotesen är att populationsproportionen högergående (eller vänstergående) är lika stor för de två arterna.
+
+```{r}
+dat_prop <- dat_endtime %>% 
+  count(Species, Direction = ifelse(x < 0, "Left", "Right")) %>% 
+  pivot_wider(names_from = Direction, values_from = n)
+
+chisq.test(dat_prop %>% select(Left, Right))
+```
+
+Testet pekar på en skillnad i proportionen höger- respektive vänstergående mellan arterna.
+:::
+
 ::: {.exercise name="Burfågel"}
 I en undersökning av lungcancerpatienter finner man följande antal.
 
