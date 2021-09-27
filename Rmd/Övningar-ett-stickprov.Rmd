@@ -105,7 +105,7 @@ dat %>%
 
 a\. Gör ett test för att se om medelvärdet för behandling är skilt från 310.
 
-b\. Beräkna ett konfidensintervall för skillnaden i populationsmedelvärde.n
+b\. Beräkna ett konfidensintervall för skillnaden i populationsmedelvärden.
 :::
 
 ::: {.hypothesis name="Äppelträd"}

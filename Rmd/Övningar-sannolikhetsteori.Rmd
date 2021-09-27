@@ -166,6 +166,33 @@ ggplot(dat, aes(x, Sannolikhetsfunktion)) +
 Den turkosa ytan motsvarar sannolikheten att $X$ ger ett utfall mellan $2.30$ och $2.45$, sannolikheten uträknad i (d).
 :::
 
+::: {.exercise name="Relativ frekvens"}
+Säg att man kastar ett häftstift och att sannolikheten att stiftet stannar med spetsen upp är 0.66. Simulera tusen häftstiftskast och beräkna den relativa frekvensen häftstiften hamnat med spetsen uppåt. Den relativa frekvensen för en serie värden ges av antalet positiva utfall delat på antalet kast för varje kast. Den relativa frekvensen efter 35 kast är till exempel antalet positiva utfall bland de 35, delat på 35.
+Illustrera med ett linjediagram.
+
+Ledning: tusen kast kan simuleras med `rbin(1000, 1, 0.66)`, vilket skapar tusen slumptal från en binomialfördelning där $n = 1$ och $p = 0.67$.
+:::
+
+::: {.hypothesis name="Relativ frekvens"}
+För att beräkna och illustrera den relativa frekvensen skapas en `tibble` där den första kolumnen anger antalet kast vid varje steg, det vill säga en kolumn som anger ett till tusen. Därefter dras tusen slumptal enligt ledningen ovan. Därefter beräknas den *kumulativa summan* - antalet positiva utfall upp till det kast som anges för raden. Och slutligen beräknas den relativa frekvensen genom att ta den kumulativa summan och dela med antalet kast.
+
+```{r}
+dat <- tibble(Kast = 1:1000,
+              Utfall = rbinom(1000, 1, 0.67),
+              Antal_spets_upp = cumsum(Utfall),
+              Relativ_frekvens = Antal_spets_upp / Kast)
+
+dat
+
+ggplot(dat, aes(Kast, Relativ_frekvens)) +
+  geom_line() +
+  geom_hline(yintercept = 0.66, col = "red", alpha = 0.7) +
+  ylim(0,1)
+```
+
+Den relativa frekvensen stabiliseras efter ett par hundra kast.
+:::
+
 ::: {.exercise name="Jämförelse mellan binomial och poisson"}
 Poissonfördelning kan ses som en approximation av en binomialfördelning när $n$ är stort och $p$ är litet. Poissonfördelningens parameter $\lambda$ sätts vid approximation till binomialfördelningens populationsmedelvärde $np$.
 

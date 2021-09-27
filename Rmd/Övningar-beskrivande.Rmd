@@ -187,6 +187,58 @@ villagers %>%
 Det vanligaste alternativet är att sång saknas, vilket då anges som `NA`. Den mest populära faktiska sången är *KK Country*.
 :::
 
+::: {.exercise name="Väderstation Falsterbo"}
+SMHI publicerar historisk väderdata från en stor mängd väderstationer (https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer). Ett exempel på en sådan fil, från väderstationen i Falsterbo, finns bland kursdatan. Notera att flera inledande rader innehåller metadata och inte ska läsas in. Filen är dessutom inte kommaseparerad utan semikolon-separerad. Den kan läsas in med funktionen `read_csv2` från `readr`. Vid inläsning kan man också ändra datatyp för temperaturkolumnen, som annars felaktigt tolkats som en textkolumn.
+
+```{r, message=F}
+dat <- read_csv2("Data/smhi-opendata_1_52230_20210912_114534.csv", skip = 9) %>% 
+  mutate(Lufttemperatur = as.numeric(Lufttemperatur))
+```
+
+a\. Vilken är den högst uppmätta temperaturen?
+
+b\. Beräkna max-temperaturen för varje år. Plotta ett linjediagram med år på x-axeln och maxtemperatur på y-axeln.
+
+c\. Skapa en variabel som anger observationens årtionde. Beräkna medeltemperaturen per årtionde och illustrera med lämplig graf.
+:::
+
+::: {.hypothesis name="Väderstation Falsterbo"}
+a\. Ordna data efter lufttemperatur och skriv ut de översta raderna.
+
+```{r}
+dat %>% arrange(desc(Lufttemperatur)) %>% print(n = 10)
+```
+
+Fem av de tio högsta mätningarna inträffade mellan 26 juli och 3 augusti 2018. Två samma dag.
+
+b\. Beräkningen kan göras genom att skapa en årsvariabel med `year` från `lubridate`-paketet. Därefter gruppera per år och summera med `max`-funktionen.
+
+```{r}
+dat %>%
+  mutate(År = lubridate::year(Datum)) %>% 
+  group_by(År) %>% 
+  summarise(Maxtemperatur = max(Lufttemperatur)) %>% 
+  ggplot(aes(År, Maxtemperatur)) +
+  geom_line()
+```
+
+Datan visar på stor variation mellan år. 
+
+c\. Likt (b) kan man skapa en årsvariabel och från den beräkna årtionde genom att dela på tio, använda `floor` för att ta bort decimalen, och sedan multiplicera med tio. Därefter kan man gruppera efter årtionde och summera till medelvärdet.
+
+```{r}
+dat %>% 
+  mutate(Årtionde = floor(lubridate::year(Datum) / 10) * 10) %>% 
+  group_by(Årtionde) %>% 
+  summarise(Medeltemperatur = mean(Lufttemperatur)) %>% 
+  ggplot(aes(Årtionde, Medeltemperatur, fill = Medeltemperatur)) +
+  geom_bar(stat = "identity", col = "black") +
+  scale_fill_gradient(low = "yellow", high = "red")
+```
+
+Temperaturen verkar öka i Falsterbo. Märk att stapeln för 2020-talet bara innefattar ett år.
+:::
+
 ::: {.exercise name="Allsvenskan för herrar"}
 Bland kursdatan finns en fil med matchresultat från herrarnas fotbollsallsvenska, 1924 - 2019. Läs in datan och undersök följande.
 
@@ -262,85 +314,6 @@ dat %>%
 ```
 
 Det verkar som att 1-1, följt av 2-1 och 1-0 är de vanligaste resultaten.
-:::
-
-::: {.exercise name="Väderstation Falsterbo"}
-SMHI publicerar historisk väderdata från en stor mängd väderstationer (https://www.smhi.se/data/meteorologi/ladda-ner-meteorologiska-observationer). Ett exempel på en sådan fil, från väderstationen i Falsterbo, finns bland kursdatan. Notera att flera inledande rader innehåller metadata och inte ska läsas in. Filen är dessutom inte kommaseparerad utan semikolon-separerad. Den kan läsas in med funktionen `read_csv2` från `readr`. Vid inläsning kan man också ändra datatyp för temperaturkolumnen, som annars felaktigt tolkats som en textkolumn.
-
-```{r, message=F}
-dat <- read_csv2("Data/smhi-opendata_1_52230_20210912_114534.csv", skip = 9) %>% 
-  mutate(Lufttemperatur = as.numeric(Lufttemperatur))
-```
-
-a\. Vilken är den högst uppmätta temperaturen?
-
-b\. Beräkna max-temperaturen för varje år. Plotta ett linjediagram med år på x-axeln och maxtemperatur på y-axeln.
-
-c\. Skapa en variabel som anger observationens årtionde. Beräkna medeltemperaturen per årtionde och illustrera med lämplig graf.
-:::
-
-::: {.hypothesis name="Väderstation Falsterbo"}
-a\. Ordna data efter lufttemperatur och skriv ut de översta raderna.
-
-```{r}
-dat %>% arrange(desc(Lufttemperatur)) %>% print(n = 10)
-```
-
-Fem av de tio högsta mätningarna inträffade mellan 26 juli och 3 augusti 2018. Två samma dag.
-
-b\. Beräkningen kan göras genom att skapa en årsvariabel med `year` från `lubridate`-paketet. Därefter gruppera per år och summera med `max`-funktionen.
-
-```{r}
-dat %>%
-  mutate(År = lubridate::year(Datum)) %>% 
-  group_by(År) %>% 
-  summarise(Maxtemperatur = max(Lufttemperatur)) %>% 
-  ggplot(aes(År, Maxtemperatur)) +
-  geom_line()
-```
-
-Datan visar på stor variation mellan år. 
-
-c\. Likt (b) kan man skapa en årsvariabel och från den beräkna årtionde genom att dela på tio, använda `floor` för att ta bort decimalen, och sedan multiplicera med tio. Därefter kan man gruppera efter årtionde och summera till medelvärdet.
-
-```{r}
-dat %>% 
-  mutate(Årtionde = floor(lubridate::year(Datum) / 10) * 10) %>% 
-  group_by(Årtionde) %>% 
-  summarise(Medeltemperatur = mean(Lufttemperatur)) %>% 
-  ggplot(aes(Årtionde, Medeltemperatur, fill = Medeltemperatur)) +
-  geom_bar(stat = "identity", col = "black") +
-  scale_fill_gradient(low = "yellow", high = "red")
-```
-
-Temperaturen verkar öka i Falsterbo. Märk att stapeln för 2020-talet bara innefattar ett år.
-:::
-
-::: {.exercise name="Relativ frekvens"}
-Säg att man kastar ett häftstift och att sannolikheten att stiftet stannar med spetsen upp är 0.66. Simulera tusen häftstiftskast och beräkna den relativa frekvensen häftstiften hamnat med spetsen uppåt. Den relativa frekvensen för en serie värden ges av antalet positiva utfall delat på antalet kast för varje kast. Den relativa frekvensen efter 35 kast är till exempel antalet positiva utfall bland de 35, delat på 35.
-Illustrera med ett linjediagram.
-
-Ledning: tusen kast kan simuleras med `rbin(1000, 1, 0.66)`, vilket skapar tusen slumptal från en binomialfördelning där $n = 1$ och $p = 0.67$.
-:::
-
-::: {.hypothesis name="Relativ frekvens"}
-För att beräkna och illustrera den relativa frekvensen skapas en `tibble` där den första kolumnen anger antalet kast vid varje steg, det vill säga en kolumn som anger ett till tusen. Därefter dras tusen slumptal enligt ledningen ovan. Därefter beräknas den *kumulativa summan* - antalet positiva utfall upp till det kast som anges för raden. Och slutligen beräknas den relativa frekvensen genom att ta den kumulativa summan och dela med antalet kast.
-
-```{r}
-dat <- tibble(Kast = 1:1000,
-              Utfall = rbinom(1000, 1, 0.67),
-              Antal_spets_upp = cumsum(Utfall),
-              Relativ_frekvens = Antal_spets_upp / Kast)
-
-dat
-
-ggplot(dat, aes(Kast, Relativ_frekvens)) +
-  geom_line() +
-  geom_hline(yintercept = 0.66, col = "red", alpha = 0.7) +
-  ylim(0,1)
-```
-
-Den relativa frekvensen stabiliseras efter ett par hundra kast.
 :::
 
 ::: {.exercise name="Egenskapad standardavvikelsefunktion"}

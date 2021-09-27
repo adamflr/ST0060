@@ -143,7 +143,7 @@ c\. Genomför ett lämpligt t-test för att se om det finns skillnader mellan ar
 
 d\. Konstruera ett konfidensintervall för medelvärdet av x-koordinaten vid landning för *Aedes aegypti*. Använd intervallet för att se om medelvärdet är statistiskt signifikant skilt från 0.
 
-e\. Om man bara sorterar individed efter om de landar på den högra eller vänstra halvan av den borde änden kan man ställa upp följande korstabell.
+e\. Om man bara sorterar individer efter om de landar på den högra eller vänstra halvan av den borde änden kan man ställa upp följande korstabell.
 
 ```{r, echo = F}
 dat_endtime %>% 
@@ -153,6 +153,8 @@ dat_endtime %>%
 ```
 
 Genomför ett lämpligt z-test eller $\chi^2$-test för att se om det finns en statistiskt säkerställd skillnad i landningsposition mellan arterna.
+
+Frågan är baserad på Hinze et al (2021) *Mosquito Host Seeking in 3D Using a Versatile Climate-Controlled Wind Tunnel System*.
 :::
 
 ::: {.hypothesis name="Nature's mosquito"}
