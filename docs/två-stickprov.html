@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 8 Två stickprov | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 8 Två stickprov | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 8 Två stickprov | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="ett-stickprov.html"/>
 <link rel="next" href="variansanalys.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -393,7 +393,7 @@ B
 ## 
 ## data:  Vikt by Behandling
 ## t = -5.3157, df = 6, p-value = 0.001803
-## alternative hypothesis: true difference in means between group A and group B is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  -24.898417  -9.201583
 ## sample estimates:
@@ -963,7 +963,7 @@ Herr
 ## 
 ## data:  Mål by Allsvenska
 ## t = 9.24, df = 16.897, p-value = 5.129e-08
-## alternative hypothesis: true difference in means between group Dam and group Herr is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##  0.6677709 1.0631973
 ## sample estimates:
@@ -1233,7 +1233,7 @@ Aedes aegypti
 <p>Konstruera ett lådagram över x-koordinaterna för de 60 individerna vid landningstillfället. Dela grafen så att arterna visas i skilda lådagram. Finns det tecken på skillnader i landningspunkt?</p>
 <p>c. Genomför ett lämpligt t-test för att se om det finns skillnader mellan arterna, med avseende på x-koordinat vid landningstillfället.</p>
 <p>d. Konstruera ett konfidensintervall för medelvärdet av x-koordinaten vid landning för <em>Aedes aegypti</em>. Använd intervallet för att se om medelvärdet är statistiskt signifikant skilt från 0.</p>
-<p>e. Om man bara sorterar individed efter om de landar på den högra eller vänstra halvan av den borde änden kan man ställa upp följande korstabell.</p>
+<p>e. Om man bara sorterar individer efter om de landar på den högra eller vänstra halvan av den borde änden kan man ställa upp följande korstabell.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1274,6 +1274,7 @@ Aedes africanus
 </tbody>
 </table>
 <p>Genomför ett lämpligt z-test eller <span class="math inline">\(\chi^2\)</span>-test för att se om det finns en statistiskt säkerställd skillnad i landningsposition mellan arterna.</p>
+<p>Frågan är baserad på Hinze et al (2021) <em>Mosquito Host Seeking in 3D Using a Versatile Climate-Controlled Wind Tunnel System</em>.</p>
 </div>
 <div class="hypothesis">
 <p><span id="hyp:unlabeled-div-54" class="hypothesis"><strong>Lösningsförslag 8.3  (Nature's mosquito) </strong></span>Datan importas med <code>read_csv</code>.</p>
@@ -1336,7 +1337,7 @@ Aedes africanus
 ## 
 ## data:  x by Species
 ## t = 6.7001, df = 57.845, p-value = 9.436e-09
-## alternative hypothesis: true difference in means between group Aedes aegypti and group Aedes africanus is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##   6.93371 12.84229
 ## sample estimates:
@@ -1348,7 +1349,7 @@ Aedes africanus
 ## 
 ## data:  x by Species
 ## t = 6.7001, df = 58, p-value = 9.331e-09
-## alternative hypothesis: true difference in means between group Aedes aegypti and group Aedes africanus is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##   6.933879 12.842121
 ## sample estimates:
@@ -1770,6 +1771,7 @@ i
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1810,7 +1812,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {

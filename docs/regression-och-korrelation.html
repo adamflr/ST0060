@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 10 Regression och korrelation | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 10 Regression och korrelation | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 10 Regression och korrelation | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,9 +32,8 @@
   
 <link rel="prev" href="variansanalys.html"/>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
 
 
 
@@ -456,7 +456,412 @@ Blodtryck
 <p>P-värdet ligger precis under fem procent.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Övning 10.2  (Metodjämförelse) </strong></span>Någon vill jämföra två metoder för att mäta volym på någon planta. Hen mäter därför nio olika plantor med bägge metoderna, vilket ger följande värden.</p>
+<p><span id="exr:unlabeled-div-73" class="exercise"><strong>Övning 10.2  (Beach 2050) </strong></span>Bland kursdata finns en fil med uppmätta temperaturer vid väderstationen i Falsterbo. Den kan läsas in från csv-filen. Se tidigare uppgift om beskrivande statistik för detaljer.</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="regression-och-korrelation.html#cb366-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;Data/smhi-opendata_1_52230_20210912_114534.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb366-2"><a href="regression-och-korrelation.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Lufttemperatur =</span> <span class="fu">as.numeric</span>(Lufttemperatur))</span></code></pre></div>
+<p>En sammanställning av medeltemperaturer de senaste fyrtio åren ges av följande tabell.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+År
+</th>
+<th style="text-align:right;">
+Medeltemperatur
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1981
+</td>
+<td style="text-align:right;">
+7.92
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1982
+</td>
+<td style="text-align:right;">
+8.53
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1983
+</td>
+<td style="text-align:right;">
+9.03
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1984
+</td>
+<td style="text-align:right;">
+8.38
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1985
+</td>
+<td style="text-align:right;">
+6.61
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1986
+</td>
+<td style="text-align:right;">
+7.20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1987
+</td>
+<td style="text-align:right;">
+6.60
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1988
+</td>
+<td style="text-align:right;">
+8.76
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1989
+</td>
+<td style="text-align:right;">
+9.76
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1990
+</td>
+<td style="text-align:right;">
+9.91
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1991
+</td>
+<td style="text-align:right;">
+8.61
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1992
+</td>
+<td style="text-align:right;">
+9.55
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1993
+</td>
+<td style="text-align:right;">
+8.12
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1994
+</td>
+<td style="text-align:right;">
+9.26
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1995
+</td>
+<td style="text-align:right;">
+9.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1996
+</td>
+<td style="text-align:right;">
+7.32
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1997
+</td>
+<td style="text-align:right;">
+8.99
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1998
+</td>
+<td style="text-align:right;">
+8.58
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1999
+</td>
+<td style="text-align:right;">
+9.29
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:right;">
+9.72
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2001
+</td>
+<td style="text-align:right;">
+8.98
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2002
+</td>
+<td style="text-align:right;">
+9.51
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2003
+</td>
+<td style="text-align:right;">
+8.89
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2004
+</td>
+<td style="text-align:right;">
+8.92
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2005
+</td>
+<td style="text-align:right;">
+9.01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2006
+</td>
+<td style="text-align:right;">
+9.63
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2007
+</td>
+<td style="text-align:right;">
+9.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2008
+</td>
+<td style="text-align:right;">
+9.81
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2009
+</td>
+<td style="text-align:right;">
+9.17
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+7.79
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+9.37
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:right;">
+9.20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+10.08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:right;">
+11.53
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:right;">
+10.73
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2016
+</td>
+<td style="text-align:right;">
+10.58
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2017
+</td>
+<td style="text-align:right;">
+10.24
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+11.42
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+11.36
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+11.44
+</td>
+</tr>
+</tbody>
+</table>
+<p>a. Skapa en passande graf med år på x-axeln och medeltemperatur på y-axeln. I ggplot kan en skattad regressionlinje illustreras genom <code>geom_smooth(method = lm)</code>.</p>
+<p>b. Skatta en regressionsmodell med år som förklarande variabel och medeltemperatur som förklarad variabel. Genomför ett t-test eller F-test för att se om lutningskoefficienten är skild från noll.</p>
+<p>c. Funktionen <code>predict</code> kan användas för att skapa en skattning av populationsmedelvärdet för valfritt värde på den förklarande variabeln. Titta på hjälpsidan för <code>predict.lm</code> och använd funktionen för att förutsäga medeltemperatur för varje år fram till 2050. Illustrera skattningarna i en passande graf.</p>
+<p>d. Vilken kritik finns mot den här modellen?</p>
+</div>
+<div class="hypothesis">
+<p><span id="hyp:unlabeled-div-74" class="hypothesis"><strong>Lösningsförslag 10.2  (Beach 2050) </strong></span>Data läses in med koden i uppgiften.</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="regression-och-korrelation.html#cb367-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">&quot;Data/smhi-opendata_1_52230_20210912_114534.csv&quot;</span>, <span class="at">skip =</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb367-2"><a href="regression-och-korrelation.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Lufttemperatur =</span> <span class="fu">as.numeric</span>(Lufttemperatur))</span></code></pre></div>
+<p>Årsmedelvärden kan beräknas genom att skapa en variabel för År med <code>year</code> från paketet <code>lubridate</code>. Därefter grupperas efter år och summeras med medelvärdet. Slutligen filteras datan för att ta fram de senaste 40 åren. Datan sparas under namnet <code>dat_medel</code>.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="regression-och-korrelation.html#cb368-1" aria-hidden="true" tabindex="-1"></a>dat_medel <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb368-2"><a href="regression-och-korrelation.html#cb368-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(Å<span class="at">r =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(Datum)) <span class="sc">%&gt;%</span> </span>
+<span id="cb368-3"><a href="regression-och-korrelation.html#cb368-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(År) <span class="sc">%&gt;%</span> </span>
+<span id="cb368-4"><a href="regression-och-korrelation.html#cb368-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Medeltemperatur =</span> <span class="fu">mean</span>(Lufttemperatur)) <span class="sc">%&gt;%</span> </span>
+<span id="cb368-5"><a href="regression-och-korrelation.html#cb368-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(År <span class="sc">&gt;</span> <span class="dv">1980</span>, År <span class="sc">&lt;</span> <span class="dv">2021</span>)</span></code></pre></div>
+<p>a. Tidsdata illustreras ofta med en linjediagram. Regressionslinjen kan skapas med <code>geom_smooth(method = lm)</code>.</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="regression-och-korrelation.html#cb369-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_medel, <span class="fu">aes</span>(År, Medeltemperatur)) <span class="sc">+</span> </span>
+<span id="cb369-2"><a href="regression-och-korrelation.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb369-3"><a href="regression-och-korrelation.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb369-4"><a href="regression-och-korrelation.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span>
+<span id="cb369-5"><a href="regression-och-korrelation.html#cb369-5" aria-hidden="true" tabindex="-1"></a>g1</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-225-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Det finns tecken på en ökning över tid.</p>
+<p>b. Regressionmodellen skattas med funktionen <code>lm</code>. Medeltemperatur är den förklarade variabeln och år den förklarande - regressionsformeln skrivs därmed <code>Medeltemperatur ~ År</code>. Modellen har automatiskt ett intercept, men man hade även kunnat skriva <code>Medeltemperatur ~ 1 + År</code> för tydlighet. Resultatet skrivs ut med <code>summary</code>.</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="regression-och-korrelation.html#cb370-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Medeltemperatur <span class="sc">~</span> År, dat_medel)</span>
+<span id="cb370-2"><a href="regression-och-korrelation.html#cb370-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Medeltemperatur ~ År, data = dat_medel)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.1256 -0.5387  0.1005  0.5267  1.4678 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -138.63357   23.31584  -5.946 6.75e-07 ***
+## År             0.07391    0.01165   6.341 1.94e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8509 on 38 degrees of freedom
+## Multiple R-squared:  0.5141, Adjusted R-squared:  0.5014 
+## F-statistic: 40.21 on 1 and 38 DF,  p-value: 1.939e-07</code></pre>
+<p>Linjen har ett intercept på <span class="math inline">\(-138.63\)</span> och en lutning på <span class="math inline">\(0.074\)</span>. Standardtolkningar är att det var <span class="math inline">\(-138\)</span> grader år noll (hmmmm) och att medeltemperaturen ökar med <span class="math inline">\(0.07\)</span> grader per år.</p>
+<p>Testet för lutningen (ett t-test) ges på raden för <code>År</code>. Nollhypotesen är att lutningskoefficienten är 0 och det låga p-värdet tyder på att den nollhypotesen bör förkastas. Det finns en statistiskt säkerställd ökning i medeltemperatur över tid.</p>
+<p>Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller struktur i spridningen.</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="regression-och-korrelation.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
+<span id="cb372-2"><a href="regression-och-korrelation.html#cb372-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-227-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="regression-och-korrelation.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod), <span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-227-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>c. Det är möjligt att prognosticera värden med <code>predict</code>. Funktionen tar en skattad modell (här <code>mod</code>) och en ny datatabellen, som innehåller en kolumn med samma namn som den förklarande variabeln i modellen (här <code>År</code>). Funktionen kan även producera konfidensintervall för skattningen, här genom <code>interval = "conf"</code> för ett konfidensintervall.</p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="regression-och-korrelation.html#cb374-1" aria-hidden="true" tabindex="-1"></a>dat_predict <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, <span class="at">newdata =</span> <span class="fu">tibble</span>(Å<span class="at">r =</span> <span class="dv">2020</span><span class="sc">:</span><span class="dv">2050</span>), <span class="at">interval =</span> <span class="st">&quot;conf&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb374-2"><a href="regression-och-korrelation.html#cb374-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="co"># Ändra till en tibble för enklare hantering</span></span>
+<span id="cb374-3"><a href="regression-och-korrelation.html#cb374-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(Å<span class="at">r =</span> <span class="dv">2020</span><span class="sc">:</span><span class="dv">2050</span>) <span class="co"># Lägg till år för senare graf</span></span>
+<span id="cb374-4"><a href="regression-och-korrelation.html#cb374-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb374-5"><a href="regression-och-korrelation.html#cb374-5" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="co"># Samma grundgraf som tidigare</span></span>
+<span id="cb374-6"><a href="regression-och-korrelation.html#cb374-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(År, fit), <span class="at">data =</span> dat_predict) <span class="sc">+</span> <span class="co"># Lägger till en linje för skattningar för kommande år</span></span>
+<span id="cb374-7"><a href="regression-och-korrelation.html#cb374-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(År, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr),  <span class="co"># Lägger till ett band för konfidensintervallet för skattningen</span></span>
+<span id="cb374-8"><a href="regression-och-korrelation.html#cb374-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">inherit.aes =</span> F, <span class="at">data =</span> dat_predict,</span>
+<span id="cb374-9"><a href="regression-och-korrelation.html#cb374-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># alpha sätter genomskinlighet för en yta</span></span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-228-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>d. I en tidigare uppgift påpekas att data inte samlats in samma tider på dygnet under hela mätperioden - det är därmed möjligt att den observerade ökningen beror på förändringar i mätmetod. Valet av de fyrtio senaste åren var ett godtyckligt val som påverkar lutningen kraftigt (till exempel om man av en ren slump börjar med några kalla år och avslutar med några varma). Regressionsmodellen är en linjär modell, vilket ger den uppenbarligen orimliga tolkning av interceptet som en temperatur år 0.</p>
+<p>Slutligen finns förstås det grundläggande problemet med prognoser: det kan ske oväntade saker som leder till strukturbrott och gör att sambandet mellan förklarande och förklarad variabel förändras.</p>
+</div>
+<div class="exercise">
+<p><span id="exr:unlabeled-div-75" class="exercise"><strong>Övning 10.3  (Metodjämförelse) </strong></span>Någon vill jämföra två metoder för att mäta volym på någon planta. Hen mäter därför nio olika plantor med bägge metoderna, vilket ger följande värden.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -563,19 +968,19 @@ B
 <p>b. Beräkna korrelationen mellan metoderna. Metod A är en dyrare men bättre metod. Ger mätning med metod B en säker uppskattning av utfallet med metod A?</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-74" class="hypothesis"><strong>Lösningsförslag 10.2  (Metodjämförelse) </strong></span>Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig skillnad mellan grupperna.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="regression-och-korrelation.html#cb366-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Metodjämförelse&quot;</span>)</span>
-<span id="cb366-2"><a href="regression-och-korrelation.html#cb366-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb366-3"><a href="regression-och-korrelation.html#cb366-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Metod, Volym, <span class="at">group =</span> Yta)) <span class="sc">+</span></span>
-<span id="cb366-4"><a href="regression-och-korrelation.html#cb366-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb366-5"><a href="regression-och-korrelation.html#cb366-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-222-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-76" class="hypothesis"><strong>Lösningsförslag 10.3  (Metodjämförelse) </strong></span>Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig skillnad mellan grupperna.</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="regression-och-korrelation.html#cb375-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Metodjämförelse&quot;</span>)</span>
+<span id="cb375-2"><a href="regression-och-korrelation.html#cb375-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb375-3"><a href="regression-och-korrelation.html#cb375-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Metod, Volym, <span class="at">group =</span> Yta)) <span class="sc">+</span></span>
+<span id="cb375-4"><a href="regression-och-korrelation.html#cb375-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb375-5"><a href="regression-och-korrelation.html#cb375-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-230-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>a. Ibland behöver man inget test.</p>
 <p>Men en jämförelse mellan två grupper kan förstås tas som ett parat t-test. Man kan först använda <code>pivot_wider</code> för att skriva om data till kolumnform.</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="regression-och-korrelation.html#cb367-1" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
-<span id="cb367-2"><a href="regression-och-korrelation.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Metod, <span class="at">values_from =</span> Volym)</span>
-<span id="cb367-3"><a href="regression-och-korrelation.html#cb367-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-4"><a href="regression-och-korrelation.html#cb367-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat_wide<span class="sc">$</span>A, dat_wide<span class="sc">$</span>B, <span class="at">paired =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="regression-och-korrelation.html#cb376-1" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb376-2"><a href="regression-och-korrelation.html#cb376-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Metod, <span class="at">values_from =</span> Volym)</span>
+<span id="cb376-3"><a href="regression-och-korrelation.html#cb376-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb376-4"><a href="regression-och-korrelation.html#cb376-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat_wide<span class="sc">$</span>A, dat_wide<span class="sc">$</span>B, <span class="at">paired =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -588,11 +993,11 @@ B
 ## mean of the differences 
 ##               -218.3333</code></pre>
 <p>Parad data kan också ses som det enklaste exemplet på ett block, och analyseras som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med <code>as.character</code>.</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="regression-och-korrelation.html#cb369-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Yta =</span> <span class="fu">as.character</span>(Yta))</span>
-<span id="cb369-2"><a href="regression-och-korrelation.html#cb369-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb369-3"><a href="regression-och-korrelation.html#cb369-3" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volym <span class="sc">~</span> Metod <span class="sc">+</span> Yta, dat)</span>
-<span id="cb369-4"><a href="regression-och-korrelation.html#cb369-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb369-5"><a href="regression-och-korrelation.html#cb369-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="regression-och-korrelation.html#cb378-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Yta =</span> <span class="fu">as.character</span>(Yta))</span>
+<span id="cb378-2"><a href="regression-och-korrelation.html#cb378-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb378-3"><a href="regression-och-korrelation.html#cb378-3" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volym <span class="sc">~</span> Metod <span class="sc">+</span> Yta, dat)</span>
+<span id="cb378-4"><a href="regression-och-korrelation.html#cb378-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb378-5"><a href="regression-och-korrelation.html#cb378-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Volym
@@ -604,10 +1009,10 @@ B
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>P-värdet från ett F-test på metod är detsamma som det från det parade t-testet.</p>
 <p>b.</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="regression-och-korrelation.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_wide, <span class="fu">aes</span>(B, A)) <span class="sc">+</span> </span>
-<span id="cb371-2"><a href="regression-och-korrelation.html#cb371-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-225-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="regression-och-korrelation.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dat_wide<span class="sc">$</span>A, dat_wide<span class="sc">$</span>B)</span></code></pre></div>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="regression-och-korrelation.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_wide, <span class="fu">aes</span>(B, A)) <span class="sc">+</span> </span>
+<span id="cb380-2"><a href="regression-och-korrelation.html#cb380-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-233-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="regression-och-korrelation.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dat_wide<span class="sc">$</span>A, dat_wide<span class="sc">$</span>B)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s product-moment correlation
 ## 
@@ -622,41 +1027,41 @@ B
 <p>Det finns inget signifikant samband mellan metoderna. Mätning med metod B säger alltså inget om utfallet i metod A. Om metod A är den mer precisa metoden, tyder detta på att metod B inte bör användas.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-75" class="exercise"><strong>Övning 10.3  (Anscombes data) </strong></span>Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är <em>Anscombes kvartett</em>, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet <code>anscombe</code>. Plotta de fyra graferna (<code>x1</code> paras med <code>y1</code> och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Kommentera utfallet.</p>
+<p><span id="exr:unlabeled-div-77" class="exercise"><strong>Övning 10.4  (Anscombes data) </strong></span>Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är <em>Anscombes kvartett</em>, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet <code>anscombe</code>. Plotta de fyra graferna (<code>x1</code> paras med <code>y1</code> och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Kommentera utfallet.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-76" class="hypothesis"><strong>Lösningsförslag 10.3  (Anscombes data) </strong></span>Data finns tillgänglig i R som <code>anscombe</code>, vilket är en tabell med åtta kolumner som består av fyra par (där <code>x1</code> är kopplad till <code>y1</code> och så vidare). Paren kan plottas med enkla spridningsdiagram.</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="regression-och-korrelation.html#cb374-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x1, y1)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb374-2"><a href="regression-och-korrelation.html#cb374-2" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x2, y2)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb374-3"><a href="regression-och-korrelation.html#cb374-3" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x3, y3)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb374-4"><a href="regression-och-korrelation.html#cb374-4" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x4, y4)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
-<span id="cb374-5"><a href="regression-och-korrelation.html#cb374-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb374-6"><a href="regression-och-korrelation.html#cb374-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb374-7"><a href="regression-och-korrelation.html#cb374-7" aria-hidden="true" tabindex="-1"></a>(g1 <span class="sc">+</span> g2) <span class="sc">/</span> (g3 <span class="sc">+</span> g4)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-226-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-78" class="hypothesis"><strong>Lösningsförslag 10.4  (Anscombes data) </strong></span>Data finns tillgänglig i R som <code>anscombe</code>, vilket är en tabell med åtta kolumner som består av fyra par (där <code>x1</code> är kopplad till <code>y1</code> och så vidare). Paren kan plottas med enkla spridningsdiagram.</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="regression-och-korrelation.html#cb383-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x1, y1)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb383-2"><a href="regression-och-korrelation.html#cb383-2" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x2, y2)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb383-3"><a href="regression-och-korrelation.html#cb383-3" aria-hidden="true" tabindex="-1"></a>g3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x3, y3)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb383-4"><a href="regression-och-korrelation.html#cb383-4" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anscombe, <span class="fu">aes</span>(x4, y4)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb383-5"><a href="regression-och-korrelation.html#cb383-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb383-6"><a href="regression-och-korrelation.html#cb383-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb383-7"><a href="regression-och-korrelation.html#cb383-7" aria-hidden="true" tabindex="-1"></a>(g1 <span class="sc">+</span> g2) <span class="sc">/</span> (g3 <span class="sc">+</span> g4)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-234-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Graferna ser olika ut.</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="regression-och-korrelation.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="regression-och-korrelation.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1)</span></code></pre></div>
 <pre><code>## [1] 0.8164205</code></pre>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="regression-och-korrelation.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x2, anscombe<span class="sc">$</span>y2)</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="regression-och-korrelation.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x2, anscombe<span class="sc">$</span>y2)</span></code></pre></div>
 <pre><code>## [1] 0.8162365</code></pre>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="regression-och-korrelation.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x3, anscombe<span class="sc">$</span>y3)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="regression-och-korrelation.html#cb388-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x3, anscombe<span class="sc">$</span>y3)</span></code></pre></div>
 <pre><code>## [1] 0.8162867</code></pre>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="regression-och-korrelation.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="regression-och-korrelation.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4)</span></code></pre></div>
 <pre><code>## [1] 0.8165214</code></pre>
 <p>Men har samma korrelation (till fjärde decimal).</p>
 <p>En modern utveckling av Anscombes kvartett ges av <em>The Datasaurus Dozen</em>.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-77" class="exercise"><strong>Övning 10.4  (Datasaurus Dozen) </strong></span>Datasaurus-datan är en konstruerad datamängd som illustrerar hur skilda mönster i data kan ge samma punktskattningar (medelvärden, standardavvikelser och korrelationer). Datan finns tillgänglig som en del av TidyTuesday-projektet och kan hämtas med följande rad.</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="regression-och-korrelation.html#cb383-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-10-13/datasaurus.csv&#39;</span>)</span></code></pre></div>
+<p><span id="exr:unlabeled-div-79" class="exercise"><strong>Övning 10.5  (Datasaurus Dozen) </strong></span>Datasaurus-datan är en konstruerad datamängd som illustrerar hur skilda mönster i data kan ge samma punktskattningar (medelvärden, standardavvikelser och korrelationer). Datan finns tillgänglig som en del av TidyTuesday-projektet och kan hämtas med följande rad.</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="regression-och-korrelation.html#cb392-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-10-13/datasaurus.csv&#39;</span>)</span></code></pre></div>
 <p>a. Datan innehåller en gruppering (<code>dataset</code>) och x- och y-koordinater. För varje grupp i kolumnen <code>dataset</code>, beräkna medelvärde och standardavvikelse för x och y, och beräkna korrelationen mellan x och y. Kommentera utfallet.</p>
 <p>b. Illustrera materialet med en lämplig graf, t.ex. ett spridningsdiagram mellan x och y för varje grupp i kolumnen <code>dataset</code>.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-78" class="hypothesis"><strong>Lösningsförslag 10.4  (Datasaurus Dozen) </strong></span>a. Punkskattningar kan beräknas genom att gruppera enligt <code>dataset</code> och summera med lämpliga funktioner (<code>mean</code>, <code>sd</code> och <code>cor</code>).</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="regression-och-korrelation.html#cb384-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
-<span id="cb384-2"><a href="regression-och-korrelation.html#cb384-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span> </span>
-<span id="cb384-3"><a href="regression-och-korrelation.html#cb384-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y), <span class="fu">sd</span>(x), <span class="fu">sd</span>(y), <span class="fu">cor</span>(x,y))</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-80" class="hypothesis"><strong>Lösningsförslag 10.5  (Datasaurus Dozen) </strong></span>a. Punkskattningar kan beräknas genom att gruppera enligt <code>dataset</code> och summera med lämpliga funktioner (<code>mean</code>, <code>sd</code> och <code>cor</code>).</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="regression-och-korrelation.html#cb393-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
+<span id="cb393-2"><a href="regression-och-korrelation.html#cb393-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dataset) <span class="sc">%&gt;%</span> </span>
+<span id="cb393-3"><a href="regression-och-korrelation.html#cb393-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(x), <span class="fu">mean</span>(y), <span class="fu">sd</span>(x), <span class="fu">sd</span>(y), <span class="fu">cor</span>(x,y))</span></code></pre></div>
 <pre><code>## # A tibble: 13 x 6
 ##    dataset    `mean(x)` `mean(y)` `sd(x)` `sd(y)` `cor(x, y)`
 ##    &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;
@@ -675,10 +1080,10 @@ B
 ## 13 x_shape         54.3      47.8    16.8    26.9     -0.0656</code></pre>
 <p>Grupperna har samma medelvärde och standardavvikelser i x och y. Korrelationerna mellan x och y är mycket lika.</p>
 <p>b. Datan kan illustreras med ett spridningsdiagram. Funktionen <code>facet_wrap</code> kan användas för separata fönster för skilda grupper.</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="regression-och-korrelation.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb386-2"><a href="regression-och-korrelation.html#cb386-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb386-3"><a href="regression-och-korrelation.html#cb386-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-230-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="regression-och-korrelation.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb395-2"><a href="regression-och-korrelation.html#cb395-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb395-3"><a href="regression-och-korrelation.html#cb395-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> dataset)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-238-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Figuren visar att det finns tydliga mönster i flera av grupperna och tydliga skillnader mellan dem.</p>
 </div>
 
@@ -694,6 +1099,7 @@ B
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -734,7 +1140,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "fuse",
+"engine": "lunr",
 "options": null
 },
 "toc": {
