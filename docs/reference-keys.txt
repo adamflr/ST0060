@@ -76,8 +76,6 @@ exr:unlabeled-div-75
 hyp:unlabeled-div-76
 exr:unlabeled-div-77
 hyp:unlabeled-div-78
-exr:unlabeled-div-79
-hyp:unlabeled-div-80
 introduktion
 installation
 inledning

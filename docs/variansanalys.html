@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 9 Variansanalys | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 9 Variansanalys | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 9 Variansanalys | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-27" />
+<meta name="date" content="2021-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="två-stickprov.html"/>
 <link rel="next" href="regression-och-korrelation.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -226,15 +226,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="variansanalys.-en-faktor" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Variansanalys. En faktor</h2>
 <p>Vid variansanalys med en faktor har man ett upplägg där varje observation av en kontinuerlig utfallsvariabel är kopplad till en specifik grupp. Som exempel används en datamängd från ett odlingsförsök på havre. Datan finns tillgänglig i paketet <code>MASS</code> som <code>oats</code>. Försöket är ett två-faktoriellt försök med block. Faktorerna ges av havresort och kvävetillsättning; utfallsvariabeln är skördvikt. Som första exempel ignoreras sortvariabeln genom att beräkna medelvärde per block och kvävenivå.</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="variansanalys.html#cb292-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> MASS<span class="sc">::</span>oats</span>
-<span id="cb292-2"><a href="variansanalys.html#cb292-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
-<span id="cb292-3"><a href="variansanalys.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(B, N) <span class="sc">%&gt;%</span> </span>
-<span id="cb292-4"><a href="variansanalys.html#cb292-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Y =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span> </span>
-<span id="cb292-5"><a href="variansanalys.html#cb292-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb292-6"><a href="variansanalys.html#cb292-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb292-7"><a href="variansanalys.html#cb292-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb292-8"><a href="variansanalys.html#cb292-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> N, <span class="at">values_from =</span> Y), </span>
-<span id="cb292-9"><a href="variansanalys.html#cb292-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="variansanalys.html#cb290-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> MASS<span class="sc">::</span>oats</span>
+<span id="cb290-2"><a href="variansanalys.html#cb290-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb290-3"><a href="variansanalys.html#cb290-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(B, N) <span class="sc">%&gt;%</span> </span>
+<span id="cb290-4"><a href="variansanalys.html#cb290-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Y =</span> <span class="fu">mean</span>(Y)) <span class="sc">%&gt;%</span> </span>
+<span id="cb290-5"><a href="variansanalys.html#cb290-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb290-6"><a href="variansanalys.html#cb290-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb290-7"><a href="variansanalys.html#cb290-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-8"><a href="variansanalys.html#cb290-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> N, <span class="at">values_from =</span> Y), </span>
+<span id="cb290-9"><a href="variansanalys.html#cb290-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">1</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -361,16 +361,16 @@ VI
 </tbody>
 </table>
 <p>Datan har 18 observationer av skördvikt och varje observation tillhör någon specifik kvävenivå. Datan kan illustreras med ett spridningsdiagram.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="variansanalys.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y)) <span class="sc">+</span></span>
-<span id="cb293-2"><a href="variansanalys.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-175-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="variansanalys.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y)) <span class="sc">+</span></span>
+<span id="cb291-2"><a href="variansanalys.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-174-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det finns en tydlig kväveeffekt.</p>
 <p>En anova-modell kan i R skattas med funktionen <code>lm</code> (för <em>linjär modell</em>). Från modellobjektet kan man sedan plocka fram en anova-tabell (som bland annat anger utfallet av F-testet) och genomföra parvisa jämförelser genom <code>emmeans</code>.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="variansanalys.html#cb294-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N, <span class="at">data =</span> dat)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="variansanalys.html#cb292-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N, <span class="at">data =</span> dat)</span></code></pre></div>
 <p>Modellen anges som en formel <code>Y ~ N</code>, vilket kan utläsas <em>Y beroende på faktorn N</em>. Detta följs av ett argument för det objekt som innehåller datan i kolumner (här <code>dat</code>).</p>
 <p>För anova-tabellen används funktionen <code>Anova</code> från paketet <code>car</code>.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="variansanalys.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb295-2"><a href="variansanalys.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="variansanalys.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb293-2"><a href="variansanalys.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Y
@@ -381,8 +381,8 @@ VI
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Anova-tabellen beräknas ett F-test. Testet har nollhypotesen att samtliga grupper har samma populationsmedelvärde - det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket alltså pekar på att det finns någon eller några skillnader i medelvärde.</p>
 <p>För att göra parvisa jämförelse används paketet <code>emmeans</code> och funktionen med samma namn. Funktionen tar modellobjektet som första argument och en formel för jämförelsetyp som andra argument (här <code>pairwise ~ N</code>, en parvis jämförelse mellan nivåer i N).</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="variansanalys.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb297-2"><a href="variansanalys.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> N)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="variansanalys.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb295-2"><a href="variansanalys.html#cb295-2" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> N)</span></code></pre></div>
 <pre><code>## $emmeans
 ##  N      emmean SE df lower.CL upper.CL
 ##  0.0cwt   79.4  7 20     64.8       94
@@ -404,10 +404,10 @@ VI
 ## P value adjustment: tukey method for comparing a family of 4 estimates</code></pre>
 <p>I den nedre tabellen med jämförelser ges alla parvisa jämförelser. Nollhypotesen är att de två grupper som jämförs har samma medelvärde - ett lågt p-värde tyder alltså på att de två grupperna är signifikant skilda. Notera också att p-värden justeras med tukey-metoden, även känt som Tukeys HSD.</p>
 <p>Parvisa jämförelser presenteras ofta med signifikansbokstäver (en <em>compact letter display, cld</em>). Dessa kan plockas fram med <code>multcomp</code>-paketet.</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="variansanalys.html#cb299-1" aria-hidden="true" tabindex="-1"></a>em <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> N)</span>
-<span id="cb299-2"><a href="variansanalys.html#cb299-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb299-3"><a href="variansanalys.html#cb299-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
-<span id="cb299-4"><a href="variansanalys.html#cb299-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cld</span>(em, <span class="at">Letters =</span> letters)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="variansanalys.html#cb297-1" aria-hidden="true" tabindex="-1"></a>em <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> N)</span>
+<span id="cb297-2"><a href="variansanalys.html#cb297-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb297-3"><a href="variansanalys.html#cb297-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb297-4"><a href="variansanalys.html#cb297-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cld</span>(em, <span class="at">Letters =</span> letters)</span></code></pre></div>
 <pre><code>##  N      emmean SE df lower.CL upper.CL .group
 ##  0.0cwt   79.4  7 20     64.8       94  a    
 ##  0.2cwt   98.9  7 20     84.3      114  ab   
@@ -425,15 +425,15 @@ VI
 <div id="variansanalys.-en-faktor-med-block" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Variansanalys. En faktor med block</h2>
 <p>Modellen med en faktor var en förenkling av den faktiska försökssituationen. Som första utbyggnad av modellen noteras att försöket är ett blockförsök. En eventuell blockeffekt kan illustreras med ett punktdiagram kombinerat med ett linjediagram.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="variansanalys.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y, <span class="at">color =</span> B, <span class="at">group =</span> B)) <span class="sc">+</span></span>
-<span id="cb301-2"><a href="variansanalys.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb301-3"><a href="variansanalys.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-180-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="variansanalys.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y, <span class="at">color =</span> B, <span class="at">group =</span> B)) <span class="sc">+</span></span>
+<span id="cb299-2"><a href="variansanalys.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb299-3"><a href="variansanalys.html#cb299-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-179-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Färg och linje sammanbinder observationer från samma block. Det finns en klar blockeffekt, vilket är särskilt tydligt för block I, som uppvisar klart högre värden än andra block.</p>
 <p>Blockeffekten kan enkelt föras in i modellen genom att lägga till variabeln B i <code>lm</code>-funktionen. Anova-tabellen och parvisa jämförelser kan göras på samma sätt som tidigare, men nu tas blockeffekten i beaktande.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="variansanalys.html#cb302-1" aria-hidden="true" tabindex="-1"></a>mod_bl <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">+</span> B, <span class="at">data =</span> dat)</span>
-<span id="cb302-2"><a href="variansanalys.html#cb302-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-3"><a href="variansanalys.html#cb302-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod_bl)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="variansanalys.html#cb300-1" aria-hidden="true" tabindex="-1"></a>mod_bl <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">+</span> B, <span class="at">data =</span> dat)</span>
+<span id="cb300-2"><a href="variansanalys.html#cb300-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb300-3"><a href="variansanalys.html#cb300-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod_bl)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Y
@@ -444,7 +444,7 @@ VI
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>P-värdet från F-testet på variabeln N är nu klart mindre än tidigare. Detta beror på att en stor del av variationen kan förklaras med blockeffekten, vilket är tydligt i att blockeffekten också har ett litet p-värde i F-testet.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="variansanalys.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod_bl, <span class="sc">~</span> N), <span class="at">Letters =</span> letters)</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="variansanalys.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod_bl, <span class="sc">~</span> N), <span class="at">Letters =</span> letters)</span></code></pre></div>
 <pre><code>##  N      emmean   SE df lower.CL upper.CL .group
 ##  0.0cwt   79.4 2.57 15     73.9     84.9  a    
 ##  0.2cwt   98.9 2.57 15     93.4    104.4   b   
@@ -463,17 +463,17 @@ VI
 <div id="variansanalys.-två-faktorer-med-block" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Variansanalys. Två faktorer med block</h2>
 <p>Den avslutande modellen tar med bägge faktorerna (sort och kväve) och blockfaktorn. Datan kan illustreras med ett punktdiagram där <code>facet_wrap</code> delar grafen efter sort.</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="variansanalys.html#cb306-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> MASS<span class="sc">::</span>oats</span>
-<span id="cb306-2"><a href="variansanalys.html#cb306-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y, <span class="at">color =</span> B)) <span class="sc">+</span></span>
-<span id="cb306-3"><a href="variansanalys.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb306-4"><a href="variansanalys.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> V)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-183-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="variansanalys.html#cb304-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> MASS<span class="sc">::</span>oats</span>
+<span id="cb304-2"><a href="variansanalys.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(N, Y, <span class="at">color =</span> B)) <span class="sc">+</span></span>
+<span id="cb304-3"><a href="variansanalys.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb304-4"><a href="variansanalys.html#cb304-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> V)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-182-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns också en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.</p>
 <p>Modellen skattas genom att lägga till variabeln för sort (V för variety) i <code>lm</code>-formeln.</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="variansanalys.html#cb307-1" aria-hidden="true" tabindex="-1"></a>mod_two_fact <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">*</span> V <span class="sc">+</span> B, <span class="at">data =</span> dat)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="variansanalys.html#cb305-1" aria-hidden="true" tabindex="-1"></a>mod_two_fact <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> N <span class="sc">*</span> V <span class="sc">+</span> B, <span class="at">data =</span> dat)</span></code></pre></div>
 <p>Formeln är nu <code>Y ~ N * V + B</code>. Stjärnan mellan N och V anger modellen med en interaktion mellan sort och kväve. Eftersom varje kombination av sort och kväve förekommer en gång i varje block, är det inte möjligt att skatta någon interaktionseffekt med blockfaktorn - blocket är då istället en <em>additiv effekt</em>.</p>
 <p>Anovatabellen kan plockas fram på samma sätt som tidigare.</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="variansanalys.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod_two_fact)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="variansanalys.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod_two_fact)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Y
@@ -487,7 +487,7 @@ VI
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Raden <code>N:V</code> gäller interaktionseffekten mellan kväve och sort. I det här fallet är det ingen signifikant interaktion - vilket tyder på att sorterna svarar på kvävebehandling på liknande sätt. Samtliga huvudeffekter (raderna för N, V och B) är signifikanta. Kvadratsummorna och p-värdena tyder på att kväve förklarar mer av variationen än sort, vilket också är i linje med grafen ovan.</p>
 <p>Vid flerfaktoriella försök kan man presentera parvisa jämförelser på flera olika sätt. Man kan ange huvudeffekter för en faktor utan att ange den andra faktorn, man kan ange medelvärden för samtliga kombinationer av två faktorer, och man kan ange medelvärden uppdelat efter nivåer i en annan faktor.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="variansanalys.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="variansanalys.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N)</span></code></pre></div>
 <pre><code>##  N      emmean   SE df lower.CL upper.CL
 ##  0.0cwt   79.4 3.76 55     71.9     86.9
 ##  0.2cwt   98.9 3.76 55     91.4    106.4
@@ -496,7 +496,7 @@ VI
 ## 
 ## Results are averaged over the levels of: V, B 
 ## Confidence level used: 0.95</code></pre>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="variansanalys.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N <span class="sc">+</span> V)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="variansanalys.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N <span class="sc">+</span> V)</span></code></pre></div>
 <pre><code>##  N      V           emmean   SE df lower.CL upper.CL
 ##  0.0cwt Golden.rain   80.0 6.51 55     67.0     93.0
 ##  0.2cwt Golden.rain   98.5 6.51 55     85.5    111.5
@@ -513,7 +513,7 @@ VI
 ## 
 ## Results are averaged over the levels of: B 
 ## Confidence level used: 0.95</code></pre>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="variansanalys.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N <span class="sc">|</span> V)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="variansanalys.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod_two_fact, <span class="sc">~</span> N <span class="sc">|</span> V)</span></code></pre></div>
 <pre><code>## V = Golden.rain:
 ##  N      emmean   SE df lower.CL upper.CL
 ##  0.0cwt   80.0 6.51 55     67.0     93.0
@@ -543,7 +543,7 @@ VI
 <div id="övningar-4" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> Övningar</h2>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Övning 9.1  (Jämförelse mellan t-test och anova) </strong></span>Detta är ett datamaterial som jämför hållfastheten hos murbruk för två oberoende stickprov.</p>
+<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Övning 9.1  (Jämförelse mellan t-test och anova) </strong></span>Detta är ett datamaterial som jämför hållfastheten hos murbruk för två oberoende stickprov.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -723,24 +723,24 @@ Standard
 <p>c. Jämför resultaten i (a) och (b).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-64" class="hypothesis"><strong>Lösningsförslag 9.1  (Jämförelse mellan t-test och anova) </strong></span>a.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="variansanalys.html#cb316-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Behandling =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Ny&quot;</span>, <span class="st">&quot;Standard&quot;</span>), <span class="at">each =</span> <span class="dv">10</span>),</span>
-<span id="cb316-2"><a href="variansanalys.html#cb316-2" aria-hidden="true" tabindex="-1"></a>              Hållfasthet <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">16.85</span>,<span class="fl">16.40</span>,<span class="fl">17.21</span>,<span class="fl">16.36</span>,<span class="fl">16.52</span>,</span>
-<span id="cb316-3"><a href="variansanalys.html#cb316-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">17.04</span>,<span class="fl">16.96</span>,<span class="fl">17.15</span>,<span class="fl">16.59</span>,<span class="fl">16.57</span>,</span>
-<span id="cb316-4"><a href="variansanalys.html#cb316-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">17.50</span>,<span class="fl">17.63</span>,<span class="fl">18.25</span>,<span class="fl">18.00</span>,<span class="fl">17.86</span>,</span>
-<span id="cb316-5"><a href="variansanalys.html#cb316-5" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">17.75</span>,<span class="fl">18.22</span>,<span class="fl">17.90</span>,<span class="fl">17.96</span>,<span class="fl">18.15</span>))</span>
-<span id="cb316-6"><a href="variansanalys.html#cb316-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb316-7"><a href="variansanalys.html#cb316-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Behandling, Hållfasthet)) <span class="sc">+</span></span>
-<span id="cb316-8"><a href="variansanalys.html#cb316-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-189-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-62" class="hypothesis"><strong>Lösningsförslag 9.1  (Jämförelse mellan t-test och anova) </strong></span>a.</p>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="variansanalys.html#cb314-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Behandling =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Ny&quot;</span>, <span class="st">&quot;Standard&quot;</span>), <span class="at">each =</span> <span class="dv">10</span>),</span>
+<span id="cb314-2"><a href="variansanalys.html#cb314-2" aria-hidden="true" tabindex="-1"></a>              Hållfasthet <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">16.85</span>,<span class="fl">16.40</span>,<span class="fl">17.21</span>,<span class="fl">16.36</span>,<span class="fl">16.52</span>,</span>
+<span id="cb314-3"><a href="variansanalys.html#cb314-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">17.04</span>,<span class="fl">16.96</span>,<span class="fl">17.15</span>,<span class="fl">16.59</span>,<span class="fl">16.57</span>,</span>
+<span id="cb314-4"><a href="variansanalys.html#cb314-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">17.50</span>,<span class="fl">17.63</span>,<span class="fl">18.25</span>,<span class="fl">18.00</span>,<span class="fl">17.86</span>,</span>
+<span id="cb314-5"><a href="variansanalys.html#cb314-5" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">17.75</span>,<span class="fl">18.22</span>,<span class="fl">17.90</span>,<span class="fl">17.96</span>,<span class="fl">18.15</span>))</span>
+<span id="cb314-6"><a href="variansanalys.html#cb314-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb314-7"><a href="variansanalys.html#cb314-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Behandling, Hållfasthet)) <span class="sc">+</span></span>
+<span id="cb314-8"><a href="variansanalys.html#cb314-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-188-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>En graf visar på en mycket tydlig behandlingsskillnad. Det finns inga tydliga extremvärden och grupperna verkar ha samma varians inom gruppen.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="variansanalys.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Hållfasthet <span class="sc">~</span> Behandling, dat, <span class="at">var.equal =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="variansanalys.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Hållfasthet <span class="sc">~</span> Behandling, dat, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  Hållfasthet by Behandling
 ## t = -9.1272, df = 18, p-value = 3.572e-08
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group Ny and group Standard is not equal to 0
 ## 95 percent confidence interval:
 ##  -1.4233204 -0.8906796
 ## sample estimates:
@@ -748,10 +748,10 @@ Standard
 ##                 16.765                 17.922</code></pre>
 <p>Ett mycket lågt p-värde tyder på att det finns en skillnad mellan grupperna.</p>
 <p>b. Modellen kan skattas med <code>lm</code>. Modellekvationen ges av <code>Hållbarhet ~ Behandling</code>, vilket kan utläsas som <em>hållbarhet beroende på behandling</em>.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="variansanalys.html#cb319-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Hållfasthet <span class="sc">~</span> Behandling, dat)</span>
-<span id="cb319-2"><a href="variansanalys.html#cb319-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb319-3"><a href="variansanalys.html#cb319-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb319-4"><a href="variansanalys.html#cb319-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="variansanalys.html#cb317-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Hållfasthet <span class="sc">~</span> Behandling, dat)</span>
+<span id="cb317-2"><a href="variansanalys.html#cb317-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb317-3"><a href="variansanalys.html#cb317-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb317-4"><a href="variansanalys.html#cb317-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Hållfasthet
@@ -762,16 +762,16 @@ Standard
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Ett mycket lågt p-värde tyder på att det finns en skillnad mellan grupperna.</p>
 <p>Modellantaganden (normalfördelning och lika varianser inom grupper) kan undersökas med diagnosplottar. QQ-grafen visar eventuella avvikelser från en normalfördelning (om data är normalfördelad följer punkterna diagonalen) och spridningsdiagram visar eventuella skillnader i spridning.</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="variansanalys.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
-<span id="cb321-2"><a href="variansanalys.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-192-1.png" width="336" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="variansanalys.html#cb322-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-192-2.png" width="336" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="variansanalys.html#cb319-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
+<span id="cb319-2"><a href="variansanalys.html#cb319-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-191-1.png" width="336" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="variansanalys.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-191-2.png" width="336" style="display: block; margin: auto;" /></p>
 <p>Diagnostik-grafer pekar inte på några extrema avvikelser från normalantagandet (punkterna följer den diagonala linjen ganska väl) eller antagandet om lika varianser (de två kolumnerna med punkter har ungefär samma spridning).</p>
 <p>c. F-testet i (b) ger samma p-värde som t-test i (a).</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Övning 9.2  (Äppelinfektion) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort.</p>
+<p><span id="exr:unlabeled-div-63" class="exercise"><strong>Övning 9.2  (Äppelinfektion) </strong></span>En studie har givit ett mått på infektion hos äppelträd. Fyra sorter jämförs med tre replikat per sort.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -888,19 +888,19 @@ D
 <p>d. Jämför sorter med Fishers LSD.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-66" class="hypothesis"><strong>Lösningsförslag 9.2  (Äppelinfektion) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="variansanalys.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb323-2"><a href="variansanalys.html#cb323-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Äppelangrepp&quot;</span>)</span>
-<span id="cb323-3"><a href="variansanalys.html#cb323-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb323-4"><a href="variansanalys.html#cb323-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Sort, Angrepp)) <span class="sc">+</span></span>
-<span id="cb323-5"><a href="variansanalys.html#cb323-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-194-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-64" class="hypothesis"><strong>Lösningsförslag 9.2  (Äppelinfektion) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="variansanalys.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb321-2"><a href="variansanalys.html#cb321-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Äppelangrepp&quot;</span>)</span>
+<span id="cb321-3"><a href="variansanalys.html#cb321-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-4"><a href="variansanalys.html#cb321-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Sort, Angrepp)) <span class="sc">+</span></span>
+<span id="cb321-5"><a href="variansanalys.html#cb321-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-193-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Grafen visar svaga tecken på skillnader, men inga <em>tydliga</em> mönster.</p>
 <p>a.</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="variansanalys.html#cb324-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Angrepp <span class="sc">~</span> Sort, dat)</span>
-<span id="cb324-2"><a href="variansanalys.html#cb324-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb324-3"><a href="variansanalys.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb324-4"><a href="variansanalys.html#cb324-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="variansanalys.html#cb322-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Angrepp <span class="sc">~</span> Sort, dat)</span>
+<span id="cb322-2"><a href="variansanalys.html#cb322-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb322-3"><a href="variansanalys.html#cb322-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb322-4"><a href="variansanalys.html#cb322-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Angrepp
@@ -909,13 +909,13 @@ D
 ## Residuals 672.07  8</code></pre>
 <p>F-testet testar nollhypotesen att alla grupper har samma populationsmedelvärde. Det höga p-värdet ger att det inte finns signifikanta skillnader mellan sorter.</p>
 <p>b.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="variansanalys.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
-<span id="cb326-2"><a href="variansanalys.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-196-1.png" width="336" style="display: block; margin: auto;" />
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="variansanalys.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
+<span id="cb324-2"><a href="variansanalys.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-195-1.png" width="336" style="display: block; margin: auto;" />
 Ungefärligt normalfördelat.</p>
 <p>c.</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="variansanalys.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb327-2"><a href="variansanalys.html#cb327-2" aria-hidden="true" tabindex="-1"></a>multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod, <span class="sc">~</span> Sort)) <span class="co"># Tukey</span></span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="variansanalys.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb325-2"><a href="variansanalys.html#cb325-2" aria-hidden="true" tabindex="-1"></a>multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod, <span class="sc">~</span> Sort)) <span class="co"># Tukey</span></span></code></pre></div>
 <pre><code>##  Sort emmean   SE df lower.CL upper.CL .group
 ##  B      43.2 5.29  8     31.0     55.4  1    
 ##  C      48.9 5.29  8     36.7     61.1  1    
@@ -930,7 +930,7 @@ Ungefärligt normalfördelat.</p>
 ##       Consider using &#39;pairs()&#39;, &#39;pwpp()&#39;, or &#39;pwpm()&#39; instead.</code></pre>
 <p>Tukey-testet pekar på att det inte finns några skillnader mellan sorterna.</p>
 <p>d.</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="variansanalys.html#cb329-1" aria-hidden="true" tabindex="-1"></a>multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod, <span class="sc">~</span> Sort, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)) <span class="co"># Fisher</span></span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="variansanalys.html#cb327-1" aria-hidden="true" tabindex="-1"></a>multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod, <span class="sc">~</span> Sort, <span class="at">adjust =</span> <span class="st">&quot;none&quot;</span>)) <span class="co"># Fisher</span></span></code></pre></div>
 <pre><code>##  Sort emmean   SE df lower.CL upper.CL .group
 ##  B      43.2 5.29  8     31.0     55.4  1    
 ##  C      48.9 5.29  8     36.7     61.1  1    
@@ -946,7 +946,7 @@ Ungefärligt normalfördelat.</p>
 <p>Fishers LSD pekar på att det inte finns några skillnader mellan sorterna.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Övning 9.3  (Majshybrider) </strong></span>Fyra majssorter planteras på fem platser (som agerar som fem block). Datan ges av följande tabell.</p>
+<p><span id="exr:unlabeled-div-65" class="exercise"><strong>Övning 9.3  (Majshybrider) </strong></span>Fyra majssorter planteras på fem platser (som agerar som fem block). Datan ges av följande tabell.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1057,16 +1057,16 @@ RC-3
 <p>b. Använd Tukey-metoden för parvisa jämförelser mellan hybrider.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-68" class="hypothesis"><strong>Lösningsförslag 9.3  (Majshybrider) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="variansanalys.html#cb331-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Majshybrider&quot;</span>)</span>
-<span id="cb331-2"><a href="variansanalys.html#cb331-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb331-3"><a href="variansanalys.html#cb331-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Hybrid, Avkastning, <span class="at">group =</span> Plats, <span class="at">col =</span> Plats)) <span class="sc">+</span></span>
-<span id="cb331-4"><a href="variansanalys.html#cb331-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb331-5"><a href="variansanalys.html#cb331-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-200-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-66" class="hypothesis"><strong>Lösningsförslag 9.3  (Majshybrider) </strong></span>Data kan läsas in från excelfilen med uppgiftsdata.</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="variansanalys.html#cb329-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Majshybrider&quot;</span>)</span>
+<span id="cb329-2"><a href="variansanalys.html#cb329-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-3"><a href="variansanalys.html#cb329-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Hybrid, Avkastning, <span class="at">group =</span> Plats, <span class="at">col =</span> Plats)) <span class="sc">+</span></span>
+<span id="cb329-4"><a href="variansanalys.html#cb329-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb329-5"><a href="variansanalys.html#cb329-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-199-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Tecken på både platseffekt (nordväst alltid lägst) och hybrideffekt (RC3 lägre än övriga).</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="variansanalys.html#cb332-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Avkastning <span class="sc">~</span> Hybrid <span class="sc">+</span> Plats, dat)</span>
-<span id="cb332-2"><a href="variansanalys.html#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="variansanalys.html#cb330-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Avkastning <span class="sc">~</span> Hybrid <span class="sc">+</span> Plats, dat)</span>
+<span id="cb330-2"><a href="variansanalys.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Avkastning
@@ -1076,7 +1076,7 @@ RC-3
 ## Residuals  18.70 12                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="variansanalys.html#cb334-1" aria-hidden="true" tabindex="-1"></a>multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod, <span class="sc">~</span> Hybrid), <span class="at">Letters =</span> letters)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="variansanalys.html#cb332-1" aria-hidden="true" tabindex="-1"></a>multcomp<span class="sc">::</span><span class="fu">cld</span>(<span class="fu">emmeans</span>(mod, <span class="sc">~</span> Hybrid), <span class="at">Letters =</span> letters)</span></code></pre></div>
 <pre><code>##  Hybrid emmean    SE df lower.CL upper.CL .group
 ##  RC-3     57.6 0.558 12     56.4     58.8  a    
 ##  DBC      63.4 0.558 12     62.2     64.6   b   
@@ -1093,7 +1093,7 @@ RC-3
 <p>Klart signifikanta skillnader mellan hybrider. Post-hoc-tester ger att RC-3 har lägre avkastning av övriga.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-69" class="exercise"><strong>Övning 9.4  (Maskiner med och utan block) </strong></span>I en fabrik testas tre olika maskiner i produktionen. Utfallsvariabeln är hur mycket tid maskinen behöver för tryckpressa en stol. Man vill undersöka om det är en skillnad mellan maskiner. Resultatet ges nedan.</p>
+<p><span id="exr:unlabeled-div-67" class="exercise"><strong>Övning 9.4  (Maskiner med och utan block) </strong></span>I en fabrik testas tre olika maskiner i produktionen. Utfallsvariabeln är hur mycket tid maskinen behöver för tryckpressa en stol. Man vill undersöka om det är en skillnad mellan maskiner. Resultatet ges nedan.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1198,21 +1198,21 @@ C
 <p>d. Någon säger att försöket inte är gjort under en dag utan att replikat i själva verket anger vilken dag som försöket gjordes. Man vill därför använda replikat som block i försöket. Gör detta och undersök om detta förändrar resultatet. Tror du att replikat anger olika dagar?</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-70" class="hypothesis"><strong>Lösningsförslag 9.4  (Maskiner med och utan block) </strong></span>Datan kan skrivas in som en <code>tibble</code> och illustreras med ett enkelt spridningsdiagram.</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="variansanalys.html#cb336-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Maskin =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">each =</span> <span class="dv">6</span>),</span>
-<span id="cb336-2"><a href="variansanalys.html#cb336-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Replikat =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>),</span>
-<span id="cb336-3"><a href="variansanalys.html#cb336-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Tid =</span> <span class="fu">c</span>(<span class="dv">34</span>,<span class="dv">38</span>,<span class="dv">32</span>,<span class="dv">41</span>,<span class="dv">41</span>,<span class="dv">36</span>,</span>
-<span id="cb336-4"><a href="variansanalys.html#cb336-4" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">30</span>,<span class="dv">31</span>,<span class="dv">33</span>,<span class="dv">40</span>,<span class="dv">39</span>,<span class="dv">35</span>,</span>
-<span id="cb336-5"><a href="variansanalys.html#cb336-5" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">27</span>,<span class="dv">30</span>,<span class="dv">29</span>,<span class="dv">31</span>,<span class="dv">36</span>,<span class="dv">32</span>))</span>
-<span id="cb336-6"><a href="variansanalys.html#cb336-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb336-7"><a href="variansanalys.html#cb336-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Maskin, Tid, <span class="at">group =</span> Replikat)) <span class="sc">+</span></span>
-<span id="cb336-8"><a href="variansanalys.html#cb336-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb336-9"><a href="variansanalys.html#cb336-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-68" class="hypothesis"><strong>Lösningsförslag 9.4  (Maskiner med och utan block) </strong></span>Datan kan skrivas in som en <code>tibble</code> och illustreras med ett enkelt spridningsdiagram.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="variansanalys.html#cb334-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Maskin =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">each =</span> <span class="dv">6</span>),</span>
+<span id="cb334-2"><a href="variansanalys.html#cb334-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Replikat =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>),</span>
+<span id="cb334-3"><a href="variansanalys.html#cb334-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">Tid =</span> <span class="fu">c</span>(<span class="dv">34</span>,<span class="dv">38</span>,<span class="dv">32</span>,<span class="dv">41</span>,<span class="dv">41</span>,<span class="dv">36</span>,</span>
+<span id="cb334-4"><a href="variansanalys.html#cb334-4" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">30</span>,<span class="dv">31</span>,<span class="dv">33</span>,<span class="dv">40</span>,<span class="dv">39</span>,<span class="dv">35</span>,</span>
+<span id="cb334-5"><a href="variansanalys.html#cb334-5" aria-hidden="true" tabindex="-1"></a>                      <span class="dv">27</span>,<span class="dv">30</span>,<span class="dv">29</span>,<span class="dv">31</span>,<span class="dv">36</span>,<span class="dv">32</span>))</span>
+<span id="cb334-6"><a href="variansanalys.html#cb334-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-7"><a href="variansanalys.html#cb334-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Maskin, Tid, <span class="at">group =</span> Replikat)) <span class="sc">+</span></span>
+<span id="cb334-8"><a href="variansanalys.html#cb334-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb334-9"><a href="variansanalys.html#cb334-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-202-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Det finns tecken på skillnader i tid (Maskin C ligger lägre).</p>
 <p>a. En enkel anova-modell skattas för att testa eventuella maskinskillnader.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="variansanalys.html#cb337-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Tid <span class="sc">~</span> Maskin, dat)</span>
-<span id="cb337-2"><a href="variansanalys.html#cb337-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="variansanalys.html#cb335-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Tid <span class="sc">~</span> Maskin, dat)</span>
+<span id="cb335-2"><a href="variansanalys.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Tid
@@ -1223,7 +1223,7 @@ C
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>F-testet för faktorn Maskin ger ett p-värde på 0.03. Eftersom det är under fem procent förkastas nollhypotesen att maskinerna ger samma medelvärde.</p>
 <p>b.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="variansanalys.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> Maskin)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="variansanalys.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> Maskin)</span></code></pre></div>
 <pre><code>## $emmeans
 ##  Maskin emmean   SE df lower.CL upper.CL
 ##  A        37.0 1.49 15     33.8     40.2
@@ -1241,17 +1241,17 @@ C
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
 <p>Post-hoc-tester visar på en skillnad mellan maskin A och C.</p>
 <p>c. Modellen bygger på antagandet att residualerna är normalfördelade och att grupperna har samma varians.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="variansanalys.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
-<span id="cb341-2"><a href="variansanalys.html#cb341-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-206-1.png" width="336" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="variansanalys.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-206-2.png" width="336" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="variansanalys.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(mod))</span>
+<span id="cb339-2"><a href="variansanalys.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-205-1.png" width="336" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="variansanalys.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(mod) <span class="sc">~</span> <span class="fu">fitted</span>(mod))</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-205-2.png" width="336" style="display: block; margin: auto;" /></p>
 <p>En graf över residualerna visar inte på några tydliga brister i antaganden.</p>
 <p>d. Replikat används som en block-faktor i försöket. För att R ska tolka variabeln Replikat korrekt ändras dess typ till <code>character</code>.</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="variansanalys.html#cb343-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Replikat =</span> <span class="fu">as.character</span>(Replikat))</span>
-<span id="cb343-2"><a href="variansanalys.html#cb343-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Tid <span class="sc">~</span> Maskin <span class="sc">+</span> Replikat, dat)</span>
-<span id="cb343-3"><a href="variansanalys.html#cb343-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb343-4"><a href="variansanalys.html#cb343-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="variansanalys.html#cb341-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Replikat =</span> <span class="fu">as.character</span>(Replikat))</span>
+<span id="cb341-2"><a href="variansanalys.html#cb341-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Tid <span class="sc">~</span> Maskin <span class="sc">+</span> Replikat, dat)</span>
+<span id="cb341-3"><a href="variansanalys.html#cb341-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb341-4"><a href="variansanalys.html#cb341-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mod)</span></code></pre></div>
 <pre><code>## Anova Table (Type II tests)
 ## 
 ## Response: Tid
@@ -1261,7 +1261,7 @@ C
 ## Residuals  37.00 10                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="variansanalys.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> Maskin)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="variansanalys.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(mod, pairwise <span class="sc">~</span> Maskin)</span></code></pre></div>
 <pre><code>## $emmeans
 ##  Maskin emmean    SE df lower.CL upper.CL
 ##  A        37.0 0.785 10     35.3     38.7
@@ -1294,7 +1294,6 @@ C
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1335,7 +1334,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

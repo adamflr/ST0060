@@ -182,20 +182,6 @@ mean(p_values < 0.05)
 När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
 :::
 
-::: {.exercise name="Jurysystemet"}
-I en amerikansk stad är 25 procent av befolkningen afroamerikaner. Bland 1050 individuer utvalda att delta i den lokala domstolens juryarbete är 177 afroamerikaner (ungefär 17 procent). Testa om andelen utvalda är mindre än 25 procent.
-:::
-
-::: {.hypothesis name="Jurysystemet"}
-Frågan kan hanteras med ett test för proportioner (ett *z-test*, vilket bygger på en normalapproximation). Funktionen `prop.test` tar ingångsvärden för antalet *positiva* utfall, totalt antal utfall, nollhypotesens värde (här $p_0 = 0.25$), och riktning för alternativhypotesen. I det här fallet finns en ensidig alternativhypotes att den sanna proportionen är mindre än $0.25$, vilket anges med `alternative = "less"`.
-
-```{r}
-prop.test(177, 1050, p = 0.25, alternative = "less")
-```
-
-Det låga p-värdet tyder på att nollhypotesen (att $p_0 = 0.25$) bör förkastas.
-:::
-
 ::: {.exercise name="Guldfiskgenetik"}
 En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om den faktiska proportionen skiljer sig från 0.75.
 :::

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Kapitel 7 Ett stickprov | R-anvisningar till Grundläggande statistik</title>
   <meta name="description" content="Kapitel 7 Ett stickprov | R-anvisningar till Grundläggande statistik" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Kapitel 7 Ett stickprov | R-anvisningar till Grundläggande statistik" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-09-27" />
+<meta name="date" content="2021-09-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="sannolikhetsfördelningar-och-slumptal.html"/>
 <link rel="next" href="två-stickprov.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -915,7 +915,7 @@ F
 <span id="cb210-11"><a href="ett-stickprov.html#cb210-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>))</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-125-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="ett-stickprov.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0485</code></pre>
+<pre><code>## [1] 0.0492</code></pre>
 <p>När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="ett-stickprov.html#cb213-1" aria-hidden="true" tabindex="-1"></a>p_values_when_mean_0 <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb213-2"><a href="ett-stickprov.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="fl">0.1</span>)</span>
@@ -930,34 +930,15 @@ F
 <span id="cb213-11"><a href="ett-stickprov.html#cb213-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.05</span>))</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-126-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="ett-stickprov.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.1724</code></pre>
+<pre><code>## [1] 0.1648</code></pre>
 <p>När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Övning 7.5  (Jurysystemet) </strong></span>I en amerikansk stad är 25 procent av befolkningen afroamerikaner. Bland 1050 individuer utvalda att delta i den lokala domstolens juryarbete är 177 afroamerikaner (ungefär 17 procent). Testa om andelen utvalda är mindre än 25 procent.</p>
+<p><span id="exr:unlabeled-div-41" class="exercise"><strong>Övning 7.5  (Guldfiskgenetik) </strong></span>En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om den faktiska proportionen skiljer sig från 0.75.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-42" class="hypothesis"><strong>Lösningsförslag 7.5  (Jurysystemet) </strong></span>Frågan kan hanteras med ett test för proportioner (ett <em>z-test</em>, vilket bygger på en normalapproximation). Funktionen <code>prop.test</code> tar ingångsvärden för antalet <em>positiva</em> utfall, totalt antal utfall, nollhypotesens värde (här <span class="math inline">\(p_0 = 0.25\)</span>), och riktning för alternativhypotesen. I det här fallet finns en ensidig alternativhypotes att den sanna proportionen är mindre än <span class="math inline">\(0.25\)</span>, vilket anges med <code>alternative = "less"</code>.</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="ett-stickprov.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">177</span>, <span class="dv">1050</span>, <span class="at">p =</span> <span class="fl">0.25</span>, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
-<pre><code>## 
-##  1-sample proportions test with continuity correction
-## 
-## data:  177 out of 1050, null probability 0.25
-## X-squared = 36.698, df = 1, p-value = 6.895e-10
-## alternative hypothesis: true p is less than 0.25
-## 95 percent confidence interval:
-##  0.0000000 0.1889178
-## sample estimates:
-##         p 
-## 0.1685714</code></pre>
-<p>Det låga p-värdet tyder på att nollhypotesen (att <span class="math inline">\(p_0 = 0.25\)</span>) bör förkastas.</p>
-</div>
-<div class="exercise">
-<p><span id="exr:unlabeled-div-43" class="exercise"><strong>Övning 7.6  (Guldfiskgenetik) </strong></span>En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om den faktiska proportionen skiljer sig från 0.75.</p>
-</div>
-<div class="hypothesis">
-<p><span id="hyp:unlabeled-div-44" class="hypothesis"><strong>Lösningsförslag 7.6  (Guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test, ett z-test eller ett binomialtest. Här ges exempel på det första. Nollhypotesen är att sannolikheten för genomskinliga fjäll är tre fjärdedelar. Notera att funktionen anges både med antalet (och andelen under nollhypotesen) med genomskinliga fjäll och antalet med färglagda fjäll.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="ett-stickprov.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.75</span>, <span class="fl">0.25</span>))</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-42" class="hypothesis"><strong>Lösningsförslag 7.5  (Guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test, ett z-test eller ett binomialtest. Här ges exempel på det första. Nollhypotesen är att sannolikheten för genomskinliga fjäll är tre fjärdedelar. Notera att funktionen anges både med antalet (och andelen under nollhypotesen) med genomskinliga fjäll och antalet med färglagda fjäll.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="ett-stickprov.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="fl">0.75</span>, <span class="fl">0.25</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
@@ -966,11 +947,11 @@ F
 <p>Det låga p-värdet tyder på att den sanna sannolikheten för genomskinliga fjäll inte är 0.75.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-45" class="exercise"><strong>Övning 7.7  (Mer guldfiskgenetik) </strong></span>En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om proportionen skiljer sig från 0.9375.</p>
+<p><span id="exr:unlabeled-div-43" class="exercise"><strong>Övning 7.6  (Mer guldfiskgenetik) </strong></span>En konkurrerande teori inom genetik förutsäger att femton sextondelar (proportionen 0.9375) ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om proportionen skiljer sig från 0.9375.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-46" class="hypothesis"><strong>Lösningsförslag 7.7  (Mer guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är femton sextondelar.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="ett-stickprov.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="dv">15</span><span class="sc">/</span><span class="dv">16</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">16</span>))</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-44" class="hypothesis"><strong>Lösningsförslag 7.6  (Mer guldfiskgenetik) </strong></span>Frågan kan hanteras med ett <span class="math inline">\(\chi^2\)</span>-test. Nollhypotesen är att sannolikheten är genomskinliga fjäll är femton sextondelar.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="ett-stickprov.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="at">p =</span> <span class="fu">c</span>(<span class="dv">15</span><span class="sc">/</span><span class="dv">16</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">16</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
@@ -979,43 +960,43 @@ F
 <p>Nollhypotesen att sannolikheten för genomskinliga fjäll är femton sextondelar, <span class="math inline">\(p = 15/16\)</span>, kan ej förkastas, eftersom testet ger ett p-värde över de vanliga signifikansnivåerna.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-47" class="exercise"><strong>Övning 7.8  (Simulering konfidensintervall) </strong></span>Konfidensinterval konstrueras så att det sanna parametervärdet ingår i intervallet med en viss konfidensgrad (oftast 95 procent). Skriv en funktion som drar 10 slumptal från en normalfördelning med medelvärdet 9 och beräknar konfidensintervall. Upprepa funktionen 10000 gånger. Hur ofta täcker intervallet 9?</p>
+<p><span id="exr:unlabeled-div-45" class="exercise"><strong>Övning 7.7  (Simulering konfidensintervall) </strong></span>Konfidensinterval konstrueras så att det sanna parametervärdet ingår i intervallet med en viss konfidensgrad (oftast 95 procent). Skriv en funktion som drar 10 slumptal från en normalfördelning med medelvärdet 9 och beräknar konfidensintervall. Upprepa funktionen 10000 gånger. Hur ofta täcker intervallet 9?</p>
 <p>Notera att detta är en svårare uppgift.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-48" class="hypothesis"><strong>Lösningsförslag 7.8  (Simulering konfidensintervall) </strong></span>Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensintervall. Eftersom funktionen ger två värden (intervallets lägre och övre gräns) behövs lite mer hantering än i tidigare exempel (där de funktioner som använts givit ett utfallsvärde).</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="ett-stickprov.html#cb222-1" aria-hidden="true" tabindex="-1"></a>ci_from_ten <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
-<span id="cb222-2"><a href="ett-stickprov.html#cb222-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">9</span>)</span>
-<span id="cb222-3"><a href="ett-stickprov.html#cb222-3" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x)</span>
-<span id="cb222-4"><a href="ett-stickprov.html#cb222-4" aria-hidden="true" tabindex="-1"></a>  test<span class="sc">$</span>conf.int</span>
-<span id="cb222-5"><a href="ett-stickprov.html#cb222-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb222-6"><a href="ett-stickprov.html#cb222-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb222-7"><a href="ett-stickprov.html#cb222-7" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">ci_from_ten</span>())</span>
-<span id="cb222-8"><a href="ett-stickprov.html#cb222-8" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">t</span>(intervals) <span class="co"># Transponera till kolumner</span></span>
-<span id="cb222-9"><a href="ett-stickprov.html#cb222-9" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(intervals)</span>
-<span id="cb222-10"><a href="ett-stickprov.html#cb222-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Undre&quot;</span>, <span class="st">&quot;Övre&quot;</span>)</span>
-<span id="cb222-11"><a href="ett-stickprov.html#cb222-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb222-12"><a href="ett-stickprov.html#cb222-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Undre <span class="sc">&gt;</span> <span class="dv">9</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0256</code></pre>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ett-stickprov.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Övre <span class="sc">&lt;</span> <span class="dv">9</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0243</code></pre>
+<p><span id="hyp:unlabeled-div-46" class="hypothesis"><strong>Lösningsförslag 7.7  (Simulering konfidensintervall) </strong></span>Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensintervall. Eftersom funktionen ger två värden (intervallets lägre och övre gräns) behövs lite mer hantering än i tidigare exempel (där de funktioner som använts givit ett utfallsvärde).</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="ett-stickprov.html#cb220-1" aria-hidden="true" tabindex="-1"></a>ci_from_ten <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb220-2"><a href="ett-stickprov.html#cb220-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">9</span>)</span>
+<span id="cb220-3"><a href="ett-stickprov.html#cb220-3" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x)</span>
+<span id="cb220-4"><a href="ett-stickprov.html#cb220-4" aria-hidden="true" tabindex="-1"></a>  test<span class="sc">$</span>conf.int</span>
+<span id="cb220-5"><a href="ett-stickprov.html#cb220-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb220-6"><a href="ett-stickprov.html#cb220-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-7"><a href="ett-stickprov.html#cb220-7" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">ci_from_ten</span>())</span>
+<span id="cb220-8"><a href="ett-stickprov.html#cb220-8" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">t</span>(intervals) <span class="co"># Transponera till kolumner</span></span>
+<span id="cb220-9"><a href="ett-stickprov.html#cb220-9" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(intervals)</span>
+<span id="cb220-10"><a href="ett-stickprov.html#cb220-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Undre&quot;</span>, <span class="st">&quot;Övre&quot;</span>)</span>
+<span id="cb220-11"><a href="ett-stickprov.html#cb220-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-12"><a href="ett-stickprov.html#cb220-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Undre <span class="sc">&gt;</span> <span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0257</code></pre>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="ett-stickprov.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Övre <span class="sc">&lt;</span> <span class="dv">9</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0236</code></pre>
 <p>Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.</p>
 <p>En illustration med 100 simulerade fall.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="ett-stickprov.html#cb226-1" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">ci_from_ten</span>())</span>
-<span id="cb226-2"><a href="ett-stickprov.html#cb226-2" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">t</span>(intervals) <span class="co"># Transponera till kolumner</span></span>
-<span id="cb226-3"><a href="ett-stickprov.html#cb226-3" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(intervals)</span>
-<span id="cb226-4"><a href="ett-stickprov.html#cb226-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Undre&quot;</span>, <span class="st">&quot;Övre&quot;</span>)</span>
-<span id="cb226-5"><a href="ett-stickprov.html#cb226-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb226-6"><a href="ett-stickprov.html#cb226-6" aria-hidden="true" tabindex="-1"></a>intervals <span class="sc">%&gt;%</span> </span>
-<span id="cb226-7"><a href="ett-stickprov.html#cb226-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Undre <span class="sc">+</span> Övre) <span class="sc">%&gt;%</span> </span>
-<span id="cb226-8"><a href="ett-stickprov.html#cb226-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(),</span>
-<span id="cb226-9"><a href="ett-stickprov.html#cb226-9" aria-hidden="true" tabindex="-1"></a>         Täcker<span class="at">_9 =</span> Undre <span class="sc">&lt;</span> <span class="dv">9</span> <span class="sc">&amp;</span> Övre <span class="sc">&gt;</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb226-10"><a href="ett-stickprov.html#cb226-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Undre, <span class="at">xend =</span> Övre, <span class="at">y =</span> id, <span class="at">yend =</span> id, <span class="at">col =</span> Täcker_9)) <span class="sc">+</span></span>
-<span id="cb226-11"><a href="ett-stickprov.html#cb226-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
-<span id="cb226-12"><a href="ett-stickprov.html#cb226-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> (Övre <span class="sc">+</span> Undre) <span class="sc">/</span> <span class="dv">2</span>, id)) <span class="sc">+</span></span>
-<span id="cb226-13"><a href="ett-stickprov.html#cb226-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
-<span id="cb226-14"><a href="ett-stickprov.html#cb226-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-131-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ett-stickprov.html#cb224-1" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">ci_from_ten</span>())</span>
+<span id="cb224-2"><a href="ett-stickprov.html#cb224-2" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">t</span>(intervals) <span class="co"># Transponera till kolumner</span></span>
+<span id="cb224-3"><a href="ett-stickprov.html#cb224-3" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(intervals)</span>
+<span id="cb224-4"><a href="ett-stickprov.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Undre&quot;</span>, <span class="st">&quot;Övre&quot;</span>)</span>
+<span id="cb224-5"><a href="ett-stickprov.html#cb224-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb224-6"><a href="ett-stickprov.html#cb224-6" aria-hidden="true" tabindex="-1"></a>intervals <span class="sc">%&gt;%</span> </span>
+<span id="cb224-7"><a href="ett-stickprov.html#cb224-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Undre <span class="sc">+</span> Övre) <span class="sc">%&gt;%</span> </span>
+<span id="cb224-8"><a href="ett-stickprov.html#cb224-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(),</span>
+<span id="cb224-9"><a href="ett-stickprov.html#cb224-9" aria-hidden="true" tabindex="-1"></a>         Täcker<span class="at">_9 =</span> Undre <span class="sc">&lt;</span> <span class="dv">9</span> <span class="sc">&amp;</span> Övre <span class="sc">&gt;</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb224-10"><a href="ett-stickprov.html#cb224-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Undre, <span class="at">xend =</span> Övre, <span class="at">y =</span> id, <span class="at">yend =</span> id, <span class="at">col =</span> Täcker_9)) <span class="sc">+</span></span>
+<span id="cb224-11"><a href="ett-stickprov.html#cb224-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>() <span class="sc">+</span></span>
+<span id="cb224-12"><a href="ett-stickprov.html#cb224-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> (Övre <span class="sc">+</span> Undre) <span class="sc">/</span> <span class="dv">2</span>, id)) <span class="sc">+</span></span>
+<span id="cb224-13"><a href="ett-stickprov.html#cb224-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb224-14"><a href="ett-stickprov.html#cb224-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-130-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Varje streck motsvarar konfidensintervallet från en simulering. Intervallet väntas täcka 9 i 95 av hundra fall, men det kan förstås variera eftersom det beror på slumptalen.</p>
 </div>
 
@@ -1031,7 +1012,6 @@ F
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1072,7 +1052,7 @@ gitbook.start({
 },
 "download": ["R-anvisningar.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
