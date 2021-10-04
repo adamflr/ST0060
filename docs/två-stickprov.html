@@ -228,10 +228,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">8.1.1</span> t-test för två matchade stickprov</h3>
 <p>Vid matchade stickprov kan varje observation i en behandlingsgrupp paras med en observation i den andra gruppen. Själva testet är ett t-test för <em>ett</em> stickprov på differensserien beräknat från varje par. I R kan man antingen beräkna den differensserien eller använda <code>t.test</code>-funktionen med två dataserier och argumentet för parvisa observationer satt till sant, <code>paired = T</code>.
 Som exempel ges följande data från en studie på äpple, där trädhöjd mätts före och efter en näringsbehandling.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="två-stickprov.html#cb225-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(TrädID <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
-<span id="cb225-2"><a href="två-stickprov.html#cb225-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">48</span>, <span class="dv">43</span>, <span class="dv">30</span>, <span class="dv">47</span>), </span>
-<span id="cb225-3"><a href="två-stickprov.html#cb225-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">51</span>, <span class="dv">44</span>, <span class="dv">42</span>, <span class="dv">54</span>))</span>
-<span id="cb225-4"><a href="två-stickprov.html#cb225-4" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="två-stickprov.html#cb229-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(TrädID <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, </span>
+<span id="cb229-2"><a href="två-stickprov.html#cb229-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">48</span>, <span class="dv">43</span>, <span class="dv">30</span>, <span class="dv">47</span>), </span>
+<span id="cb229-3"><a href="två-stickprov.html#cb229-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">51</span>, <span class="dv">44</span>, <span class="dv">42</span>, <span class="dv">54</span>))</span>
+<span id="cb229-4"><a href="två-stickprov.html#cb229-4" aria-hidden="true" tabindex="-1"></a>dat</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 3
 ##   TrädID `Tidpunkt 1` `Tidpunkt 2`
 ##    &lt;int&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -240,8 +240,8 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 ## 3      3           30           42
 ## 4      4           47           54</code></pre>
 <p>Datan kan illustreras med ett punktdiagram där en linje binder samman paret. För att enkelt skapa grafen i <code>ggplot2</code> kan man först omstrukturera datan till lång form genom <code>pivot_longer</code>.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="två-stickprov.html#cb227-1" aria-hidden="true" tabindex="-1"></a>dat_long <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>TrädID)</span>
-<span id="cb227-2"><a href="två-stickprov.html#cb227-2" aria-hidden="true" tabindex="-1"></a>dat_long</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="två-stickprov.html#cb231-1" aria-hidden="true" tabindex="-1"></a>dat_long <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>TrädID)</span>
+<span id="cb231-2"><a href="två-stickprov.html#cb231-2" aria-hidden="true" tabindex="-1"></a>dat_long</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ##   TrädID name       value
 ##    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
@@ -253,12 +253,12 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 ## 6      3 Tidpunkt 2    42
 ## 7      4 Tidpunkt 1    47
 ## 8      4 Tidpunkt 2    54</code></pre>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="två-stickprov.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(name, value, <span class="at">group =</span> TrädID)) <span class="sc">+</span></span>
-<span id="cb229-2"><a href="två-stickprov.html#cb229-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb229-3"><a href="två-stickprov.html#cb229-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-133-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="två-stickprov.html#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(name, value, <span class="at">group =</span> TrädID)) <span class="sc">+</span></span>
+<span id="cb233-2"><a href="två-stickprov.html#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb233-3"><a href="två-stickprov.html#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-137-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Testet för parade stickprov kan antingen utföras som ett enkelt t-test på differensserien</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="två-stickprov.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span> <span class="sc">-</span> dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="två-stickprov.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span> <span class="sc">-</span> dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -271,7 +271,7 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 ## mean of x 
 ##      5.75</code></pre>
 <p>eller som ett t-test för två stickprov där man särskilt anger att datan är parad</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="två-stickprov.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span>, dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span>, <span class="at">paired =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="två-stickprov.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 1</span><span class="st">`</span>, dat<span class="sc">$</span><span class="st">`</span><span class="at">Tidpunkt 2</span><span class="st">`</span>, <span class="at">paired =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -288,9 +288,9 @@ Som exempel ges följande data från en studie på äpple, där trädhöjd mätt
 <div id="t-test-för-två-oberoende-stickprov" class="section level3" number="8.1.2">
 <h3><span class="header-section-number">8.1.2</span> t-test för två oberoende stickprov</h3>
 <p>Ett t-test för två oberoende stickprov testar om två populationsmedelvärden är lika. Ta som exempel följande data på jordgubbsskörd vid två olika näringsbehandlingar (A och B). Här är stickprov inte matchade - det finns ingen direkt koppling mellan en observation i den ena behandlingsgruppen till någon observation i den andra.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="två-stickprov.html#cb234-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Behandling =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>),</span>
-<span id="cb234-2"><a href="två-stickprov.html#cb234-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Vikt =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="fl">48.2</span>, <span class="fl">39.2</span>, <span class="fl">47.9</span>, <span class="fl">57.5</span>, <span class="fl">61.5</span>, <span class="dv">58</span>, <span class="fl">66.5</span>))</span>
-<span id="cb234-3"><a href="två-stickprov.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="två-stickprov.html#cb238-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Behandling =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>),</span>
+<span id="cb238-2"><a href="två-stickprov.html#cb238-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">Vikt =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="fl">48.2</span>, <span class="fl">39.2</span>, <span class="fl">47.9</span>, <span class="fl">57.5</span>, <span class="fl">61.5</span>, <span class="dv">58</span>, <span class="fl">66.5</span>))</span>
+<span id="cb238-3"><a href="två-stickprov.html#cb238-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -370,24 +370,24 @@ B
 </tbody>
 </table>
 <p>Datan kan illustreras med ett enkelt punktdiagram. I ett publiceringssammanhang hade det kanske presenterats med ett stapeldiagram med felstaplar.</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="två-stickprov.html#cb235-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Behandling, Vikt)) <span class="sc">+</span></span>
-<span id="cb235-2"><a href="två-stickprov.html#cb235-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb235-3"><a href="två-stickprov.html#cb235-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb235-4"><a href="två-stickprov.html#cb235-4" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
-<span id="cb235-5"><a href="två-stickprov.html#cb235-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Behandling) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-6"><a href="två-stickprov.html#cb235-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">m =</span> <span class="fu">mean</span>(Vikt), <span class="at">s =</span> <span class="fu">sd</span>(Vikt)) <span class="sc">%&gt;%</span> </span>
-<span id="cb235-7"><a href="två-stickprov.html#cb235-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Behandling, m)) <span class="sc">+</span></span>
-<span id="cb235-8"><a href="två-stickprov.html#cb235-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;grey80&quot;</span>, <span class="at">width =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb235-9"><a href="två-stickprov.html#cb235-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> m <span class="sc">-</span> s, <span class="at">ymax =</span> m <span class="sc">+</span> s), <span class="at">width =</span> <span class="fl">0.1</span>)</span>
-<span id="cb235-10"><a href="två-stickprov.html#cb235-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb235-11"><a href="två-stickprov.html#cb235-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb235-12"><a href="två-stickprov.html#cb235-12" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-137-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="två-stickprov.html#cb239-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Behandling, Vikt)) <span class="sc">+</span></span>
+<span id="cb239-2"><a href="två-stickprov.html#cb239-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb239-3"><a href="två-stickprov.html#cb239-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-4"><a href="två-stickprov.html#cb239-4" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb239-5"><a href="två-stickprov.html#cb239-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Behandling) <span class="sc">%&gt;%</span> </span>
+<span id="cb239-6"><a href="två-stickprov.html#cb239-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">m =</span> <span class="fu">mean</span>(Vikt), <span class="at">s =</span> <span class="fu">sd</span>(Vikt)) <span class="sc">%&gt;%</span> </span>
+<span id="cb239-7"><a href="två-stickprov.html#cb239-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Behandling, m)) <span class="sc">+</span></span>
+<span id="cb239-8"><a href="två-stickprov.html#cb239-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;grey80&quot;</span>, <span class="at">width =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb239-9"><a href="två-stickprov.html#cb239-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> m <span class="sc">-</span> s, <span class="at">ymax =</span> m <span class="sc">+</span> s), <span class="at">width =</span> <span class="fl">0.1</span>)</span>
+<span id="cb239-10"><a href="två-stickprov.html#cb239-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-11"><a href="två-stickprov.html#cb239-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb239-12"><a href="två-stickprov.html#cb239-12" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> g2</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-141-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Ett t-test för två oberoende stickprov har nollhypotesen att grupperna har samma populationsmedelvärde och alternativhypotesen att populationsmedelvärdena är skilda (för det tvåsidiga fallet):</p>
 <p><span class="math display">\[\mu_1 = \mu_2 \qquad \mu_1 \neq \mu_2.\]</span></p>
 <p>Testet kan utföras i R genom funktionen <code>t.test</code>. Data kan antingen anges som en formel med dess data <code>Vikt ~ Behandling, data = dat</code> (vilket man kan läsa som <em>vikt uppdelat efter behandling</em>) eller som två skilda vektorer. Det förra alternativet är oftast enklare om man har datan på lång form - med en kolumn som anger grupp (i exemplet <em>Behandling</em>) och en kolumn som anger utfallsvärdet (i exemplet <em>Vikt</em>).</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="två-stickprov.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formelskrivning</span></span>
-<span id="cb236-2"><a href="två-stickprov.html#cb236-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Vikt <span class="sc">~</span> Behandling, <span class="at">data =</span> dat, <span class="at">var.equal =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="två-stickprov.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formelskrivning</span></span>
+<span id="cb240-2"><a href="två-stickprov.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Vikt <span class="sc">~</span> Behandling, <span class="at">data =</span> dat, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -399,14 +399,14 @@ B
 ## sample estimates:
 ## mean in group A mean in group B 
 ##          43.825          60.875</code></pre>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="två-stickprov.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Två separata vektorer</span></span>
-<span id="cb238-2"><a href="två-stickprov.html#cb238-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtrera ut data där behandling är A</span></span>
-<span id="cb238-3"><a href="två-stickprov.html#cb238-3" aria-hidden="true" tabindex="-1"></a>Vikt_A <span class="ot">&lt;-</span> dat<span class="sc">$</span>Vikt[dat<span class="sc">$</span>Behandling <span class="sc">==</span> <span class="st">&quot;A&quot;</span>]</span>
-<span id="cb238-4"><a href="två-stickprov.html#cb238-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb238-5"><a href="två-stickprov.html#cb238-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtrera ut data där behandling är B</span></span>
-<span id="cb238-6"><a href="två-stickprov.html#cb238-6" aria-hidden="true" tabindex="-1"></a>Vikt_B <span class="ot">&lt;-</span> dat<span class="sc">$</span>Vikt[dat<span class="sc">$</span>Behandling <span class="sc">==</span> <span class="st">&quot;B&quot;</span>]</span>
-<span id="cb238-7"><a href="två-stickprov.html#cb238-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb238-8"><a href="två-stickprov.html#cb238-8" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Vikt_A, Vikt_B, <span class="at">var.equal =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="två-stickprov.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Två separata vektorer</span></span>
+<span id="cb242-2"><a href="två-stickprov.html#cb242-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtrera ut data där behandling är A</span></span>
+<span id="cb242-3"><a href="två-stickprov.html#cb242-3" aria-hidden="true" tabindex="-1"></a>Vikt_A <span class="ot">&lt;-</span> dat<span class="sc">$</span>Vikt[dat<span class="sc">$</span>Behandling <span class="sc">==</span> <span class="st">&quot;A&quot;</span>]</span>
+<span id="cb242-4"><a href="två-stickprov.html#cb242-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-5"><a href="två-stickprov.html#cb242-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Filtrera ut data där behandling är B</span></span>
+<span id="cb242-6"><a href="två-stickprov.html#cb242-6" aria-hidden="true" tabindex="-1"></a>Vikt_B <span class="ot">&lt;-</span> dat<span class="sc">$</span>Vikt[dat<span class="sc">$</span>Behandling <span class="sc">==</span> <span class="st">&quot;B&quot;</span>]</span>
+<span id="cb242-7"><a href="två-stickprov.html#cb242-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb242-8"><a href="två-stickprov.html#cb242-8" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Vikt_A, Vikt_B, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -428,7 +428,7 @@ Testet ger ett p-värde på <span class="math inline">\(0.0018\)</span>, vilket 
 <p>Om man vill jämföra två proportioner kan man använda z-testet för två stickprov. Säg till exempel att man utvecklar den tidigare studien, som gav 17 av 50 infekterade plantor, till att undersöka ytterligare en sort och att den sorten har 26 infekterade plantor av en total på 60. Testets hypotesen är i det tvåsidiga fallet</p>
 <p><span class="math display">\[H_0: p_1 = p_2 \qquad H_1: p_1 \neq p_2.\]</span></p>
 <p>I R kan testet genomföras med <code>prop.test</code>-funktionen. Funktionens första argument är antalen infekterade, som en vektor med två värden, och dess andra argument är totalerna. Likt testet med ett stickprov finns en möjlighet att göra en kontinuitetskorrektion med <code>correct</code>-argumentet.</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="två-stickprov.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(<span class="dv">17</span>, <span class="dv">26</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>), <span class="at">correct =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="två-stickprov.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(<span class="dv">17</span>, <span class="dv">26</span>), <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>), <span class="at">correct =</span> F)</span></code></pre></div>
 <pre><code>## 
 ##  2-sample test for equality of proportions without continuity
 ##  correction
@@ -448,10 +448,10 @@ Testet ger ett högt p-värde vilket innebär att nollhypotesen inte förkastas.
 <div id="nominal-eller-ordinal-data.-korstabeller" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Nominal eller ordinal data. Korstabeller</h2>
 <p>Data med två insamlade variabler per observerad enhet kan presenteras med en korstabell. Ta som (ett något deppigt) exempel överlevandsdata från Titanic. Datan finns tillgänglig i R som <code>Titanic</code> och man kan konstruera en korstabell med <code>pivot_wider</code>. I detta fall ges överlevnad filtrerad på vuxna män, uppdelat efter klass.</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="två-stickprov.html#cb242-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> Titanic <span class="sc">%&gt;%</span> </span>
-<span id="cb242-2"><a href="två-stickprov.html#cb242-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb242-3"><a href="två-stickprov.html#cb242-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>, Sex <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>)</span>
-<span id="cb242-4"><a href="två-stickprov.html#cb242-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="två-stickprov.html#cb246-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> Titanic <span class="sc">%&gt;%</span> </span>
+<span id="cb246-2"><a href="två-stickprov.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb246-3"><a href="två-stickprov.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>, Sex <span class="sc">==</span> <span class="st">&quot;Male&quot;</span>)</span>
+<span id="cb246-4"><a href="två-stickprov.html#cb246-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -612,18 +612,18 @@ Yes
 </tbody>
 </table>
 <p>En korstabell kan konstrueras med <code>pivot_wider</code>.</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="två-stickprov.html#cb243-1" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
-<span id="cb243-2"><a href="två-stickprov.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Survived, <span class="at">values_from =</span> n)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="två-stickprov.html#cb247-1" aria-hidden="true" tabindex="-1"></a>dat_wide <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb247-2"><a href="två-stickprov.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Survived, <span class="at">values_from =</span> n)</span></code></pre></div>
 <p>Datan tyder på att överlevnad är beroende av klass - en tredjedel av förstaklass överlever, men en sjättedel av tredjeklass överlever. En illustration kan göras genom ett stapeldiagram.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="två-stickprov.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Class, n, <span class="at">fill =</span> Survived)) <span class="sc">+</span></span>
-<span id="cb244-2"><a href="två-stickprov.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_fill</span>(), </span>
-<span id="cb244-3"><a href="två-stickprov.html#cb244-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb244-4"><a href="två-stickprov.html#cb244-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb244-5"><a href="två-stickprov.html#cb244-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Proportion&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-142-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="två-stickprov.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(Class, n, <span class="at">fill =</span> Survived)) <span class="sc">+</span></span>
+<span id="cb248-2"><a href="två-stickprov.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_fill</span>(), </span>
+<span id="cb248-3"><a href="två-stickprov.html#cb248-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb248-4"><a href="två-stickprov.html#cb248-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb248-5"><a href="två-stickprov.html#cb248-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Proportion&quot;</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-146-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Argumentet <code>position</code> i <code>geom_bar</code> används för att skapa proportionella staplar.</p>
 <p>Ett <span class="math inline">\(\chi^2\)</span>-test på en korstabell har nollhypotesen att det inte finns något samband mellan variabeln för rader och variabeln för kolumner. Antal frihetsgrader ges av antal rader minus ett gånger antal kolumner minus ett. Testet kan enkelt göras med <code>chisq.test</code>. Som ingångsvärde kan man plocka ut kolumnerna med numeriska värden genom hakparenteser.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="två-stickprov.html#cb245-1" aria-hidden="true" tabindex="-1"></a>dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># De två numeriska kolumnerna</span></span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="två-stickprov.html#cb249-1" aria-hidden="true" tabindex="-1"></a>dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="co"># De två numeriska kolumnerna</span></span></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##      No   Yes
 ##   &lt;dbl&gt; &lt;dbl&gt;
@@ -631,7 +631,7 @@ Yes
 ## 2   154    14
 ## 3   387    75
 ## 4   670   192</code></pre>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="två-stickprov.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="två-stickprov.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
@@ -639,17 +639,17 @@ Yes
 ## X-squared = 37.988, df = 3, p-value = 2.843e-08</code></pre>
 <p>Utskriften ger teststorheten, antal frihetsgrader, och p-värdet. I det här fallet är p-värdet mycket litet (skrivning med <code>e</code> ska läsas som <span class="math inline">\(2.843e-8 = 2.843 \cdot 10^{-8} = 0.00000002843\)</span>) och slutsatsen blir att nollhypotesen förkastas - det finns ett samband mellan klass och överlevnad. Antalet frihetsgrader ges av antalet rader minus ett gånger antalet kolumner minus ett (här <span class="math inline">\((4-1) \cdot (2-1) = 3\)</span>).</p>
 <p><span class="math inline">\(\chi^2\)</span>-test är ett asymptotiskt test - dess egenskaper är beroende av <em>stora</em> stickprov. Som gräns för storleken används ofta att samtliga förväntade antal ska vara större än 5. Funktionen ger en varning om förväntade värden är små. En möjlig lösning i sådana fall är att slå ihop klasser.</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="två-stickprov.html#cb249-1" aria-hidden="true" tabindex="-1"></a>test_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb249-2"><a href="två-stickprov.html#cb249-2" aria-hidden="true" tabindex="-1"></a>test_result<span class="sc">$</span>expected <span class="co"># Samtliga förväntade värden över 5</span></span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="två-stickprov.html#cb253-1" aria-hidden="true" tabindex="-1"></a>test_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dat_wide[, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb253-2"><a href="två-stickprov.html#cb253-2" aria-hidden="true" tabindex="-1"></a>test_result<span class="sc">$</span>expected <span class="co"># Samtliga förväntade värden över 5</span></span></code></pre></div>
 <pre><code>##            No       Yes
 ## [1,] 139.5171  35.48290
 ## [2,] 133.9364  34.06359
 ## [3,] 368.3251  93.67487
 ## [4,] 687.2214 174.77864</code></pre>
 <p>Om detta krav inte är uppfyllt skriver funktionen ut en varning.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="två-stickprov.html#cb251-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb251-2"><a href="två-stickprov.html#cb251-2" aria-hidden="true" tabindex="-1"></a>test_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dat)</span>
-<span id="cb251-3"><a href="två-stickprov.html#cb251-3" aria-hidden="true" tabindex="-1"></a>test_result<span class="sc">$</span>expected</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="två-stickprov.html#cb255-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">1</span>), <span class="dv">2</span>)</span>
+<span id="cb255-2"><a href="två-stickprov.html#cb255-2" aria-hidden="true" tabindex="-1"></a>test_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dat)</span>
+<span id="cb255-3"><a href="två-stickprov.html#cb255-3" aria-hidden="true" tabindex="-1"></a>test_result<span class="sc">$</span>expected</span></code></pre></div>
 <pre><code>##      [,1] [,2]
 ## [1,]  4.5  4.5
 ## [2,]  1.5  1.5</code></pre>
@@ -658,7 +658,7 @@ Yes
 <div id="övningar-3" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Övningar</h2>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-47" class="exercise"><strong>Övning 8.1  (Lök) </strong></span>Åtta monoglukosidmätningar på lök samlas in från fyra konventionella och fyra ekologiska ordlare.</p>
+<p><span id="exr:unlabeled-div-49" class="exercise"><strong>Övning 8.1  (Lök) </strong></span>Åtta monoglukosidmätningar på lök samlas in från fyra konventionella och fyra ekologiska ordlare.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -741,17 +741,17 @@ Konventionell
 <p>b. Beräkna ett 95-procentigt konfidensintervall för skillnaden i medelvärde.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-48" class="hypothesis"><strong>Lösningsförslag 8.1  (Lök) </strong></span>Datan kan importeras från excelfilen med uppgiftsdata. En lämplig graf kan skapas genom att pivotera till långform och plotta med <code>ggplot</code>.</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="två-stickprov.html#cb253-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Lökfärg&quot;</span>)</span>
-<span id="cb253-2"><a href="två-stickprov.html#cb253-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb253-3"><a href="två-stickprov.html#cb253-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
-<span id="cb253-4"><a href="två-stickprov.html#cb253-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Odlare, <span class="at">names_to =</span> <span class="st">&quot;Odlingstyp&quot;</span>, </span>
-<span id="cb253-5"><a href="två-stickprov.html#cb253-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;Monoglukosid&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb253-6"><a href="två-stickprov.html#cb253-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Odlingstyp, Monoglukosid)) <span class="sc">+</span></span>
-<span id="cb253-7"><a href="två-stickprov.html#cb253-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-147-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-50" class="hypothesis"><strong>Lösningsförslag 8.1  (Lök) </strong></span>Datan kan importeras från excelfilen med uppgiftsdata. En lämplig graf kan skapas genom att pivotera till långform och plotta med <code>ggplot</code>.</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="två-stickprov.html#cb257-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">&quot;Data/Uppgiftsdata.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Lökfärg&quot;</span>)</span>
+<span id="cb257-2"><a href="två-stickprov.html#cb257-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb257-3"><a href="två-stickprov.html#cb257-3" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb257-4"><a href="två-stickprov.html#cb257-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Odlare, <span class="at">names_to =</span> <span class="st">&quot;Odlingstyp&quot;</span>, </span>
+<span id="cb257-5"><a href="två-stickprov.html#cb257-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;Monoglukosid&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb257-6"><a href="två-stickprov.html#cb257-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Odlingstyp, Monoglukosid)) <span class="sc">+</span></span>
+<span id="cb257-7"><a href="två-stickprov.html#cb257-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-151-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>a. Eftersom det inte finns någon koppling mellan odlare är ett t-test för två oberoende stickprov ett lämpligt test. Testet kan genomföras med eller utan ett antagande om lika varianser inom grupperna.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="två-stickprov.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Konventionell, dat<span class="sc">$</span>Ekologisk, <span class="at">var.equal =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="två-stickprov.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Konventionell, dat<span class="sc">$</span>Ekologisk, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -763,7 +763,7 @@ Konventionell
 ## sample estimates:
 ## mean of x mean of y 
 ##   135.100   171.225</code></pre>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="två-stickprov.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Konventionell, dat<span class="sc">$</span>Ekologisk, <span class="at">var.equal =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="två-stickprov.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Konventionell, dat<span class="sc">$</span>Ekologisk, <span class="at">var.equal =</span> F)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -779,30 +779,30 @@ Konventionell
 <p>b. Om varianser antas lika ges ett 95-procentigt konfidensintervall av <span class="math inline">\((-70.9, -1.4)\)</span>. Notera att ett 95-procentigt intervall inte täcker noll, vilket är i linje med att p-värdet är mindre än 5 procent.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-49" class="exercise"><strong>Övning 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>Bland kursdata finns datafiler med allsvenska matcher för damer (2000-2020) och herrar (1924-2019).
+<p><span id="exr:unlabeled-div-51" class="exercise"><strong>Övning 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>Bland kursdata finns datafiler med allsvenska matcher för damer (2000-2020) och herrar (1924-2019).
 Det genomsnittliga antalet mål i respektive serie ges för åren 2000-2009 av följande tabell.</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="två-stickprov.html#cb258-1" aria-hidden="true" tabindex="-1"></a>dat_dam <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, damer, 2000-2020.csv&quot;</span>)</span>
-<span id="cb258-2"><a href="två-stickprov.html#cb258-2" aria-hidden="true" tabindex="-1"></a>dat_herr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, herrar, 1924-2019.csv&quot;</span>)</span>
-<span id="cb258-3"><a href="två-stickprov.html#cb258-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb258-4"><a href="två-stickprov.html#cb258-4" aria-hidden="true" tabindex="-1"></a>dat_dam_medel <span class="ot">&lt;-</span> dat_dam <span class="sc">%&gt;%</span> </span>
-<span id="cb258-5"><a href="två-stickprov.html#cb258-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sasong) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-6"><a href="två-stickprov.html#cb258-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Mål <span class="ot">=</span> <span class="fu">mean</span>(hemmamal <span class="sc">+</span> bortamal)) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-7"><a href="två-stickprov.html#cb258-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sasong <span class="sc">%in%</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2009</span>)</span>
-<span id="cb258-8"><a href="två-stickprov.html#cb258-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb258-9"><a href="två-stickprov.html#cb258-9" aria-hidden="true" tabindex="-1"></a>dat_herr_medel <span class="ot">&lt;-</span> dat_herr <span class="sc">%&gt;%</span> </span>
-<span id="cb258-10"><a href="två-stickprov.html#cb258-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sasong) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-11"><a href="två-stickprov.html#cb258-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Mål <span class="ot">=</span> <span class="fu">mean</span>(hemmamal <span class="sc">+</span> bortamal)) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-12"><a href="två-stickprov.html#cb258-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sasong <span class="sc">%in%</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2009</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-13"><a href="två-stickprov.html#cb258-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sasong =</span> <span class="fu">as.numeric</span>(sasong))</span>
-<span id="cb258-14"><a href="två-stickprov.html#cb258-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb258-15"><a href="två-stickprov.html#cb258-15" aria-hidden="true" tabindex="-1"></a>dat_total <span class="ot">&lt;-</span> dat_dam_medel <span class="sc">%&gt;%</span></span>
-<span id="cb258-16"><a href="två-stickprov.html#cb258-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Allsvenska =</span> <span class="st">&quot;Dam&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-17"><a href="två-stickprov.html#cb258-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(dat_herr_medel <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Allsvenska =</span> <span class="st">&quot;Herr&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-18"><a href="två-stickprov.html#cb258-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(Säsong <span class="ot">=</span> sasong)</span>
-<span id="cb258-19"><a href="två-stickprov.html#cb258-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb258-20"><a href="två-stickprov.html#cb258-20" aria-hidden="true" tabindex="-1"></a>dat_total <span class="sc">%&gt;%</span> </span>
-<span id="cb258-21"><a href="två-stickprov.html#cb258-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">values_from =</span> Mål, <span class="at">names_from =</span> Allsvenska) <span class="sc">%&gt;%</span> </span>
-<span id="cb258-22"><a href="två-stickprov.html#cb258-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="två-stickprov.html#cb262-1" aria-hidden="true" tabindex="-1"></a>dat_dam <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, damer, 2000-2020.csv&quot;</span>)</span>
+<span id="cb262-2"><a href="två-stickprov.html#cb262-2" aria-hidden="true" tabindex="-1"></a>dat_herr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Allsvenskan, herrar, 1924-2019.csv&quot;</span>)</span>
+<span id="cb262-3"><a href="två-stickprov.html#cb262-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-4"><a href="två-stickprov.html#cb262-4" aria-hidden="true" tabindex="-1"></a>dat_dam_medel <span class="ot">&lt;-</span> dat_dam <span class="sc">%&gt;%</span> </span>
+<span id="cb262-5"><a href="två-stickprov.html#cb262-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sasong) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-6"><a href="två-stickprov.html#cb262-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Mål <span class="ot">=</span> <span class="fu">mean</span>(hemmamal <span class="sc">+</span> bortamal)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-7"><a href="två-stickprov.html#cb262-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sasong <span class="sc">%in%</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2009</span>)</span>
+<span id="cb262-8"><a href="två-stickprov.html#cb262-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-9"><a href="två-stickprov.html#cb262-9" aria-hidden="true" tabindex="-1"></a>dat_herr_medel <span class="ot">&lt;-</span> dat_herr <span class="sc">%&gt;%</span> </span>
+<span id="cb262-10"><a href="två-stickprov.html#cb262-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sasong) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-11"><a href="två-stickprov.html#cb262-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Mål <span class="ot">=</span> <span class="fu">mean</span>(hemmamal <span class="sc">+</span> bortamal)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-12"><a href="två-stickprov.html#cb262-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sasong <span class="sc">%in%</span> <span class="dv">2000</span><span class="sc">:</span><span class="dv">2009</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-13"><a href="två-stickprov.html#cb262-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sasong =</span> <span class="fu">as.numeric</span>(sasong))</span>
+<span id="cb262-14"><a href="två-stickprov.html#cb262-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-15"><a href="två-stickprov.html#cb262-15" aria-hidden="true" tabindex="-1"></a>dat_total <span class="ot">&lt;-</span> dat_dam_medel <span class="sc">%&gt;%</span></span>
+<span id="cb262-16"><a href="två-stickprov.html#cb262-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Allsvenska =</span> <span class="st">&quot;Dam&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-17"><a href="två-stickprov.html#cb262-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(dat_herr_medel <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Allsvenska =</span> <span class="st">&quot;Herr&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-18"><a href="två-stickprov.html#cb262-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(Säsong <span class="ot">=</span> sasong)</span>
+<span id="cb262-19"><a href="två-stickprov.html#cb262-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-20"><a href="två-stickprov.html#cb262-20" aria-hidden="true" tabindex="-1"></a>dat_total <span class="sc">%&gt;%</span> </span>
+<span id="cb262-21"><a href="två-stickprov.html#cb262-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">values_from =</span> Mål, <span class="at">names_from =</span> Allsvenska) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-22"><a href="två-stickprov.html#cb262-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -935,15 +935,15 @@ Herr
 <p>c. Genomför ett lämpligt test för att se om serierna har samma populationsmedelvärde för antal mål. Diskutera om datan bör ses som parad (två observationer per år).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-50" class="hypothesis"><strong>Lösningsförslag 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>a. Datan kan illustreras med ett linjediagram med två separata linjer.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="två-stickprov.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fortsättning från inläsningen ovan</span></span>
-<span id="cb259-2"><a href="två-stickprov.html#cb259-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_total, <span class="fu">aes</span>(Säsong, Mål, <span class="at">col =</span> Allsvenska)) <span class="sc">+</span></span>
-<span id="cb259-3"><a href="två-stickprov.html#cb259-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-150-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-52" class="hypothesis"><strong>Lösningsförslag 8.2  (Allsvenskan. Genomsnittligt antal mål) </strong></span>a. Datan kan illustreras med ett linjediagram med två separata linjer.</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="två-stickprov.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fortsättning från inläsningen ovan</span></span>
+<span id="cb263-2"><a href="två-stickprov.html#cb263-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_total, <span class="fu">aes</span>(Säsong, Mål, <span class="at">col =</span> Allsvenska)) <span class="sc">+</span></span>
+<span id="cb263-3"><a href="två-stickprov.html#cb263-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-154-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Allsvenskan för damer har ett högre genomsnittligt antal mål än allsvenskan för herrar.</p>
 <p>b. Konfidensintervall kan beräknas med <code>t.test</code> efter att observationer för damer filtrerats ut.</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="två-stickprov.html#cb260-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat_total <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Allsvenska <span class="sc">==</span> <span class="st">&quot;Dam&quot;</span>)</span>
-<span id="cb260-2"><a href="två-stickprov.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Mål)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="två-stickprov.html#cb264-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat_total <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Allsvenska <span class="sc">==</span> <span class="st">&quot;Dam&quot;</span>)</span>
+<span id="cb264-2"><a href="två-stickprov.html#cb264-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat<span class="sc">$</span>Mål)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -957,7 +957,7 @@ Herr
 ##  3.546212</code></pre>
 <p>Konfidensintervallet ges av <span class="math inline">\((3.37, 3.71)\)</span>. Det sanna populationsmedelvärdet ligger med 95-procents konfidens i det intervallet.</p>
 <p>c. Ett lämpligt test kan genomföras med <code>t.test</code>. Nollhypotesen är att serierna har samma populationsmedelvärde och att den skillnad man kan se därmed enbart är slumpmässig variation.</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="två-stickprov.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Mål <span class="sc">~</span> Allsvenska, dat_total)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="två-stickprov.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Mål <span class="sc">~</span> Allsvenska, dat_total)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -973,7 +973,7 @@ Herr
 <p>I det här fallet kan man diskutera om det inte är mer lämpligt att använda ett t-test för parade observation, eftersom det är två observationer per år. Ett argument mot det är att det inte finns någon egentlig anledning att tro att det skulle finnas något samband mellan antal mål för damer respektive för herrar ett visst år.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-51" class="exercise"><strong>Övning 8.3  (Nature's mosquito) </strong></span>En viktig del i arbetet mot spridning av malaria är att förstå myggors reaktion på dofter. Ett vanligt sätt att undersöka detta är att följa flyktmönster i en sluten vindtunnel. I ett försök har man en vindtunnel med måtten 60 x 30 x 100 cm (bredd, höjd, djup). I den ena änden finns två doftkällor placerade i jämn höjd, med 30 centimeters mellanrum. I den andra änden släpper man en mygga i taget och genom videoinspelning kan man beräkna dess position varje tiondels sekund. Försöket omfattar 60 individer av två arter. Datan finns tillgänglig bland kursdatan i filen <em>Mosquitos.csv</em>.</p>
+<p><span id="exr:unlabeled-div-53" class="exercise"><strong>Övning 8.3  (Nature's mosquito) </strong></span>En viktig del i arbetet mot spridning av malaria är att förstå myggors reaktion på dofter. Ett vanligt sätt att undersöka detta är att följa flyktmönster i en sluten vindtunnel. I ett försök har man en vindtunnel med måtten 60 x 30 x 100 cm (bredd, höjd, djup). I den ena änden finns två doftkällor placerade i jämn höjd, med 30 centimeters mellanrum. I den andra änden släpper man en mygga i taget och genom videoinspelning kan man beräkna dess position varje tiondels sekund. Försöket omfattar 60 individer av två arter. Datan finns tillgänglig bland kursdatan i filen <em>Mosquitos.csv</em>.</p>
 <p>a. Illustrera en eller flera myggors flykt med ett passande diagram. En möjlighet är att ha z-koordinaten på den horisontella axeln och x-koordinaten på den vertikala axeln och göra en spårlinje med <code>geom_path</code>. Den linjen motsvarar då flykten sedd från ovan. Eftersom flykten anges med x-, y- och z-koordinater kan man även illustrera det som en tre-dimensionell graf, till exempel med <code>rgl</code>-paketet.</p>
 <p>b. Det är möjligt att ta fram myggornas landningspunkt på bortre änden genom att filtera på värden där <code>Proportional_time</code> är 1. Man får då följande värden på x-koordinaten.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1277,61 +1277,61 @@ Aedes africanus
 <p>Frågan är baserad på Hinze et al (2021) <em>Mosquito Host Seeking in 3D Using a Versatile Climate-Controlled Wind Tunnel System</em>.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-52" class="hypothesis"><strong>Lösningsförslag 8.3  (Nature's mosquito) </strong></span>Datan importas med <code>read_csv</code>.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="två-stickprov.html#cb264-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Mosquitos.csv&quot;</span>)</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-54" class="hypothesis"><strong>Lösningsförslag 8.3  (Nature's mosquito) </strong></span>Datan importas med <code>read_csv</code>.</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="två-stickprov.html#cb268-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Mosquitos.csv&quot;</span>)</span></code></pre></div>
 <p>a. En passande graf kan konstrueras med <code>ggplot2</code> och <code>geom_path</code>. Med två grafer kan man illustrera flykten från sidan och från ovan. Färger kan separera arterna. Den specifika individen måste sättas med <code>group = id</code> för att den enskilda flykten ska bli en egen linje.</p>
 <p>Ett exempel på en enskild individ.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="två-stickprov.html#cb265-1" aria-hidden="true" tabindex="-1"></a>dat_ind1 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb265-2"><a href="två-stickprov.html#cb265-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb265-3"><a href="två-stickprov.html#cb265-3" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_ind1, <span class="fu">aes</span>(z, y, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
-<span id="cb265-4"><a href="två-stickprov.html#cb265-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
-<span id="cb265-5"><a href="två-stickprov.html#cb265-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från sidan&quot;</span>)</span>
-<span id="cb265-6"><a href="två-stickprov.html#cb265-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb265-7"><a href="två-stickprov.html#cb265-7" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_ind1, <span class="fu">aes</span>(z, x, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
-<span id="cb265-8"><a href="två-stickprov.html#cb265-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
-<span id="cb265-9"><a href="två-stickprov.html#cb265-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från ovan&quot;</span>)</span>
-<span id="cb265-10"><a href="två-stickprov.html#cb265-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb265-11"><a href="två-stickprov.html#cb265-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb265-12"><a href="två-stickprov.html#cb265-12" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">/</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-156-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="två-stickprov.html#cb269-1" aria-hidden="true" tabindex="-1"></a>dat_ind1 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb269-2"><a href="två-stickprov.html#cb269-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-3"><a href="två-stickprov.html#cb269-3" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_ind1, <span class="fu">aes</span>(z, y, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
+<span id="cb269-4"><a href="två-stickprov.html#cb269-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
+<span id="cb269-5"><a href="två-stickprov.html#cb269-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från sidan&quot;</span>)</span>
+<span id="cb269-6"><a href="två-stickprov.html#cb269-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-7"><a href="två-stickprov.html#cb269-7" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat_ind1, <span class="fu">aes</span>(z, x, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
+<span id="cb269-8"><a href="två-stickprov.html#cb269-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
+<span id="cb269-9"><a href="två-stickprov.html#cb269-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från ovan&quot;</span>)</span>
+<span id="cb269-10"><a href="två-stickprov.html#cb269-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb269-11"><a href="två-stickprov.html#cb269-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb269-12"><a href="två-stickprov.html#cb269-12" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">/</span> g2</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-160-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Ett exempel med samtliga individer i en (rörig) illustration.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="två-stickprov.html#cb266-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(z, y, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
-<span id="cb266-2"><a href="två-stickprov.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb266-3"><a href="två-stickprov.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från sidan&quot;</span>)</span>
-<span id="cb266-4"><a href="två-stickprov.html#cb266-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-5"><a href="två-stickprov.html#cb266-5" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(z, x, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
-<span id="cb266-6"><a href="två-stickprov.html#cb266-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb266-7"><a href="två-stickprov.html#cb266-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från ovan&quot;</span>)</span>
-<span id="cb266-8"><a href="två-stickprov.html#cb266-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-9"><a href="två-stickprov.html#cb266-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb266-10"><a href="två-stickprov.html#cb266-10" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">/</span> g2</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-157-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="två-stickprov.html#cb270-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(z, y, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
+<span id="cb270-2"><a href="två-stickprov.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb270-3"><a href="två-stickprov.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från sidan&quot;</span>)</span>
+<span id="cb270-4"><a href="två-stickprov.html#cb270-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb270-5"><a href="två-stickprov.html#cb270-5" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(z, x, <span class="at">group =</span> id, <span class="at">col =</span> Species)) <span class="sc">+</span> </span>
+<span id="cb270-6"><a href="två-stickprov.html#cb270-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb270-7"><a href="två-stickprov.html#cb270-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Från ovan&quot;</span>)</span>
+<span id="cb270-8"><a href="två-stickprov.html#cb270-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb270-9"><a href="två-stickprov.html#cb270-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb270-10"><a href="två-stickprov.html#cb270-10" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">/</span> g2</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-161-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>R har paket med funktioner för tre-dimensionella grafer. Ett exempel är genom paketet <code>rgl</code> och funktionerna <code>plot3d</code> och <code>lines3d</code>.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="två-stickprov.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(rgl)</span></span>
-<span id="cb267-2"><a href="två-stickprov.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgl)</span>
-<span id="cb267-3"><a href="två-stickprov.html#cb267-3" aria-hidden="true" tabindex="-1"></a><span class="co"># En enskild mygga plottad med plot3d</span></span>
-<span id="cb267-4"><a href="två-stickprov.html#cb267-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Det första argumentet är de tre koordinatvariablerna efter filter på första individen</span></span>
-<span id="cb267-5"><a href="två-stickprov.html#cb267-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot3d</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(z, x, y), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">asp =</span> F, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>)</span>
-<span id="cb267-6"><a href="två-stickprov.html#cb267-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb267-7"><a href="två-stickprov.html#cb267-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Övriga flykter tillagda med lines3d i en for-loop</span></span>
-<span id="cb267-8"><a href="två-stickprov.html#cb267-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Loopen går inom samtliga individer och lägger till linjen till 3d-grafen</span></span>
-<span id="cb267-9"><a href="två-stickprov.html#cb267-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>){</span>
-<span id="cb267-10"><a href="två-stickprov.html#cb267-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines3d</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> i) <span class="sc">%&gt;%</span> <span class="fu">select</span>(z, x, y), </span>
-<span id="cb267-11"><a href="två-stickprov.html#cb267-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="fu">ifelse</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> i) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Species) <span class="sc">==</span> <span class="st">&quot;Aedes africanus&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
-<span id="cb267-12"><a href="två-stickprov.html#cb267-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha =</span> <span class="fl">0.15</span>)</span>
-<span id="cb267-13"><a href="två-stickprov.html#cb267-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb267-14"><a href="två-stickprov.html#cb267-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb267-15"><a href="två-stickprov.html#cb267-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Skapa punkter för landningsplatsen</span></span>
-<span id="cb267-16"><a href="två-stickprov.html#cb267-16" aria-hidden="true" tabindex="-1"></a><span class="fu">points3d</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Proportional_time <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(z, x, y), <span class="at">size =</span> <span class="dv">6</span>, </span>
-<span id="cb267-17"><a href="två-stickprov.html#cb267-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">ifelse</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Proportional_time <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Species) <span class="sc">==</span> <span class="st">&quot;Aedes africanus&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="två-stickprov.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(rgl)</span></span>
+<span id="cb271-2"><a href="två-stickprov.html#cb271-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgl)</span>
+<span id="cb271-3"><a href="två-stickprov.html#cb271-3" aria-hidden="true" tabindex="-1"></a><span class="co"># En enskild mygga plottad med plot3d</span></span>
+<span id="cb271-4"><a href="två-stickprov.html#cb271-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Det första argumentet är de tre koordinatvariablerna efter filter på första individen</span></span>
+<span id="cb271-5"><a href="två-stickprov.html#cb271-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot3d</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(z, x, y), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">asp =</span> F, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>)</span>
+<span id="cb271-6"><a href="två-stickprov.html#cb271-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb271-7"><a href="två-stickprov.html#cb271-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Övriga flykter tillagda med lines3d i en for-loop</span></span>
+<span id="cb271-8"><a href="två-stickprov.html#cb271-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Loopen går inom samtliga individer och lägger till linjen till 3d-grafen</span></span>
+<span id="cb271-9"><a href="två-stickprov.html#cb271-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">60</span>){</span>
+<span id="cb271-10"><a href="två-stickprov.html#cb271-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines3d</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> i) <span class="sc">%&gt;%</span> <span class="fu">select</span>(z, x, y), </span>
+<span id="cb271-11"><a href="två-stickprov.html#cb271-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="fu">ifelse</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(id <span class="sc">==</span> i) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Species) <span class="sc">==</span> <span class="st">&quot;Aedes africanus&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb271-12"><a href="två-stickprov.html#cb271-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">alpha =</span> <span class="fl">0.15</span>)</span>
+<span id="cb271-13"><a href="två-stickprov.html#cb271-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb271-14"><a href="två-stickprov.html#cb271-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb271-15"><a href="två-stickprov.html#cb271-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Skapa punkter för landningsplatsen</span></span>
+<span id="cb271-16"><a href="två-stickprov.html#cb271-16" aria-hidden="true" tabindex="-1"></a><span class="fu">points3d</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Proportional_time <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(z, x, y), <span class="at">size =</span> <span class="dv">6</span>, </span>
+<span id="cb271-17"><a href="två-stickprov.html#cb271-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">ifelse</span>(dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Proportional_time <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Species) <span class="sc">==</span> <span class="st">&quot;Aedes africanus&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p>b. För att titta på landningsplatser filtreras på de observationer där den proportionella observationstiden är 1 (den sista observationen). Därefter kan en lämplig graf skapas med <code>geom_boxplot</code> med art på x-axeln och x-koordinaten på grafens y-axel.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="två-stickprov.html#cb268-1" aria-hidden="true" tabindex="-1"></a>dat_endtime <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Proportional_time <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb268-2"><a href="två-stickprov.html#cb268-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb268-3"><a href="två-stickprov.html#cb268-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_endtime, <span class="fu">aes</span>(Species, x)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-159-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="två-stickprov.html#cb272-1" aria-hidden="true" tabindex="-1"></a>dat_endtime <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Proportional_time <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb272-2"><a href="två-stickprov.html#cb272-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb272-3"><a href="två-stickprov.html#cb272-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_endtime, <span class="fu">aes</span>(Species, x)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-163-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><em>Aedes aegypti</em> uppvisar högre x-koordinater, vilket tyder på att den arten varit mer lockad av doftämnet till höger.</p>
 <p>c. Ett t-test för oberoende stickprov kan genomföras genom att ta x-koordinaten som utfallsvariabel och arterna som de två grupperna. Testet kan genomföras med eller utan antaganden om lika varianser inom grupperna. Nollhypotesen är arterna har samma populationsmedelvärde i x-koordinaten vid landningstillfället.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="två-stickprov.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x <span class="sc">~</span> Species, dat_endtime)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="två-stickprov.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x <span class="sc">~</span> Species, dat_endtime)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -1343,7 +1343,7 @@ Aedes africanus
 ## sample estimates:
 ##   mean in group Aedes aegypti mean in group Aedes africanus 
 ##                      3.106667                     -6.781333</code></pre>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="två-stickprov.html#cb271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x <span class="sc">~</span> Species, dat_endtime, <span class="at">var.equal =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="två-stickprov.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x <span class="sc">~</span> Species, dat_endtime, <span class="at">var.equal =</span> T)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -1357,8 +1357,8 @@ Aedes africanus
 ##                      3.106667                     -6.781333</code></pre>
 <p>Bägge testet ger stark signifikans. Man drar slutsatsen att det finns en skillnad mellan arterna.</p>
 <p>d. Ett konfidensintervall kan tas fram med <code>t.test</code> efter filtrering på art så att enbart <em>aegypti</em> förekommer i datan.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="två-stickprov.html#cb273-1" aria-hidden="true" tabindex="-1"></a>dat_endtime_aegypti <span class="ot">&lt;-</span> dat_endtime <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">&quot;Aedes aegypti&quot;</span>)</span>
-<span id="cb273-2"><a href="två-stickprov.html#cb273-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat_endtime_aegypti<span class="sc">$</span>x)</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="två-stickprov.html#cb277-1" aria-hidden="true" tabindex="-1"></a>dat_endtime_aegypti <span class="ot">&lt;-</span> dat_endtime <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">&quot;Aedes aegypti&quot;</span>)</span>
+<span id="cb277-2"><a href="två-stickprov.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dat_endtime_aegypti<span class="sc">$</span>x)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -1372,11 +1372,11 @@ Aedes africanus
 ##  3.106667</code></pre>
 <p>Intervallet ges av <span class="math inline">\((0.92, 5.30)\)</span>. Eftersom 0 inte ingår i det 95-procentiga konfidensintervallet är det statistiskt signifikant (på 5-procentsnivån) att populationsmedelvärdet skiljer sig från 0.</p>
 <p>e. Antalet kan antingen skrivas in från siffrorna i uppgiften eller beräknas från data genom att koda om x-koordinaten till höger respektive vänster beroende på om x är större eller mindre än 0. Därefter kan ett test genomföras med <code>chisq.test</code>. Nollhypotesen är att populationsproportionen högergående (eller vänstergående) är lika stor för de två arterna.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="två-stickprov.html#cb275-1" aria-hidden="true" tabindex="-1"></a>dat_prop <span class="ot">&lt;-</span> dat_endtime <span class="sc">%&gt;%</span> </span>
-<span id="cb275-2"><a href="två-stickprov.html#cb275-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Species, <span class="at">Direction =</span> <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Left&quot;</span>, <span class="st">&quot;Right&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb275-3"><a href="två-stickprov.html#cb275-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Direction, <span class="at">values_from =</span> n)</span>
-<span id="cb275-4"><a href="två-stickprov.html#cb275-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb275-5"><a href="två-stickprov.html#cb275-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_prop <span class="sc">%&gt;%</span> <span class="fu">select</span>(Left, Right))</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="två-stickprov.html#cb279-1" aria-hidden="true" tabindex="-1"></a>dat_prop <span class="ot">&lt;-</span> dat_endtime <span class="sc">%&gt;%</span> </span>
+<span id="cb279-2"><a href="två-stickprov.html#cb279-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Species, <span class="at">Direction =</span> <span class="fu">ifelse</span>(x <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;Left&quot;</span>, <span class="st">&quot;Right&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb279-3"><a href="två-stickprov.html#cb279-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Direction, <span class="at">values_from =</span> n)</span>
+<span id="cb279-4"><a href="två-stickprov.html#cb279-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb279-5"><a href="två-stickprov.html#cb279-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_prop <span class="sc">%&gt;%</span> <span class="fu">select</span>(Left, Right))</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
 ## 
@@ -1385,7 +1385,7 @@ Aedes africanus
 <p>Testet pekar på en skillnad i proportionen höger- respektive vänstergående mellan arterna.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-53" class="exercise"><strong>Övning 8.4  (Burfågel) </strong></span>I en undersökning av lungcancerpatienter finner man följande antal.</p>
+<p><span id="exr:unlabeled-div-55" class="exercise"><strong>Övning 8.4  (Burfågel) </strong></span>I en undersökning av lungcancerpatienter finner man följande antal.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1427,8 +1427,8 @@ Ej burfågel
 <p>Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-54" class="hypothesis"><strong>Lösningsförslag 8.4  (Burfågel) </strong></span>Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="två-stickprov.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">101</span>), <span class="fu">c</span>(<span class="dv">98</span> <span class="sc">+</span> <span class="dv">141</span>, <span class="dv">101</span> <span class="sc">+</span> <span class="dv">328</span>), <span class="at">correct =</span> F)</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-56" class="hypothesis"><strong>Lösningsförslag 8.4  (Burfågel) </strong></span>Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="två-stickprov.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">101</span>), <span class="fu">c</span>(<span class="dv">98</span> <span class="sc">+</span> <span class="dv">141</span>, <span class="dv">101</span> <span class="sc">+</span> <span class="dv">328</span>), <span class="at">correct =</span> F)</span></code></pre></div>
 <pre><code>## 
 ##  2-sample test for equality of proportions without continuity
 ##  correction
@@ -1444,7 +1444,7 @@ Ej burfågel
 <p>Det låga p-värdet tyder på att det finns skillnader mellan grupperna.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-55" class="exercise"><strong>Övning 8.5  (Po-ta-toes) </strong></span>I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.</p>
+<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Övning 8.5  (Po-ta-toes) </strong></span>I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1539,15 +1539,15 @@ D
 <p>Genomför ett lämpligt test för att se om det finns färgskillnader mellan behandlingarna.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-56" class="hypothesis"><strong>Lösningsförslag 8.5  (Po-ta-toes) </strong></span>Funktionen <code>matrix</code> kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till <code>chisq.test</code>.</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="två-stickprov.html#cb279-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">64</span>,<span class="dv">36</span>,<span class="dv">38</span>,</span>
-<span id="cb279-2"><a href="två-stickprov.html#cb279-2" aria-hidden="true" tabindex="-1"></a>                <span class="dv">45</span>,<span class="dv">36</span>,<span class="dv">44</span>,<span class="dv">48</span>,</span>
-<span id="cb279-3"><a href="två-stickprov.html#cb279-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">18</span>,<span class="dv">13</span>,<span class="dv">27</span>,<span class="dv">20</span>,</span>
-<span id="cb279-4"><a href="två-stickprov.html#cb279-4" aria-hidden="true" tabindex="-1"></a>                <span class="dv">6</span>,<span class="dv">12</span>,<span class="dv">18</span>,<span class="dv">19</span>),</span>
-<span id="cb279-5"><a href="två-stickprov.html#cb279-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T)</span>
-<span id="cb279-6"><a href="två-stickprov.html#cb279-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb279-7"><a href="två-stickprov.html#cb279-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dat)</span>
-<span id="cb279-8"><a href="två-stickprov.html#cb279-8" aria-hidden="true" tabindex="-1"></a>test</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-58" class="hypothesis"><strong>Lösningsförslag 8.5  (Po-ta-toes) </strong></span>Funktionen <code>matrix</code> kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till <code>chisq.test</code>.</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="två-stickprov.html#cb283-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">64</span>,<span class="dv">36</span>,<span class="dv">38</span>,</span>
+<span id="cb283-2"><a href="två-stickprov.html#cb283-2" aria-hidden="true" tabindex="-1"></a>                <span class="dv">45</span>,<span class="dv">36</span>,<span class="dv">44</span>,<span class="dv">48</span>,</span>
+<span id="cb283-3"><a href="två-stickprov.html#cb283-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">18</span>,<span class="dv">13</span>,<span class="dv">27</span>,<span class="dv">20</span>,</span>
+<span id="cb283-4"><a href="två-stickprov.html#cb283-4" aria-hidden="true" tabindex="-1"></a>                <span class="dv">6</span>,<span class="dv">12</span>,<span class="dv">18</span>,<span class="dv">19</span>),</span>
+<span id="cb283-5"><a href="två-stickprov.html#cb283-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb283-6"><a href="två-stickprov.html#cb283-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb283-7"><a href="två-stickprov.html#cb283-7" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dat)</span>
+<span id="cb283-8"><a href="två-stickprov.html#cb283-8" aria-hidden="true" tabindex="-1"></a>test</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
@@ -1555,18 +1555,18 @@ D
 ## X-squared = 26.518, df = 9, p-value = 0.00168</code></pre>
 <p>I ett <span class="math inline">\(\chi^2\)</span>-test är nollhypotesen att kolumner och rader är oberoende. Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket tyder på att det finns ett samband mellan behandling och färg.</p>
 <p>Datan kan illustreras med ett stapeldiagram.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="två-stickprov.html#cb281-1" aria-hidden="true" tabindex="-1"></a>dat_long <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
-<span id="cb281-2"><a href="två-stickprov.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb281-3"><a href="två-stickprov.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(Färg <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb281-4"><a href="två-stickprov.html#cb281-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Färg)</span>
-<span id="cb281-5"><a href="två-stickprov.html#cb281-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb281-6"><a href="två-stickprov.html#cb281-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(name, value, <span class="at">fill =</span> Färg)) <span class="sc">+</span></span>
-<span id="cb281-7"><a href="två-stickprov.html#cb281-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb281-8"><a href="två-stickprov.html#cb281-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Reds&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-167-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="två-stickprov.html#cb285-1" aria-hidden="true" tabindex="-1"></a>dat_long <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> </span>
+<span id="cb285-2"><a href="två-stickprov.html#cb285-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb285-3"><a href="två-stickprov.html#cb285-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(Färg <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb285-4"><a href="två-stickprov.html#cb285-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Färg)</span>
+<span id="cb285-5"><a href="två-stickprov.html#cb285-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb285-6"><a href="två-stickprov.html#cb285-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat_long, <span class="fu">aes</span>(name, value, <span class="at">fill =</span> Färg)) <span class="sc">+</span></span>
+<span id="cb285-7"><a href="två-stickprov.html#cb285-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb285-8"><a href="två-stickprov.html#cb285-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Reds&quot;</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-171-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-57" class="exercise"><strong>Övning 8.6  (Mer burfågel) </strong></span>En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.</p>
+<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Övning 8.6  (Mer burfågel) </strong></span>En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1608,9 +1608,9 @@ Ej burfågel
 <p>Genomför ett <span class="math inline">\(\chi^2\)</span>-test för att se om det finns något signifikant samband mellan variablerna.</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-58" class="hypothesis"><strong>Lösningsförslag 8.6  (Mer burfågel) </strong></span>För att genomföra <span class="math inline">\(\chi^2\)</span>-testet kan man skriva in data som en 2-gånger-2-matris med funktionen <code>matrix</code>.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="två-stickprov.html#cb282-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">141</span>, <span class="dv">101</span>, <span class="dv">328</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb282-2"><a href="två-stickprov.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat, <span class="at">correct =</span> F)</span></code></pre></div>
+<p><span id="hyp:unlabeled-div-60" class="hypothesis"><strong>Lösningsförslag 8.6  (Mer burfågel) </strong></span>För att genomföra <span class="math inline">\(\chi^2\)</span>-testet kan man skriva in data som en 2-gånger-2-matris med funktionen <code>matrix</code>.</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="två-stickprov.html#cb286-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">98</span>, <span class="dv">141</span>, <span class="dv">101</span>, <span class="dv">328</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb286-2"><a href="två-stickprov.html#cb286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat, <span class="at">correct =</span> F)</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
@@ -1619,28 +1619,28 @@ Ej burfågel
 <p>Samma resultat som i den tidigare beräkningen på samma data.</p>
 </div>
 <div class="exercise">
-<p><span id="exr:unlabeled-div-59" class="exercise"><strong>Övning 8.7  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>Bland kursdatan finns text till Selma Lagerlöfs <em>Gösta Berlings saga</em> och August Strindbergs <em>Röda rummet</em>, i kolumnform. Det finns också en text med okänd författare (filen <em>Den tredje boken</em>). En ytlig textanalys kan baseras på frekvensen för olika ord. Närliggande tabell ger antalet förekomster för texternas fem vanligaste ord i första kapitlet av varje text.</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="två-stickprov.html#cb284-1" aria-hidden="true" tabindex="-1"></a>dat_rr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Röda rummet.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-2"><a href="två-stickprov.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Röda rummet&quot;</span>)</span>
-<span id="cb284-3"><a href="två-stickprov.html#cb284-3" aria-hidden="true" tabindex="-1"></a>dat_gbs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Gösta Berlings saga.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-4"><a href="två-stickprov.html#cb284-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Gösta Berlings saga&quot;</span>)</span>
-<span id="cb284-5"><a href="två-stickprov.html#cb284-5" aria-hidden="true" tabindex="-1"></a>dat_tredje <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Den tredje boken.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-6"><a href="två-stickprov.html#cb284-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Okänd&quot;</span>)</span>
-<span id="cb284-7"><a href="två-stickprov.html#cb284-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb284-8"><a href="två-stickprov.html#cb284-8" aria-hidden="true" tabindex="-1"></a>dat_full <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat_rr, dat_gbs, dat_tredje)</span>
-<span id="cb284-9"><a href="två-stickprov.html#cb284-9" aria-hidden="true" tabindex="-1"></a>vanligaste_ord <span class="ot">&lt;-</span> dat_full <span class="sc">%&gt;%</span> </span>
-<span id="cb284-10"><a href="två-stickprov.html#cb284-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Ord, <span class="at">sort =</span> T) <span class="sc">%&gt;%</span></span>
-<span id="cb284-11"><a href="två-stickprov.html#cb284-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-12"><a href="två-stickprov.html#cb284-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Ord)</span>
-<span id="cb284-13"><a href="två-stickprov.html#cb284-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb284-14"><a href="två-stickprov.html#cb284-14" aria-hidden="true" tabindex="-1"></a>dat_ord <span class="ot">&lt;-</span> dat_full <span class="sc">%&gt;%</span> </span>
-<span id="cb284-15"><a href="två-stickprov.html#cb284-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Ord <span class="sc">%in%</span> vanligaste_ord, Kapitel <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-16"><a href="två-stickprov.html#cb284-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Bok, Ord) </span>
-<span id="cb284-17"><a href="två-stickprov.html#cb284-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb284-18"><a href="två-stickprov.html#cb284-18" aria-hidden="true" tabindex="-1"></a>dat_ord_wide <span class="ot">&lt;-</span> dat_ord <span class="sc">%&gt;%</span> </span>
-<span id="cb284-19"><a href="två-stickprov.html#cb284-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Bok, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-20"><a href="två-stickprov.html#cb284-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Gösta Berlings saga</span><span class="st">`</span> <span class="sc">+</span> Okänd <span class="sc">+</span> <span class="st">`</span><span class="at">Röda rummet</span><span class="st">`</span>))</span>
-<span id="cb284-21"><a href="två-stickprov.html#cb284-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat_ord_wide)</span></code></pre></div>
+<p><span id="exr:unlabeled-div-61" class="exercise"><strong>Övning 8.7  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>Bland kursdatan finns text till Selma Lagerlöfs <em>Gösta Berlings saga</em> och August Strindbergs <em>Röda rummet</em>, i kolumnform. Det finns också en text med okänd författare (filen <em>Den tredje boken</em>). En ytlig textanalys kan baseras på frekvensen för olika ord. Närliggande tabell ger antalet förekomster för texternas fem vanligaste ord i första kapitlet av varje text.</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="två-stickprov.html#cb288-1" aria-hidden="true" tabindex="-1"></a>dat_rr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Röda rummet.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-2"><a href="två-stickprov.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Röda rummet&quot;</span>)</span>
+<span id="cb288-3"><a href="två-stickprov.html#cb288-3" aria-hidden="true" tabindex="-1"></a>dat_gbs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Gösta Berlings saga.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-4"><a href="två-stickprov.html#cb288-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Gösta Berlings saga&quot;</span>)</span>
+<span id="cb288-5"><a href="två-stickprov.html#cb288-5" aria-hidden="true" tabindex="-1"></a>dat_tredje <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;Data/Den tredje boken.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-6"><a href="två-stickprov.html#cb288-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bok =</span> <span class="st">&quot;Okänd&quot;</span>)</span>
+<span id="cb288-7"><a href="två-stickprov.html#cb288-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb288-8"><a href="två-stickprov.html#cb288-8" aria-hidden="true" tabindex="-1"></a>dat_full <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dat_rr, dat_gbs, dat_tredje)</span>
+<span id="cb288-9"><a href="två-stickprov.html#cb288-9" aria-hidden="true" tabindex="-1"></a>vanligaste_ord <span class="ot">&lt;-</span> dat_full <span class="sc">%&gt;%</span> </span>
+<span id="cb288-10"><a href="två-stickprov.html#cb288-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Ord, <span class="at">sort =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb288-11"><a href="två-stickprov.html#cb288-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-12"><a href="två-stickprov.html#cb288-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(Ord)</span>
+<span id="cb288-13"><a href="två-stickprov.html#cb288-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb288-14"><a href="två-stickprov.html#cb288-14" aria-hidden="true" tabindex="-1"></a>dat_ord <span class="ot">&lt;-</span> dat_full <span class="sc">%&gt;%</span> </span>
+<span id="cb288-15"><a href="två-stickprov.html#cb288-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Ord <span class="sc">%in%</span> vanligaste_ord, Kapitel <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-16"><a href="två-stickprov.html#cb288-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Bok, Ord) </span>
+<span id="cb288-17"><a href="två-stickprov.html#cb288-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb288-18"><a href="två-stickprov.html#cb288-18" aria-hidden="true" tabindex="-1"></a>dat_ord_wide <span class="ot">&lt;-</span> dat_ord <span class="sc">%&gt;%</span> </span>
+<span id="cb288-19"><a href="två-stickprov.html#cb288-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Bok, <span class="at">values_from =</span> n) <span class="sc">%&gt;%</span> </span>
+<span id="cb288-20"><a href="två-stickprov.html#cb288-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Gösta Berlings saga</span><span class="st">`</span> <span class="sc">+</span> Okänd <span class="sc">+</span> <span class="st">`</span><span class="at">Röda rummet</span><span class="st">`</span>))</span>
+<span id="cb288-21"><a href="två-stickprov.html#cb288-21" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dat_ord_wide)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1735,22 +1735,22 @@ i
 <p>b. Genomför två <span class="math inline">\(\chi^2\)</span>-test för att se vilken av Gösta Berlings saga och Röda rummet den okända texten är mest lik (sett till de fem vanligaste orden).</p>
 </div>
 <div class="hypothesis">
-<p><span id="hyp:unlabeled-div-60" class="hypothesis"><strong>Lösningsförslag 8.7  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>a. En möjlig illustration är ett stapeldiagram för proportion av varje ord inom respektive text.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="två-stickprov.html#cb285-1" aria-hidden="true" tabindex="-1"></a>dat_ord <span class="sc">%&gt;%</span></span>
-<span id="cb285-2"><a href="två-stickprov.html#cb285-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Bok, n, <span class="at">fill =</span> Ord)) <span class="sc">+</span></span>
-<span id="cb285-3"><a href="två-stickprov.html#cb285-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_fill</span>(), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
-<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-171-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><span id="hyp:unlabeled-div-62" class="hypothesis"><strong>Lösningsförslag 8.7  (Röda rummet, Gösta Berlings saga, och okänd) </strong></span>a. En möjlig illustration är ett stapeldiagram för proportion av varje ord inom respektive text.</p>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="två-stickprov.html#cb289-1" aria-hidden="true" tabindex="-1"></a>dat_ord <span class="sc">%&gt;%</span></span>
+<span id="cb289-2"><a href="två-stickprov.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Bok, n, <span class="at">fill =</span> Ord)) <span class="sc">+</span></span>
+<span id="cb289-3"><a href="två-stickprov.html#cb289-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_fill</span>(), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="R-anvisningar_files/figure-html/unnamed-chunk-175-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Röda rummet har större andel förekomster av <em>och</em> och <em>i</em>.</p>
 <p>b. Två <span class="math inline">\(\chi^2\)</span>-test kan användas för att ställa de kända verken mot det okända verket. Detta kan göras genom att välja kolumner från <code>dat_ord_wide</code> med hakparenteser.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="två-stickprov.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gösta Berlings saga (kolumn 2) mot okänd text (kolumn 3)</span></span>
-<span id="cb286-2"><a href="två-stickprov.html#cb286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_ord_wide[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="två-stickprov.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gösta Berlings saga (kolumn 2) mot okänd text (kolumn 3)</span></span>
+<span id="cb290-2"><a href="två-stickprov.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_ord_wide[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
 ## data:  dat_ord_wide[, 2:3]
 ## X-squared = 16.963, df = 4, p-value = 0.001965</code></pre>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="två-stickprov.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Röda rummet (kolumn 4) mot okänd text (kolumn 3)</span></span>
-<span id="cb288-2"><a href="två-stickprov.html#cb288-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_ord_wide[, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="två-stickprov.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Röda rummet (kolumn 4) mot okänd text (kolumn 3)</span></span>
+<span id="cb292-2"><a href="två-stickprov.html#cb292-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dat_ord_wide[, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Pearson&#39;s Chi-squared test
 ## 
