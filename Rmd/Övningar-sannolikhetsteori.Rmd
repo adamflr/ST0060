@@ -315,7 +315,7 @@ Histogrammet ligger närmare en typisk normalfördelning.
 :::
 
 ::: {.exercise name="Multiplicera med två eller addera två"}
-I en övningsuppsgift väcks frågan om det finns någon skillnad mellan att ta utfallet av en slumpvariabel och multiplicera med två, och att addera två slumpvariabler. Ta som exempel tre slumpvariabler $X_1, X_1, X_1$ och låt dem alla följa en binomialfördelning med $n = 100$ och $p = 0.8$. Dra 10000 slumptal från respektive fördelning, beräkna $2 \cdot X_1$ och $X_2 + X_3$ och illustrera dessa beräknade variabler. Beräkna också väntevärde och standardavvikelse från de beräknade variablerna.
+I en övningsuppsgift väcks frågan om det finns någon skillnad mellan att ta utfallet av en slumpvariabel och multiplicera med två, och att addera två slumpvariabler. Ta som exempel tre slumpvariabler $X_1, X_2, X_3$ och låt dem alla följa en binomialfördelning med $n = 100$ och $p = 0.8$. Dra 10000 slumptal från respektive fördelning, beräkna $2 \cdot X_1$ och $X_2 + X_3$ och illustrera dessa beräknade variabler. Beräkna också väntevärde och standardavvikelse från de beräknade variablerna.
 :::
 
 ::: {.hypothesis name="Multiplicera med två eller addera två"}
