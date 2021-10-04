@@ -184,6 +184,8 @@ När slumptalen istället genereras från en normalfördelning med medelvärde 0
 
 ::: {.exercise name="Guldfiskgenetik"}
 En teori inom genetik förutsäger att tre fjärdedelar i en grupp guldfiskar ska ha genomskinliga fjäll. Observationer ger att nittio av hundra har genomskinliga fjäll. Genomför ett test för att se om den faktiska proportionen skiljer sig från 0.75.
+
+(Fråga från Olsson, *Biometri*)
 :::
 
 ::: {.hypothesis name="Guldfiskgenetik"}
@@ -208,6 +210,57 @@ chisq.test(c(90, 10), p = c(15/16, 1/16))
 ```
 
 Nollhypotesen att sannolikheten för genomskinliga fjäll är femton sextondelar, $p = 15/16$, kan ej förkastas, eftersom testet ger ett p-värde över de vanliga signifikansnivåerna.
+:::
+
+::: {.exercise name="Artobservationer"}
+Ekologisk data på populationsstorlekar kan samlas in genom att en observatör följer en rak slinga (en transekt) i ett naturområde och räknar antalet observerade individer. I en transektundersökning av storlom utförs 200 observationer med resultat nedan. Data finns tillgänglig bland kursdatan.
+
+```{r, echo = F}
+dat <- read_csv("Data/Transektdata Storlom.csv")
+dat %>% 
+  count(`Antal observerade`) %>% 
+  kable()
+```
+
+*Observerade* anger antalet observerade individer och *n* anger antalet transekter med det utfallet. Från tidigare studier förväntar man sig 1.7 observationer per transektgång. Genomför ett *goodness-of-fit*-test för att undersöka om antalet observerade individer följer en poissonfördelning med $\lambda = 1.7$.
+:::
+
+::: {.hypothesis name="Artobservationer"}
+Ett goodness-of-fit-test kan genomföras genom att först beräkna det förväntade antalet observationer om nollhypotesen stämmer, det vill säga om antalet observerade individer följer en poissonfördelning med $\lambda = 1.7$. 
+Förväntat antal beräknas genom att ta fram sannolikheterna för utfallet noll till 5 från poissonfördelning och multiplicera med 200. 
+För att sannolikheterna ska summera till 1 sätts sannolikheten att observera fem individer till ett minus summan av sannolikheten att få färre än 5.
+
+```{r}
+prob_poisson <- dpois(x = 0:5, lambda = 1.7)
+prob_poisson[6] <- 1 - sum(prob_poisson[0:5])
+
+expected_counts <- prob_poisson * 200
+```
+
+Datan kan illusteras med ett stapeldiagram. Stapeln ger faktiska observationer med punkten ger det förväntade antalet under nollhypotesen.
+
+```{r}
+dat <- read_csv("Data/Transektdata Storlom.csv")
+dat <- dat %>% 
+  count(`Antal observerade`) %>% 
+  mutate(`Sannolikheter enligt nollhypotes` = prob_poisson,
+         `Förväntat antal` = expected_counts)
+
+ggplot(dat, aes(`Antal observerade`, n)) +
+  geom_bar(stat = "identity", width = 0.5, 
+           fill = "white", color = "black") +
+  geom_point(aes(y = `Förväntat antal`), color = "red")
+```
+
+Observerade antal verkar inte perfekt följa nollhypotesens förväntade värden.
+
+Ett formellt test genomförs som ett chi-två-test. Eftersom värdet på $\lambda$ inte skattas från datan ges antalet frihetsgrader av antalet klasser minus ett. Testet genomförs i R med `chisq.test`.
+
+```{r}
+chisq.test(dat$`Antal observerade`, p = dat$`Sannolikheter enligt nollhypotes`)
+```
+
+Det låga p-värdet ger att man förkastar nollhypotesen. Det finns en statistiskt säkerställd skillnad mellan den observerade fördelningen och en poissonfördelning med $\lambda = 1.7$.
 :::
 
 ::: {.exercise name="Simulering konfidensintervall"}
