@@ -114,7 +114,11 @@ d\. $P(2.30 < X < 2.45)$
 
 e\. $P(X > -0.02)$
 
-(Från Olsson, *Biometri*.)
+f\. $P(-0.02 < X < 1.80)$
+
+g\. Bestäm värdet på x som uppfyller att $P(X < x) = F(x) = 0.95$.
+
+(Från Olsson, *Biometri*. Samma som instuderingsuppgift 22.)
 :::
 
 ::: {.hypothesis name="Sannolikheter från en normalfördelning"}
@@ -138,16 +142,10 @@ c\. Likt (a).
 1 - pnorm(2.5, 2, 3)
 ```
 
-d\. För att beräkna sannoliketen att ligga mellan två värden kan man ta skillnaden mellan två värden framräknade med `pnorm`.
+d\. För att beräkna sannolikheten att ligga mellan två värden kan man ta skillnaden mellan två värden framräknade med `pnorm`.
 
 ```{r}
 pnorm(2.45, 2, 3) - pnorm(2.30, 2, 3)
-```
-
-e\.
-
-```{r}
-1 - pnorm(-0.02, 2, 3)
 ```
 
 Om man vill illustrera en sannolikhet från en normalfördelning kan man beräkna normalfördelningskurvan med `dnorm` och sedan färglägga en sektion genom ett `geom_ribbon` på filtrerad data. Exempel för (d).
@@ -164,6 +162,44 @@ ggplot(dat, aes(x, Sannolikhetsfunktion)) +
 ```
 
 Den turkosa ytan motsvarar sannolikheten att $X$ ger ett utfall mellan $2.30$ och $2.45$, sannolikheten uträknad i (d).
+
+e\.
+
+```{r}
+1 - pnorm(-0.02, 2, 3)
+```
+
+f\. 
+
+```{r}
+pnorm(1.8, 2, 3) - pnorm(-0.02, 2, 3)
+```
+
+g\. Det sökta värdet är kvantil $0.95$, ett värde sådant att 95 procent ligger under det värdet. Med en normalfördelning med medelvärde 2 och standardavvikelse 3 kan det tas fram med följande.
+
+```{r}
+qnorm(0.95, 2, 3) # 2 och 3 anger medel 2 och standardavvikelse 3
+```
+
+Tolkningen är att i en normal $N(\mu = 2, \sigma^2 = 9)$ ligger 95 procent av ytan under $6.9346$.
+
+En illustration kan skapas med en datatabell med värden från fördelningens sannolikhetsfunktion och `geom_ribbon`.
+
+```{r}
+dat <- tibble(x = seq(-7, 11, 0.01),
+              Sannolikhetsfunktion = dnorm(x, 2, 3))
+
+q_95 <- qnorm(0.95, 2, 3)
+
+ggplot(dat, aes(x, Sannolikhetsfunktion)) +
+  geom_line() +
+  geom_ribbon(aes(ymax = Sannolikhetsfunktion, ymin = 0), 
+              data = dat %>% filter(x < q_95),
+              fill = "turquoise", col = "black") +
+  scale_x_continuous(breaks = c(-5, 0, 5, round(q_95, 3)))
+```
+
+95 procent av ytan ligger under 6.935.
 :::
 
 ::: {.exercise name="Relativ frekvens"}
