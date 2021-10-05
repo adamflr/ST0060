@@ -133,7 +133,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2021-10-04}
+\date{\vspace{-2.5em}2021-10-05}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -1429,7 +1429,7 @@ En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktio
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## <bytecode: 0x0000000025ed4500>
+## <bytecode: 0x0000000023066968>
 ## <environment: namespace:stats>
 \end{verbatim}
 
@@ -1747,7 +1747,7 @@ Eftersom standardavvikelsen i den ursprungliga dragningen var 1 (\(\sigma = 1\))
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2516508
+## [1] 0.2486562
 \end{verbatim}
 
 Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra observationer bör ge ett värde kring 0.1 (eftersom \(\sigma / \sqrt{100} = 1 / 10 = 0.1\)).
@@ -1760,7 +1760,7 @@ Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra obser
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.09966531
+## [1] 0.1001761
 \end{verbatim}
 
 Sannolikhetsteorin viktigaste resultat är \emph{centrala gränsvärdesatsen}, som säger att medelvärden av flera lika slumpvariabler är ungefärligt normalfördelade även om den ursprungliga slumpvariabeln inte är det. Detta kan illustreras genom att dra slumptal från valfri fördelning, beräkna medelvärden av de slumptalen, och sedan titta på fördelningen för de medelvärdena. Ett första steg kan vara att skriva en funktion som drar slumptal och beräknar ett medelvärde.
@@ -1952,7 +1952,11 @@ d. \(P(2.30 < X < 2.45)\)
 
 e. \(P(X > -0.02)\)
 
-(Från Olsson, \emph{Biometri}.)
+f. \(P(-0.02 < X < 1.80)\)
+
+g. Bestäm värdet på x som uppfyller att \(P(X < x) = F(x) = 0.95\).
+
+(Från Olsson, \emph{Biometri}. Samma som instuderingsuppgift 22.)
 \end{exercise}
 
 \begin{hypothesis}[Sannolikheter från en normalfördelning]
@@ -1994,7 +1998,7 @@ c. Likt (a).
 ## [1] 0.4338162
 \end{verbatim}
 
-d. För att beräkna sannoliketen att ligga mellan två värden kan man ta skillnaden mellan två värden framräknade med \texttt{pnorm}.
+d. För att beräkna sannolikheten att ligga mellan två värden kan man ta skillnaden mellan två värden framräknade med \texttt{pnorm}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2004,18 +2008,6 @@ d. För att beräkna sannoliketen att ligga mellan två värden kan man ta skill
 
 \begin{verbatim}
 ## [1] 0.01978986
-\end{verbatim}
-
-e.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.02}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.7496324
 \end{verbatim}
 
 Om man vill illustrera en sannolikhet från en normalfördelning kan man beräkna normalfördelningskurvan med \texttt{dnorm} och sedan färglägga en sektion genom ett \texttt{geom\_ribbon} på filtrerad data. Exempel för (d).
@@ -2033,9 +2025,69 @@ Om man vill illustrera en sannolikhet från en normalfördelning kan man beräkn
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-91-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-90-1} \end{center}
 
 Den turkosa ytan motsvarar sannolikheten att \(X\) ger ett utfall mellan \(2.30\) och \(2.45\), sannolikheten uträknad i (d).
+
+e.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.02}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.7496324
+\end{verbatim}
+
+f.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pnorm}\NormalTok{(}\FloatTok{1.8}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{pnorm}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.02}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.2230559
+\end{verbatim}
+
+g. Det sökta värdet är kvantil \(0.95\), ett värde sådant att 95 procent ligger under det värdet. Med en normalfördelning med medelvärde 2 och standardavvikelse 3 kan det tas fram med följande.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.95}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{) }\CommentTok{\# 2 och 3 anger medel 2 och standardavvikelse 3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.934561
+\end{verbatim}
+
+Tolkningen är att i en normal \(N(\mu = 2, \sigma^2 = 9)\) ligger 95 procent av ytan under \(6.9346\).
+
+En illustration kan skapas med en datatabell med värden från fördelningens sannolikhetsfunktion och \texttt{geom\_ribbon}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\DecValTok{11}\NormalTok{, }\FloatTok{0.01}\NormalTok{),}
+              \AttributeTok{Sannolikhetsfunktion =} \FunctionTok{dnorm}\NormalTok{(x, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+
+\NormalTok{q\_95 }\OtherTok{\textless{}{-}} \FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.95}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(x, Sannolikhetsfunktion)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymax =}\NormalTok{ Sannolikhetsfunktion, }\AttributeTok{ymin =} \DecValTok{0}\NormalTok{), }
+              \AttributeTok{data =}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textless{}}\NormalTok{ q\_95),}
+              \AttributeTok{fill =} \StringTok{"turquoise"}\NormalTok{, }\AttributeTok{col =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{, }\FunctionTok{round}\NormalTok{(q\_95, }\DecValTok{3}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-94-1} \end{center}
+
+95 procent av ytan ligger under 6.935.
 \end{hypothesis}
 
 \begin{exercise}[Relativ frekvens]
@@ -2064,15 +2116,15 @@ För att beräkna och illustrera den relativa frekvensen skapas en \texttt{tibbl
 ##     Kast Utfall Antal_spets_upp Relativ_frekvens
 ##    <int>  <int>           <int>            <dbl>
 ##  1     1      1               1            1    
-##  2     2      1               2            1    
-##  3     3      1               3            1    
-##  4     4      1               4            1    
-##  5     5      1               5            1    
-##  6     6      0               5            0.833
-##  7     7      0               5            0.714
-##  8     8      1               6            0.75 
-##  9     9      1               7            0.778
-## 10    10      1               8            0.8  
+##  2     2      0               1            0.5  
+##  3     3      0               1            0.333
+##  4     4      1               2            0.5  
+##  5     5      0               2            0.4  
+##  6     6      1               3            0.5  
+##  7     7      1               4            0.571
+##  8     8      0               4            0.5  
+##  9     9      1               5            0.556
+## 10    10      1               6            0.6  
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -2085,7 +2137,7 @@ För att beräkna och illustrera den relativa frekvensen skapas en \texttt{tibbl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-92-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-95-1} \end{center}
 
 Den relativa frekvensen stabiliseras efter ett par hundra kast.
 \end{hypothesis}
@@ -2135,7 +2187,7 @@ Fördelningen för binomial och poisson kan tas fram med \texttt{dbinom} respekt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-93-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-96-1} \end{center}
 
 Fördelningarna är ganska lika. Relativt binomialen överskattar poissonfördelningen sannolikheten att få exakt 0 och överskattar sannolikheten att få exakt 1.
 \end{hypothesis}
@@ -2161,7 +2213,7 @@ Funktionerna \texttt{dbinom} och \texttt{dnorm} kan användas för att ta fram f
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-94-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-97-1} \end{center}
 
 Normalkurvan (blå kontinuerlig linje) följer binomalfördelningen (röda staplar). Man kan också jämföra specifika sannolikheter, till exempel
 
@@ -2215,7 +2267,7 @@ Funktionen \texttt{rlnorm} skapar slumptal från en log-normal fördelning. Två
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-96-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-99-1} \end{center}
 
 \end{hypothesis}
 
@@ -2244,7 +2296,7 @@ En funktion som tar medelvärdet av tio observation skapas. Tiotusen sådana med
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-97-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-100-1} \end{center}
 
 Histogrammet visar en klar skevhet.
 
@@ -2264,7 +2316,7 @@ Histogrammet visar en klar skevhet.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-98-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-101-1} \end{center}
 
 Histogrammet ligger närmare en typisk normalfördelning.
 \end{hypothesis}
@@ -2307,7 +2359,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 ## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   <dbl> <dbl> <dbl>     <dbl>      <dbl>
-## 1  4.01  3.99  4.01      8.01       5.71
+## 1  3.97  4.00  3.98      7.95       5.58
 \end{verbatim}
 
 \begin{Shaded}
@@ -2321,7 +2373,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-99-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-102-1} \end{center}
 
 Stapeldiagrammet för fallet med en variabel multiplicerad med två ger högre staplar och större spridning än stapeldiagrammet med två summerade variabler. Diagrammet visar också hur vissa utfall inte kan inträffa i fallet med multiplikation, eftersom bara jämna utfall kan inträffa. Intuitivt kan man förstå den mindre spridningen för två summerade variabler med att ovanligt låga eller höga värden ofta kommer kvittas ut mot ett \emph{vanligt} värde.
 
@@ -2377,7 +2429,7 @@ Innan man utför testet kan det vara bra att ta en titt på datan och bilda en f
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-101-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-104-1} \end{center}
 
 Det skattade medelvärdet är \(\bar x = 52.0\) och standardavvikelsen \(s = 4.68\). Teststorheten kan beräknas till
 
@@ -2424,7 +2476,7 @@ I funktionen anges datan \texttt{dat} och nollhypotesens värde \texttt{mu\ =\ 5
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-103-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-106-1} \end{center}
 
 Notera hur man kan spara utfallet av \texttt{t.test} och sedan använda resultat direkt ur det objektet (här genom \texttt{test\_restults\$statistic} som ger teststorheten, men även \texttt{test\_results\$p.value} kan vara användbart). Testobjektets namn kan förstås vara något helt annat än \texttt{test\_results}.
 
@@ -2561,7 +2613,7 @@ Totalt har man observerat 600 fåglar. Från tidigare års studier tror man att 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-107-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-110-1} \end{center}
 
 Grafen visar att hussvalor förekommer något mer sällan än väntat, medan backsvalor förekommer någon oftare.
 
@@ -2651,7 +2703,7 @@ Data och nollhypotes kan illustreras med ett stapeldiagram där punkter anger f�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-112-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-115-1} \end{center}
 
 Data och nollhypotes verkar stämma ganska väl. Funktionen \texttt{chisq.test} kan användas för att beräkna teststorheten, men observera att antalet frihetsgrader nu blir fel - datan har åtta klasser, och då en parameter skattas i beräkningen av förväntade antal bör testet genomföras med \(8-1-1=6\) frihetsgrader. För att korrigera kan man ta fram teststorheten och beräkna p-värdet ur den korrekta fördelningen.
 
@@ -2718,7 +2770,7 @@ Datan kan importeras från excelfilen med uppgiftsdata.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-115-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-118-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2766,6 +2818,12 @@ Medeltemperatur 2000-2009 ges av följande tabell.
   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Medeltemperatur =} \FunctionTok{mean}\NormalTok{(Lufttemperatur)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Medeltemperatur =} \FunctionTok{round}\NormalTok{(Medeltemperatur, }\DecValTok{2}\NormalTok{))}
 
+\NormalTok{dat\_temp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{kable}\NormalTok{(dat\_temp)}
 \end{Highlighting}
 \end{Shaded}
@@ -2790,6 +2848,28 @@ Medeltemperatur 2000-2009 ges av följande tabell.
 \bottomrule
 \end{tabular}
 \end{table}
+
+Medelvärde och standardavvikelsen ges av följande.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(dat\_temp}\SpecialCharTok{$}\NormalTok{Medeltemperatur)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9.344
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(dat\_temp}\SpecialCharTok{$}\NormalTok{Medeltemperatur)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3852907
+\end{verbatim}
 
 a. Konstruera och tolka ett 95-procentigt konfidensintervall för medeltemperaturen under perioden.
 
@@ -2855,7 +2935,7 @@ c. Man kan räkna antal observationer per dag med \texttt{count} och göra en li
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-120-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-125-1} \end{center}
 
 Antal observationer per dag är inte konstant. Om vissa dagar är uppmätta vid tider på dygnet då det är kallare eller varmare kan det ge en skevhet i mätningarna, vilket gör att jämförelsen mellan olika tider inte är rättvis. En lösning skulle kunna vara att ta värdet en viss tid på dygnet, en tid då det finns observationer för samtliga dagar. Det finns förstås också andra möjliga felkällor som påverkar en jämförelse över tid, t.ex. ändrade mätinstrument, små positionsförändringar, förändringar i kringliggande bebyggelse).
 \end{hypothesis}
@@ -2900,7 +2980,7 @@ Datan importeras från excelfilen med uppgiftsdata. Datan ändras till långform
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-122-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-127-1} \end{center}
 
 a.
 
@@ -2976,7 +3056,7 @@ Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärde
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-125-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-130-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2985,7 +3065,7 @@ Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärde
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0511
+## [1] 0.0525
 \end{verbatim}
 
 När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.
@@ -3006,7 +3086,7 @@ När slumptalen genereras från en normalfördelning med medelvärde 0 följer p
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-126-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-131-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3015,7 +3095,7 @@ När slumptalen genereras från en normalfördelning med medelvärde 0 följer p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.175
+## [1] 0.1687
 \end{verbatim}
 
 När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
@@ -3125,7 +3205,7 @@ Datan kan illusteras med ett stapeldiagram. Stapeln ger faktiska observationer m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-131-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-136-1} \end{center}
 
 Observerade antal verkar inte perfekt följa nollhypotesens förväntade värden.
 
@@ -3175,7 +3255,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0267
+## [1] 0.0243
 \end{verbatim}
 
 \begin{Shaded}
@@ -3185,7 +3265,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0266
+## [1] 0.0235
 \end{verbatim}
 
 Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
@@ -3211,7 +3291,7 @@ En illustration med 100 simulerade fall.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-134-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-139-1} \end{center}
 
 Varje streck motsvarar konfidensintervallet från en simulering. Intervallet väntas täcka 9 i 95 av hundra fall, men det kan förstås variera eftersom det beror på slumptalen.
 \end{hypothesis}
@@ -3280,7 +3360,7 @@ Datan kan illustreras med ett punktdiagram där en linje binder samman paret. F�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-137-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-142-1} \end{center}
 
 Testet för parade stickprov kan antingen utföras som ett enkelt t-test på differensserien
 
@@ -3379,7 +3459,7 @@ Datan kan illustreras med ett enkelt punktdiagram. I ett publiceringssammanhang 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-141-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-146-1} \end{center}
 
 Ett t-test för två oberoende stickprov har nollhypotesen att grupperna har samma populationsmedelvärde och alternativhypotesen att populationsmedelvärdena är skilda (för det tvåsidiga fallet):
 
@@ -3525,7 +3605,7 @@ Datan tyder på att överlevnad är beroende av klass - en tredjedel av förstak
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-146-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-151-1} \end{center}
 
 Argumentet \texttt{position} i \texttt{geom\_bar} används för att skapa proportionella staplar.
 
@@ -3641,7 +3721,7 @@ Datan kan importeras från excelfilen med uppgiftsdata. En lämplig graf kan ska
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-151-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-156-1} \end{center}
 
 a. Eftersom det inte finns någon koppling mellan odlare är ett t-test för två oberoende stickprov ett lämpligt test. Testet kan genomföras med eller utan ett antagande om lika varianser inom grupperna.
 
@@ -3760,7 +3840,7 @@ a. Datan kan illustreras med ett linjediagram med två separata linjer.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-154-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-159-1} \end{center}
 
 Allsvenskan för damer har ett högre genomsnittligt antal mål än allsvenskan för herrar.
 
@@ -3923,7 +4003,7 @@ Ett exempel på en enskild individ.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-160-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-165-1} \end{center}
 
 Ett exempel med samtliga individer i en (rörig) illustration.
 
@@ -3942,7 +4022,7 @@ Ett exempel med samtliga individer i en (rörig) illustration.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-161-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-166-1} \end{center}
 
 R har paket med funktioner för tre-dimensionella grafer. Ett exempel är genom paketet \texttt{rgl} och funktionerna \texttt{plot3d} och \texttt{lines3d}.
 
@@ -3978,7 +4058,7 @@ b. För att titta på landningsplatser filtreras på de observationer där den p
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-163-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-168-1} \end{center}
 
 \emph{Aedes aegypti} uppvisar högre x-koordinater, vilket tyder på att den arten varit mer lockad av doftämnet till höger.
 
@@ -4181,7 +4261,7 @@ Datan kan illustreras med ett stapeldiagram.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-171-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-176-1} \end{center}
 
 \end{hypothesis}
 
@@ -4284,7 +4364,7 @@ a. En möjlig illustration är ett stapeldiagram för proportion av varje ord in
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-175-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-180-1} \end{center}
 
 Röda rummet har större andel förekomster av \emph{och} och \emph{i}.
 
@@ -4375,7 +4455,7 @@ Datan har 18 observationer av skördvikt och varje observation tillhör någon s
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-178-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-183-1} \end{center}
 
 Det finns en tydlig kväveeffekt.
 
@@ -4485,7 +4565,7 @@ Modellen med en faktor var en förenkling av den faktiska försökssituationen. 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-183-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-188-1} \end{center}
 
 Färg och linje sammanbinder observationer från samma block. Det finns en klar blockeffekt, vilket är särskilt tydligt för block I, som uppvisar klart högre värden än andra block.
 
@@ -4551,7 +4631,7 @@ Den avslutande modellen tar med bägge faktorerna (sort och kväve) och blockfak
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-186-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-191-1} \end{center}
 
 Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns också en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
 
@@ -4729,7 +4809,7 @@ a.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-192-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-197-1} \end{center}
 
 En graf visar på en mycket tydlig behandlingsskillnad. Det finns inga tydliga extremvärden och grupperna verkar ha samma varians inom gruppen.
 
@@ -4788,7 +4868,7 @@ Modellantaganden (normalfördelning och lika varianser inom grupper) kan unders�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-195-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-200-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4796,7 +4876,7 @@ Modellantaganden (normalfördelning och lika varianser inom grupper) kan unders�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-195-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-200-2} \end{center}
 
 Diagnostik-grafer pekar inte på några extrema avvikelser från normalantagandet (punkterna följer den diagonala linjen ganska väl) eller antagandet om lika varianser (de två kolumnerna med punkter har ungefär samma spridning).
 
@@ -4852,7 +4932,7 @@ Data kan läsas in från excelfilen med uppgiftsdata.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-197-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-202-1} \end{center}
 
 Grafen visar svaga tecken på skillnader, men inga \emph{tydliga} mönster.
 
@@ -4887,7 +4967,7 @@ b.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-199-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-204-1} \end{center}
 
 Ungefärligt normalfördelat.
 
@@ -4978,7 +5058,7 @@ Data kan läsas in från excelfilen med uppgiftsdata.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-203-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-208-1} \end{center}
 
 Tecken på både platseffekt (nordväst alltid lägst) och hybrideffekt (RC3 lägre än övriga).
 
@@ -5068,7 +5148,7 @@ Datan kan skrivas in som en \texttt{tibble} och illustreras med ett enkelt sprid
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-206-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-211-1} \end{center}
 
 Det finns tecken på skillnader i tid (Maskin C ligger lägre).
 
@@ -5131,7 +5211,7 @@ c. Modellen bygger på antagandet att residualerna är normalfördelade och att 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-209-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-214-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5139,7 +5219,7 @@ c. Modellen bygger på antagandet att residualerna är normalfördelade och att 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-209-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-214-2} \end{center}
 
 En graf över residualerna visar inte på några tydliga brister i antaganden.
 
@@ -5225,7 +5305,7 @@ Ta som exempel data på förväntad medellivslängd och bnp per capita. Datan h�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-211-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-216-1} \end{center}
 
 Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medelllivslängd. En regressionmodell kan i R skattas med \texttt{lm}-funktionen. Syntaxen är väldigt lik den för anovamodellen, men istället för en faktor som förklarande variabel används nu en kontinuerlig variabel.
 
@@ -5270,7 +5350,7 @@ Man kan rita ut regressionlinjen i en graf med \texttt{geom\_smooth} och argumen
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-213-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-218-1} \end{center}
 
 Den blå linjen illustrerar regressionlinjen \(72.27 + 0.2146 \cdot x\). Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln vid ett visst x-värde.
 
@@ -5304,7 +5384,7 @@ Testerna av en regressionmodell bygger på ett normalfördelningsantagande oh et
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-216-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-221-1} \end{center}
 
 Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.
 
@@ -5394,7 +5474,7 @@ Data kan läsas in från excelfilen med uppgiftsdata. Två kontinuerliga variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-219-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-224-1} \end{center}
 
 Det finns ett tydligt positivt samband mellan variablerna.
 
@@ -5454,7 +5534,7 @@ c. Modellen bygger på normalfördelade residualer och lika varians för skilda 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-222-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-227-1} \end{center}
 
 Det finns inga extremvärden bland residualer och inga tydliga tecken på skillnader i varians.
 
@@ -5586,7 +5666,7 @@ a. Tidsdata illustreras ofta med en linjediagram. Regressionslinjen kan skapas m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-228-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-233-1} \end{center}
 
 Det finns tecken på en ökning över tid.
 
@@ -5633,7 +5713,7 @@ Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller strukt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-230-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-235-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5641,7 +5721,7 @@ Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller strukt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-230-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-235-2} \end{center}
 
 c. Det är möjligt att prognosticera värden med \texttt{predict}. Funktionen tar en skattad modell (här \texttt{mod}) och en ny datatabellen, som innehåller en kolumn med samma namn som den förklarande variabeln i modellen (här \texttt{År}). Funktionen kan även producera konfidensintervall för skattningen, här genom \texttt{interval\ =\ "conf"} för ett konfidensintervall.
 
@@ -5659,7 +5739,7 @@ c. Det är möjligt att prognosticera värden med \texttt{predict}. Funktionen t
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-231-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-236-1} \end{center}
 
 d. I en tidigare uppgift påpekas att data inte samlats in samma tider på dygnet under hela mätperioden - det är därmed möjligt att den observerade ökningen beror på förändringar i mätmetod. Valet av de fyrtio senaste åren var ett godtyckligt val som påverkar lutningen kraftigt (till exempel om man av en ren slump börjar med några kalla år och avslutar med några varma). Regressionsmodellen är en linjär modell, vilket ger den uppenbarligen orimliga tolkning av interceptet som en temperatur år 0.
 
@@ -5699,7 +5779,7 @@ Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-233-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-238-1} \end{center}
 
 a. Ibland behöver man inget test.
 
@@ -5763,7 +5843,7 @@ b.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-236-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-241-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5807,7 +5887,7 @@ Data finns tillgänglig i R som \texttt{anscombe}, vilket är en tabell med ått
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-237-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-1} \end{center}
 
 Graferna ser olika ut.
 
@@ -5912,7 +5992,7 @@ b. Datan kan illustreras med ett spridningsdiagram. Funktionen \texttt{facet\_wr
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-241-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-246-1} \end{center}
 
 Figuren visar att det finns tydliga mönster i flera av grupperna och tydliga skillnader mellan dem.
 \end{hypothesis}
