@@ -49,7 +49,7 @@ dat <- read_csv2("Data/smhi-opendata_1_52230_20210912_114534.csv", skip = 9) %>%
 
 Medeltemperatur 2000-2009 ges av följande tabell.
 
-```{r}
+```{r, results='hide'}
 dat_temp <- dat %>% 
   mutate(År = lubridate::year(Datum)) %>% 
   filter(År %in% 2000:2009) %>% 
@@ -57,8 +57,20 @@ dat_temp <- dat %>%
   summarise(Medeltemperatur = mean(Lufttemperatur)) %>% 
   mutate(Medeltemperatur = round(Medeltemperatur, 2))
 
+dat_temp
+```
+
+```{r}
 kable(dat_temp)
 ```
+
+Medelvärde och standardavvikelsen ges av följande.
+
+```{r}
+mean(dat_temp$Medeltemperatur)
+sd(dat_temp$Medeltemperatur)
+```
+
 
 a\. Konstruera och tolka ett 95-procentigt konfidensintervall för medeltemperaturen under perioden.
 
