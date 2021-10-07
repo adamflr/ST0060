@@ -10,7 +10,7 @@ editor_options:
 
 R kommer med en stor mängd funktioner för att beräkna sannolikheter ur kända sannolikhetsfördelningar såsom binomial- och normalfördelningen. För en lista på fördelningar täckta av grundpaketen i R kan man köra `?distributions`.
 
-För en *likformig fördelning* gäller att alla utfall mellan 0 och 1 är lika sannolika. Som exempel kan man tänka sig att man stoppar ett tidtagarur vid ett slumpmässigt tillfälle och tittar på utfallets decimaler - de kommer ge ett värde mellan 0 och 1 och det finns ingen anledning att tro att vissa värden är mer sannolika än andra. Sannolikhetsfunktionen $f(x)$ kan beräknas genom $dunif$, där `d` står för *density* (täthet) och `unif` anger en *uniform* fördelning. Fördelningens sannolikhetsfunktion är 0 för värden på $x$ under 0 eller över 1, och däremellan är sannolikhetsfunktionen 1.
+För en *kontinuerlig likformig fördelning* gäller att alla utfall mellan 0 och 1 är lika sannolika. Som exempel kan man tänka sig att man stoppar ett tidtagarur vid ett slumpmässigt tillfälle och tittar på utfallets decimaler - de kommer ge ett värde mellan 0 och 1 och det finns ingen anledning att tro att vissa värden är mer sannolika än andra. Täthetsfunktionen $f(x)$ kan beräknas genom $dunif$, där `d` står för *density* (täthet) och `unif` anger en *uniform* fördelning. Fördelningens täthetsfunktion är 0 för värden på $x$ under 0 eller över 1, och däremellan är täthetsfunktionen 1.
 
 ```{r dunif}
 dunif(-0.1)
@@ -28,14 +28,14 @@ punif(1.1)
 
 Fördelningsfunktionen för en likformig fördelning är för värden på $x$ under 0, 1 för värden på $x$ över 1, och däremellan lika med $x$.
 
-Sannolikhetsfunktion och fördelningsfunktion kan illustreras med grafer. Funktionen `seq` används för att skapa en sekvens från ett värde till ett annat värde. Paketet `patchwork` används för att kombinera två grafer. Funktionen `tibble` används för att skapa ett `tibble`-objekt - funktionen fungerar likt `data.frame` i att kolumner anges som `namn = kolumnvärden`.
+Täthetsfunktion och fördelningsfunktion kan illustreras med grafer. Funktionen `seq` används för att skapa en sekvens från ett värde till ett annat värde. Paketet `patchwork` används för att kombinera två grafer. Funktionen `tibble` används för att skapa ett `tibble`-objekt - funktionen fungerar likt `data.frame` i att kolumner anges som `namn = kolumnvärden`.
 
 ```{r}
 g1 <- tibble(x = seq(from = -0.5, to = 1.5, by = 0.01),
              f = dunif(x)) %>% 
   ggplot(aes(x, f)) + 
   geom_line() +
-  labs(title = "Sannolikhetsfunktion, f(x)")
+  labs(title = "Täthetsfunktion, f(x)")
 
 g2 <- tibble(x = seq(from = -0.5, to = 1.5, by = 0.01),
              F = punif(x)) %>% 
@@ -54,7 +54,7 @@ g1 <- tibble(x = seq(from = 40, to = 60, by = 0.1),
              f = dnorm(x, mean = 50, sd = 3)) %>% 
   ggplot(aes(x, f)) + 
   geom_line() +
-  labs(title = "Sannolikhetsfunktion, f(x)")
+  labs(title = "Täthetsfunktion, f(x)")
 
 g2 <- tibble(x = seq(from = 40, to = 60, by = 0.1),
              F = pnorm(x, mean = 50, sd = 3)) %>% 

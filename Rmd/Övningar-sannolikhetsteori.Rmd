@@ -152,11 +152,11 @@ Om man vill illustrera en sannolikhet från en normalfördelning kan man beräkn
 
 ```{r}
 dat <- tibble(x = seq(-7, 11, 0.01),
-              Sannolikhetsfunktion = dnorm(x, 2, 3))
+              Täthetsfunktion = dnorm(x, 2, 3))
 
-ggplot(dat, aes(x, Sannolikhetsfunktion)) +
+ggplot(dat, aes(x, Täthetsfunktion)) +
   geom_line() +
-  geom_ribbon(aes(ymax = Sannolikhetsfunktion, ymin = 0), 
+  geom_ribbon(aes(ymax = Täthetsfunktion, ymin = 0), 
               data = dat %>% filter(x > 2.30 & x < 2.45),
               fill = "turquoise")
 ```
@@ -183,17 +183,17 @@ qnorm(0.95, 2, 3) # 2 och 3 anger medel 2 och standardavvikelse 3
 
 Tolkningen är att i en normal $N(\mu = 2, \sigma^2 = 9)$ ligger 95 procent av ytan under $6.9346$.
 
-En illustration kan skapas med en datatabell med värden från fördelningens sannolikhetsfunktion och `geom_ribbon`.
+En illustration kan skapas med en datatabell med värden från fördelningens täthetsfunktion och `geom_ribbon`.
 
 ```{r}
 dat <- tibble(x = seq(-7, 11, 0.01),
-              Sannolikhetsfunktion = dnorm(x, 2, 3))
+              Täthetsfunktion = dnorm(x, 2, 3))
 
 q_95 <- qnorm(0.95, 2, 3)
 
-ggplot(dat, aes(x, Sannolikhetsfunktion)) +
+ggplot(dat, aes(x, Täthetsfunktion)) +
   geom_line() +
-  geom_ribbon(aes(ymax = Sannolikhetsfunktion, ymin = 0), 
+  geom_ribbon(aes(ymax = Täthetsfunktion, ymin = 0), 
               data = dat %>% filter(x < q_95),
               fill = "turquoise", col = "black") +
   scale_x_continuous(breaks = c(-5, 0, 5, round(q_95, 3)))
