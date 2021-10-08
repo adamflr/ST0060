@@ -157,7 +157,7 @@ ggplot(gapminder, aes(x = log(gdpPercap), y = lifeExp, color = continent, size =
   facet_wrap(~ year)
 ```
 
-Här används dessutom log-transformerad bnp per capita för att få en jämnare fördelning i x-axeln.
+Här används dessutom log-transformerad bnp per capita för att få en jämnare fördelning i x-axeln. 
 
 Andra graftyper kan skapas med andra `geom_`-funktioner. För ett linjediagram används `geom_line`. De observationer som ska ge en specifik linje anges med `group` i `aes`-funktionen. 
 
