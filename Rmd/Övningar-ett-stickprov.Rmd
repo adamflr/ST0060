@@ -115,7 +115,7 @@ dat %>%
   kable()
 ```
 
-a\. Gör ett test för att se om medelvärdet för behandling är skilt från 310.
+a\. Gör ett test för att se om medelvärdet *före* behandling är skilt från 310.
 
 b\. Beräkna ett konfidensintervall för skillnaden i populationsmedelvärden.
 :::
