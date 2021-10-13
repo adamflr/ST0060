@@ -269,7 +269,7 @@ Observerade antal verkar inte perfekt följa nollhypotesens förväntade värden
 Ett formellt test genomförs som ett chi-två-test. Eftersom värdet på $\lambda$ inte skattas från datan ges antalet frihetsgrader av antalet klasser minus ett. Testet genomförs i R med `chisq.test`.
 
 ```{r}
-chisq.test(dat$`Antal observerade`, p = dat$`Sannolikheter enligt nollhypotes`)
+chisq.test(dat$n, p = dat$`Sannolikheter enligt nollhypotes`)
 ```
 
 Det låga p-värdet ger att man förkastar nollhypotesen. Det finns en statistiskt säkerställd skillnad mellan den observerade fördelningen och en poissonfördelning med $\lambda = 1.7$.
