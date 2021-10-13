@@ -1429,7 +1429,7 @@ En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktio
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## <bytecode: 0x0000000027055138>
+## <bytecode: 0x0000000025ec4c08>
 ## <environment: namespace:stats>
 \end{verbatim}
 
@@ -1747,7 +1747,7 @@ Eftersom standardavvikelsen i den ursprungliga dragningen var 1 (\(\sigma = 1\))
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2519129
+## [1] 0.2491594
 \end{verbatim}
 
 Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra observationer bör ge ett värde kring 0.1 (eftersom \(\sigma / \sqrt{100} = 1 / 10 = 0.1\)).
@@ -1760,7 +1760,7 @@ Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra obser
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.09945237
+## [1] 0.1004951
 \end{verbatim}
 
 Sannolikhetsteorin viktigaste resultat är \emph{centrala gränsvärdesatsen}, som säger att medelvärden av flera lika slumpvariabler är ungefärligt normalfördelade även om den ursprungliga slumpvariabeln inte är det. Detta kan illustreras genom att dra slumptal från valfri fördelning, beräkna medelvärden av de slumptalen, och sedan titta på fördelningen för de medelvärdena. Ett första steg kan vara att skriva en funktion som drar slumptal och beräknar ett medelvärde.
@@ -2116,15 +2116,15 @@ För att beräkna och illustrera den relativa frekvensen skapas en \texttt{tibbl
 ##     Kast Utfall Antal_spets_upp Relativ_frekvens
 ##    <int>  <int>           <int>            <dbl>
 ##  1     1      1               1            1    
-##  2     2      1               2            1    
-##  3     3      1               3            1    
-##  4     4      0               3            0.75 
-##  5     5      1               4            0.8  
-##  6     6      1               5            0.833
-##  7     7      1               6            0.857
-##  8     8      1               7            0.875
-##  9     9      0               7            0.778
-## 10    10      1               8            0.8  
+##  2     2      0               1            0.5  
+##  3     3      1               2            0.667
+##  4     4      0               2            0.5  
+##  5     5      1               3            0.6  
+##  6     6      1               4            0.667
+##  7     7      0               4            0.571
+##  8     8      1               5            0.625
+##  9     9      1               6            0.667
+## 10    10      1               7            0.7  
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -2345,7 +2345,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 ## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   <dbl> <dbl> <dbl>     <dbl>      <dbl>
-## 1  80.0  79.9  80.0      160.       160.
+## 1  80.0  80.0  80.0      160.       160.
 \end{verbatim}
 
 \begin{Shaded}
@@ -2359,7 +2359,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 ## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   <dbl> <dbl> <dbl>     <dbl>      <dbl>
-## 1  3.96  4.02  3.97      7.93       5.68
+## 1  3.98  4.01  4.00      7.96       5.69
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärde
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.053
+## [1] 0.0529
 \end{verbatim}
 
 När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.
@@ -3095,7 +3095,7 @@ När slumptalen genereras från en normalfördelning med medelvärde 0 följer p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.1756
+## [1] 0.1683
 \end{verbatim}
 
 När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
@@ -3213,7 +3213,7 @@ Ett formellt test genomförs som ett chi-två-test. Eftersom värdet på \(\lamb
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{chisq.test}\NormalTok{(dat}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Antal observerade}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{p =}\NormalTok{ dat}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Sannolikheter enligt nollhypotes}\StringTok{\textasciigrave{}}\NormalTok{)}
+\FunctionTok{chisq.test}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{n, }\AttributeTok{p =}\NormalTok{ dat}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Sannolikheter enligt nollhypotes}\StringTok{\textasciigrave{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3221,8 +3221,8 @@ Ett formellt test genomförs som ett chi-två-test. Eftersom värdet på \(\lamb
 ## 
 ##  Chi-squared test for given probabilities
 ## 
-## data:  dat$`Antal observerade`
-## X-squared = 63.292, df = 5, p-value = 2.532e-12
+## data:  dat$n
+## X-squared = 32.347, df = 5, p-value = 5.072e-06
 \end{verbatim}
 
 Det låga p-värdet ger att man förkastar nollhypotesen. Det finns en statistiskt säkerställd skillnad mellan den observerade fördelningen och en poissonfördelning med \(\lambda = 1.7\).
@@ -3255,7 +3255,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0248
+## [1] 0.0266
 \end{verbatim}
 
 \begin{Shaded}
@@ -3265,7 +3265,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0292
+## [1] 0.0235
 \end{verbatim}
 
 Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
