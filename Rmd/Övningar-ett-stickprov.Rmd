@@ -249,7 +249,7 @@ prob_poisson[6] <- 1 - sum(prob_poisson[0:5])
 expected_counts <- prob_poisson * 200
 ```
 
-Datan kan illusteras med ett stapeldiagram. Stapeln ger faktiska observationer med punkten ger det förväntade antalet under nollhypotesen.
+Datan kan illusteras med ett stapeldiagram. Stapeln ger faktiska observationer medan punkten ger det förväntade antalet under nollhypotesen.
 
 ```{r}
 dat <- read_csv("Data/Transektdata Storlom.csv")
