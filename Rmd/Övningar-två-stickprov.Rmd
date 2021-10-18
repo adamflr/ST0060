@@ -85,8 +85,10 @@ dat %>%
 
 Antag normalfördelad data och lika populationsvarianser i de bägge grupperna. 
 
-a\. Konstruera ett 95-procentigt konfidensintervall för vikten före övervintring. 
+a\. Konstruera ett 95-procentigt konfidensintervall för vikten före övervintring.
+
 b\. Gör ett hypotestest för att se om det är någon skillnad i vikt före och efter vintern. Använd signifikansnivån 5%. 
+
 c\. Ett problem med att mäta skilda individer före och efter övervintring är att det kan finnas en stor skillnad i vikt mellan ekorrar. Kan man lägga upp försöket på ett sätt som reducerar det problemet?
 
 (Detta är en tentamensuppgift från 2019.)
@@ -138,7 +140,7 @@ dat <- tibble(` ` = c("Burfågel", "Ej burfågel"),
 kable(dat)
 ```
 
-Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.
+Genomför ett z-test för att se om andelen burfågelägare än densamma i de två grupperna.
 :::
 
 ::: {.hypothesis name="Burfågel"}
