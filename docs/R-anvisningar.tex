@@ -133,7 +133,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2021-10-13}
+\date{\vspace{-2.5em}2021-10-18}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -1429,7 +1429,7 @@ En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktio
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## <bytecode: 0x0000000025ec4c08>
+## <bytecode: 0x0000000012339750>
 ## <environment: namespace:stats>
 \end{verbatim}
 
@@ -1747,7 +1747,7 @@ Eftersom standardavvikelsen i den ursprungliga dragningen var 1 (\(\sigma = 1\))
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2491594
+## [1] 0.2475117
 \end{verbatim}
 
 Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra observationer bör ge ett värde kring 0.1 (eftersom \(\sigma / \sqrt{100} = 1 / 10 = 0.1\)).
@@ -1760,7 +1760,7 @@ Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra obser
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.1004951
+## [1] 0.1005226
 \end{verbatim}
 
 Sannolikhetsteorin viktigaste resultat är \emph{centrala gränsvärdesatsen}, som säger att medelvärden av flera lika slumpvariabler är ungefärligt normalfördelade även om den ursprungliga slumpvariabeln inte är det. Detta kan illustreras genom att dra slumptal från valfri fördelning, beräkna medelvärden av de slumptalen, och sedan titta på fördelningen för de medelvärdena. Ett första steg kan vara att skriva en funktion som drar slumptal och beräknar ett medelvärde.
@@ -2116,15 +2116,15 @@ För att beräkna och illustrera den relativa frekvensen skapas en \texttt{tibbl
 ##     Kast Utfall Antal_spets_upp Relativ_frekvens
 ##    <int>  <int>           <int>            <dbl>
 ##  1     1      1               1            1    
-##  2     2      0               1            0.5  
-##  3     3      1               2            0.667
-##  4     4      0               2            0.5  
-##  5     5      1               3            0.6  
-##  6     6      1               4            0.667
-##  7     7      0               4            0.571
-##  8     8      1               5            0.625
-##  9     9      1               6            0.667
-## 10    10      1               7            0.7  
+##  2     2      1               2            1    
+##  3     3      1               3            1    
+##  4     4      1               4            1    
+##  5     5      1               5            1    
+##  6     6      1               6            1    
+##  7     7      1               7            1    
+##  8     8      0               7            0.875
+##  9     9      1               8            0.889
+## 10    10      0               8            0.8  
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -2359,7 +2359,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 ## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   <dbl> <dbl> <dbl>     <dbl>      <dbl>
-## 1  3.98  4.01  4.00      7.96       5.69
+## 1  4.03  4.00  4.02      8.06       5.67
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärde
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0529
+## [1] 0.0497
 \end{verbatim}
 
 När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.
@@ -3095,7 +3095,7 @@ När slumptalen genereras från en normalfördelning med medelvärde 0 följer p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.1683
+## [1] 0.1705
 \end{verbatim}
 
 När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
@@ -3188,7 +3188,7 @@ För att sannolikheterna ska summera till 1 sätts sannolikheten att observera f
 \end{Highlighting}
 \end{Shaded}
 
-Datan kan illusteras med ett stapeldiagram. Stapeln ger faktiska observationer med punkten ger det förväntade antalet under nollhypotesen.
+Datan kan illusteras med ett stapeldiagram. Stapeln ger faktiska observationer medan punkten ger det förväntade antalet under nollhypotesen.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3265,7 +3265,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0235
+## [1] 0.0241
 \end{verbatim}
 
 Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
@@ -3767,7 +3767,350 @@ a. Eftersom det inte finns någon koppling mellan odlare är ett t-test för tv�
 
 Hypotestestet (ett t-test för två oberoende stickprov) ger ett p-värde på \(0.0439\) eller \(0.0503\), beroende på om varianser inom grupperna antas lika eller ej.
 
+Om man har fler än två grupper kan man vilja göra parvisa t-test - alltså ett t-test för varje par av grupper.
+Ett exempel på funktionen \texttt{pairwise.t.test} ges nedan. Funktionen bygger på att datan är i \emph{lång} form, med en kolumn som anger det numeriska utfallet och en kolumn som anger behandlingen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat\_long }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Odlare, }\AttributeTok{names\_to =} \StringTok{"Odlingstyp"}\NormalTok{, }
+               \AttributeTok{values\_to =} \StringTok{"Monoglukosid"}\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(dat\_long)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+\centering
+\begin{tabular}[t]{rlr}
+\toprule
+Odlare & Odlingstyp & Monoglukosid\\
+\midrule
+1 & Konventionell & 138.9\\
+1 & Ekologisk & 135.7\\
+2 & Konventionell & 155.1\\
+2 & Ekologisk & 186.7\\
+3 & Konventionell & 126.3\\
+\addlinespace
+3 & Ekologisk & 182.0\\
+4 & Konventionell & 120.1\\
+4 & Ekologisk & 180.5\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairwise.t.test}\NormalTok{(dat\_long}\SpecialCharTok{$}\NormalTok{Monoglukosid, dat\_long}\SpecialCharTok{$}\NormalTok{Odlingstyp,}
+                \AttributeTok{p.adjust.method =} \StringTok{"none"}\NormalTok{, }\AttributeTok{pool.sd =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with non-pooled SD 
+## 
+## data:  dat_long$Monoglukosid and dat_long$Odlingstyp 
+## 
+##               Ekologisk
+## Konventionell 0.05     
+## 
+## P value adjustment method: none
+\end{verbatim}
+
 b. Om varianser antas lika ges ett 95-procentigt konfidensintervall av \((-70.9, -1.4)\). Notera att ett 95-procentigt intervall inte täcker noll, vilket är i linje med att p-värdet är mindre än 5 procent.
+\end{hypothesis}
+
+\begin{exercise}[Ekorrar]
+I en undersökning av hur den europeiska ekorren (Sciurus vulgaris) förändras i vikt under övervintring mäts 7 slumpmässigt valda ekorrar före och 5 slumpmässigt valda ekorrar efter övervintring.
+Resultaten ges av tabell.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lr}
+\toprule
+Tidpunkt & Vikt\\
+\midrule
+Före & 537\\
+Före & 597\\
+Före & 445\\
+Före & 556\\
+Före & 585\\
+\addlinespace
+Före & 542\\
+Före & 415\\
+Efter & 302\\
+Efter & 326\\
+Efter & 377\\
+\addlinespace
+Efter & 469\\
+Efter & 417\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Medelvärde och standardavvikelse per grupp ges av följande.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+Tidpunkt & Medelvikt & Standardavvikelse\\
+\midrule
+Efter & 378.2000 & 67.6070\\
+Före & 525.2857 & 69.1344\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Antag normalfördelad data och lika populationsvarianser i de bägge grupperna.
+
+a. Konstruera ett 95-procentigt konfidensintervall för vikten före övervintring.
+b. Gör ett hypotestest för att se om det är någon skillnad i vikt före och efter vintern. Använd signifikansnivån 5\%.
+c. Ett problem med att mäta skilda individer före och efter övervintring är att det kan finnas en stor skillnad i vikt mellan ekorrar. Kan man lägga upp försöket på ett sätt som reducerar det problemet?
+
+(Detta är en tentamensuppgift från 2019.)
+\end{exercise}
+
+\begin{hypothesis}[Ekorrar]
+Data läses in från kursdatan, fliken \emph{Ekorrar}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Data/Uppgiftsdata.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Ekorrar"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+En illustration kan skapas som en punktdiagram med tidpunkt på ena axeln och vikt på den andra. Notera i det steget att det inte finns några lika vikter, och därmed inga överlappande punkter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(Vikt, Tidpunkt)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-162-1} \end{center}
+
+Grafen visar på högre vikter före vintern.
+
+a. Ett konfidensintervall kan skapas genom att filtrera datan för observationerna före vintern och sedan skapa intervallet med \texttt{t.test}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat\_före }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Tidpunkt }\SpecialCharTok{==} \StringTok{"Före"}\NormalTok{)}
+\FunctionTok{t.test}\NormalTok{(dat\_före}\SpecialCharTok{$}\NormalTok{Vikt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  dat_före$Vikt
+## t = 20.103, df = 6, p-value = 9.84e-07
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  461.3470 589.2244
+## sample estimates:
+## mean of x 
+##  525.2857
+\end{verbatim}
+
+Utskriften ger intervallet \((461.35, 589.22)\), vilket ger tolkningen att populationsmedelvärdet för ekorrvikt före vintern ligger i det intervallet med 95 procents konfidens.
+
+b. Datan är på lång form - ett t-test genomförs enklast med formelskrivningen \texttt{Vikt\ \textasciitilde{}\ Tidpunkt}. Testet kan genomföras med eller utan antagandet om lika varianser i grupperna.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(Vikt }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Tidpunkt, dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  Vikt by Tidpunkt
+## t = -3.6807, df = 8.8977, p-value = 0.00517
+## alternative hypothesis: true difference in means between group Efter and group Före is not equal to 0
+## 95 percent confidence interval:
+##  -237.64404  -56.52739
+## sample estimates:
+## mean in group Efter  mean in group Före 
+##            378.2000            525.2857
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(Vikt }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Tidpunkt, dat, }\AttributeTok{var.equal =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two Sample t-test
+## 
+## data:  Vikt by Tidpunkt
+## t = -3.6656, df = 10, p-value = 0.004348
+## alternative hypothesis: true difference in means between group Efter and group Före is not equal to 0
+## 95 percent confidence interval:
+##  -236.49116  -57.68027
+## sample estimates:
+## mean in group Efter  mean in group Före 
+##            378.2000            525.2857
+\end{verbatim}
+
+c. Om man mäter samma individ före och efter vintern och sedan analyserar viktförändringen över tid försvinner variansen \emph{mellan} individer.
+\end{hypothesis}
+
+\begin{exercise}[Burfågel]
+I en undersökning av lungcancerpatienter finner man följande antal.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+  & Lungcancer & Ej lungcancer\\
+\midrule
+Burfågel & 98 & 101\\
+Ej burfågel & 141 & 328\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.
+\end{exercise}
+
+\begin{hypothesis}[Burfågel]
+Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{prop.test}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{98}\NormalTok{, }\DecValTok{101}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{98} \SpecialCharTok{+} \DecValTok{141}\NormalTok{, }\DecValTok{101} \SpecialCharTok{+} \DecValTok{328}\NormalTok{), }\AttributeTok{correct =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  2-sample test for equality of proportions without continuity
+##  correction
+## 
+## data:  c(98, 101) out of c(98 + 141, 101 + 328)
+## X-squared = 22.374, df = 1, p-value = 2.244e-06
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  0.1004485 0.2487727
+## sample estimates:
+##    prop 1    prop 2 
+## 0.4100418 0.2354312
+\end{verbatim}
+
+Det låga p-värdet tyder på att det finns skillnader mellan grupperna.
+\end{hypothesis}
+
+\begin{exercise}[Po-ta-toes]
+I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+Färg & a1b1 & a1b2 & a2b1 & a2b2\\
+\midrule
+A & 56 & 64 & 36 & 38\\
+B & 45 & 36 & 44 & 48\\
+C & 18 & 13 & 27 & 20\\
+D & 6 & 12 & 18 & 19\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Genomför ett lämpligt test för att se om det finns färgskillnader mellan behandlingarna.
+\end{exercise}
+
+\begin{hypothesis}[Po-ta-toes]
+
+Funktionen \texttt{matrix} kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till \texttt{chisq.test}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{56}\NormalTok{,}\DecValTok{64}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{38}\NormalTok{,}
+                \DecValTok{45}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{44}\NormalTok{,}\DecValTok{48}\NormalTok{,}
+                \DecValTok{18}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{27}\NormalTok{,}\DecValTok{20}\NormalTok{,}
+                \DecValTok{6}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{18}\NormalTok{,}\DecValTok{19}\NormalTok{),}
+              \AttributeTok{nrow =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T)}
+
+\NormalTok{test }\OtherTok{\textless{}{-}} \FunctionTok{chisq.test}\NormalTok{(dat)}
+\NormalTok{test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test
+## 
+## data:  dat
+## X-squared = 26.518, df = 9, p-value = 0.00168
+\end{verbatim}
+
+I ett \(\chi^2\)-test är nollhypotesen att kolumner och rader är oberoende. Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket tyder på att det finns ett samband mellan behandling och färg.
+
+Datan kan illustreras med ett stapeldiagram.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat\_long }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(Färg }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Färg)}
+
+\FunctionTok{ggplot}\NormalTok{(dat\_long, }\FunctionTok{aes}\NormalTok{(name, value, }\AttributeTok{fill =}\NormalTok{ Färg)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{col =} \StringTok{"black"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Reds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-169-1} \end{center}
+
+\end{hypothesis}
+
+\begin{exercise}[Mer burfågel]
+En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+  & Lungcancer & Ej lungcancer\\
+\midrule
+Burfågel & 98 & 101\\
+Ej burfågel & 141 & 328\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Genomför ett \(\chi^2\)-test för att se om det finns något signifikant samband mellan variablerna.
+\end{exercise}
+
+\begin{hypothesis}[Mer burfågel]
+För att genomföra \(\chi^2\)-testet kan man skriva in data som en 2-gånger-2-matris med funktionen \texttt{matrix}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{98}\NormalTok{, }\DecValTok{141}\NormalTok{, }\DecValTok{101}\NormalTok{, }\DecValTok{328}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{chisq.test}\NormalTok{(dat, }\AttributeTok{correct =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's Chi-squared test
+## 
+## data:  dat
+## X-squared = 22.374, df = 1, p-value = 2.244e-06
+\end{verbatim}
+
+Samma resultat som i den tidigare beräkningen på samma data.
 \end{hypothesis}
 
 \begin{exercise}[Allsvenskan. Genomsnittligt antal mål]
@@ -3840,7 +4183,7 @@ a. Datan kan illustreras med ett linjediagram med två separata linjer.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-159-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-173-1} \end{center}
 
 Allsvenskan för damer har ett högre genomsnittligt antal mål än allsvenskan för herrar.
 
@@ -4003,7 +4346,7 @@ Ett exempel på en enskild individ.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-165-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-179-1} \end{center}
 
 Ett exempel med samtliga individer i en (rörig) illustration.
 
@@ -4022,7 +4365,7 @@ Ett exempel med samtliga individer i en (rörig) illustration.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-166-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-180-1} \end{center}
 
 R har paket med funktioner för tre-dimensionella grafer. Ett exempel är genom paketet \texttt{rgl} och funktionerna \texttt{plot3d} och \texttt{lines3d}.
 
@@ -4058,7 +4401,7 @@ b. För att titta på landningsplatser filtreras på de observationer där den p
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-168-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-182-1} \end{center}
 
 \emph{Aedes aegypti} uppvisar högre x-koordinater, vilket tyder på att den arten varit mer lockad av doftämnet till höger.
 
@@ -4154,156 +4497,6 @@ e. Antalet kan antingen skrivas in från siffrorna i uppgiften eller beräknas f
 Testet pekar på en skillnad i proportionen höger- respektive vänstergående mellan arterna.
 \end{hypothesis}
 
-\begin{exercise}[Burfågel]
-I en undersökning av lungcancerpatienter finner man följande antal.
-
-\begin{table}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-  & Lungcancer & Ej lungcancer\\
-\midrule
-Burfågel & 98 & 101\\
-Ej burfågel & 141 & 328\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.
-\end{exercise}
-
-\begin{hypothesis}[Burfågel]
-Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{prop.test}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{98}\NormalTok{, }\DecValTok{101}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{98} \SpecialCharTok{+} \DecValTok{141}\NormalTok{, }\DecValTok{101} \SpecialCharTok{+} \DecValTok{328}\NormalTok{), }\AttributeTok{correct =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  2-sample test for equality of proportions without continuity
-##  correction
-## 
-## data:  c(98, 101) out of c(98 + 141, 101 + 328)
-## X-squared = 22.374, df = 1, p-value = 2.244e-06
-## alternative hypothesis: two.sided
-## 95 percent confidence interval:
-##  0.1004485 0.2487727
-## sample estimates:
-##    prop 1    prop 2 
-## 0.4100418 0.2354312
-\end{verbatim}
-
-Det låga p-värdet tyder på att det finns skillnader mellan grupperna.
-\end{hypothesis}
-
-\begin{exercise}[Po-ta-toes]
-I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.
-
-\begin{table}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-Färg & a1b1 & a1b2 & a2b1 & a2b2\\
-\midrule
-A & 56 & 64 & 36 & 38\\
-B & 45 & 36 & 44 & 48\\
-C & 18 & 13 & 27 & 20\\
-D & 6 & 12 & 18 & 19\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Genomför ett lämpligt test för att se om det finns färgskillnader mellan behandlingarna.
-\end{exercise}
-
-\begin{hypothesis}[Po-ta-toes]
-
-Funktionen \texttt{matrix} kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till \texttt{chisq.test}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{56}\NormalTok{,}\DecValTok{64}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{38}\NormalTok{,}
-                \DecValTok{45}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{44}\NormalTok{,}\DecValTok{48}\NormalTok{,}
-                \DecValTok{18}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{27}\NormalTok{,}\DecValTok{20}\NormalTok{,}
-                \DecValTok{6}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{18}\NormalTok{,}\DecValTok{19}\NormalTok{),}
-              \AttributeTok{nrow =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =}\NormalTok{ T)}
-
-\NormalTok{test }\OtherTok{\textless{}{-}} \FunctionTok{chisq.test}\NormalTok{(dat)}
-\NormalTok{test}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Pearson's Chi-squared test
-## 
-## data:  dat
-## X-squared = 26.518, df = 9, p-value = 0.00168
-\end{verbatim}
-
-I ett \(\chi^2\)-test är nollhypotesen att kolumner och rader är oberoende. Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket tyder på att det finns ett samband mellan behandling och färg.
-
-Datan kan illustreras med ett stapeldiagram.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_long }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{mutate}\NormalTok{(Färg }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Färg)}
-
-\FunctionTok{ggplot}\NormalTok{(dat\_long, }\FunctionTok{aes}\NormalTok{(name, value, }\AttributeTok{fill =}\NormalTok{ Färg)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{col =} \StringTok{"black"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Reds"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-176-1} \end{center}
-
-\end{hypothesis}
-
-\begin{exercise}[Mer burfågel]
-En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.
-
-\begin{table}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-  & Lungcancer & Ej lungcancer\\
-\midrule
-Burfågel & 98 & 101\\
-Ej burfågel & 141 & 328\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Genomför ett \(\chi^2\)-test för att se om det finns något signifikant samband mellan variablerna.
-\end{exercise}
-
-\begin{hypothesis}[Mer burfågel]
-För att genomföra \(\chi^2\)-testet kan man skriva in data som en 2-gånger-2-matris med funktionen \texttt{matrix}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{98}\NormalTok{, }\DecValTok{141}\NormalTok{, }\DecValTok{101}\NormalTok{, }\DecValTok{328}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{)}
-\FunctionTok{chisq.test}\NormalTok{(dat, }\AttributeTok{correct =}\NormalTok{ F)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Pearson's Chi-squared test
-## 
-## data:  dat
-## X-squared = 22.374, df = 1, p-value = 2.244e-06
-\end{verbatim}
-
-Samma resultat som i den tidigare beräkningen på samma data.
-\end{hypothesis}
-
 \begin{exercise}[Röda rummet, Gösta Berlings saga, och okänd]
 Bland kursdatan finns text till Selma Lagerlöfs \emph{Gösta Berlings saga} och August Strindbergs \emph{Röda rummet}, i kolumnform. Det finns också en text med okänd författare (filen \emph{Den tredje boken}). En ytlig textanalys kan baseras på frekvensen för olika ord. Närliggande tabell ger antalet förekomster för texternas fem vanligaste ord i första kapitlet av varje text.
 
@@ -4364,7 +4557,7 @@ a. En möjlig illustration är ett stapeldiagram för proportion av varje ord in
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-180-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-187-1} \end{center}
 
 Röda rummet har större andel förekomster av \emph{och} och \emph{i}.
 
@@ -4455,7 +4648,7 @@ Datan har 18 observationer av skördvikt och varje observation tillhör någon s
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-183-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-190-1} \end{center}
 
 Det finns en tydlig kväveeffekt.
 
@@ -4565,7 +4758,7 @@ Modellen med en faktor var en förenkling av den faktiska försökssituationen. 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-188-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-195-1} \end{center}
 
 Färg och linje sammanbinder observationer från samma block. Det finns en klar blockeffekt, vilket är särskilt tydligt för block I, som uppvisar klart högre värden än andra block.
 
@@ -4631,7 +4824,7 @@ Den avslutande modellen tar med bägge faktorerna (sort och kväve) och blockfak
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-191-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-198-1} \end{center}
 
 Grafen visar samma kvävesamband som tidigare. Det finns inga tydliga skillnader sorter, möjligen har sorten Victory givit något lägre skörd än övriga. Det finns också en tydlig blockeffekt, till exempel har block I höga värden och block V låga värden.
 
@@ -4809,7 +5002,7 @@ a.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-197-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-204-1} \end{center}
 
 En graf visar på en mycket tydlig behandlingsskillnad. Det finns inga tydliga extremvärden och grupperna verkar ha samma varians inom gruppen.
 
@@ -4868,7 +5061,7 @@ Modellantaganden (normalfördelning och lika varianser inom grupper) kan unders�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-200-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-207-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4876,7 +5069,7 @@ Modellantaganden (normalfördelning och lika varianser inom grupper) kan unders�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-200-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-207-2} \end{center}
 
 Diagnostik-grafer pekar inte på några extrema avvikelser från normalantagandet (punkterna följer den diagonala linjen ganska väl) eller antagandet om lika varianser (de två kolumnerna med punkter har ungefär samma spridning).
 
@@ -4932,7 +5125,7 @@ Data kan läsas in från excelfilen med uppgiftsdata.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-202-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-209-1} \end{center}
 
 Grafen visar svaga tecken på skillnader, men inga \emph{tydliga} mönster.
 
@@ -4967,7 +5160,7 @@ b.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-204-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-211-1} \end{center}
 
 Ungefärligt normalfördelat.
 
@@ -5058,7 +5251,7 @@ Data kan läsas in från excelfilen med uppgiftsdata.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-208-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-215-1} \end{center}
 
 Tecken på både platseffekt (nordväst alltid lägst) och hybrideffekt (RC3 lägre än övriga).
 
@@ -5148,7 +5341,7 @@ Datan kan skrivas in som en \texttt{tibble} och illustreras med ett enkelt sprid
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-211-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-218-1} \end{center}
 
 Det finns tecken på skillnader i tid (Maskin C ligger lägre).
 
@@ -5211,7 +5404,7 @@ c. Modellen bygger på antagandet att residualerna är normalfördelade och att 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-214-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-221-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5219,7 +5412,7 @@ c. Modellen bygger på antagandet att residualerna är normalfördelade och att 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-214-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-221-2} \end{center}
 
 En graf över residualerna visar inte på några tydliga brister i antaganden.
 
@@ -5305,7 +5498,7 @@ Ta som exempel data på förväntad medellivslängd och bnp per capita. Datan h�
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-216-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-223-1} \end{center}
 
 Datan visar ett positivt samband mellan variablerna - högre bnp per capita är kopplat till högre medelllivslängd. En regressionmodell kan i R skattas med \texttt{lm}-funktionen. Syntaxen är väldigt lik den för anovamodellen, men istället för en faktor som förklarande variabel används nu en kontinuerlig variabel.
 
@@ -5350,7 +5543,7 @@ Man kan rita ut regressionlinjen i en graf med \texttt{geom\_smooth} och argumen
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-218-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-225-1} \end{center}
 
 Den blå linjen illustrerar regressionlinjen \(72.27 + 0.2146 \cdot x\). Det grå bandet kring linjen är ett konfidensintervall för skattningen av y-variabeln vid ett visst x-värde.
 
@@ -5384,7 +5577,7 @@ Testerna av en regressionmodell bygger på ett normalfördelningsantagande oh et
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-221-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-228-1} \end{center}
 
 Om data följer en normalfördelning bör histogrammet visa en ungefärlig normalkurva, QQ-plotten bör visa punkter på den diagonala linjen och spridningsdiagrammet bör visa en slumpmässig spridning av punkter. Graferna pekar i det här fallet inte på några tydliga avvikelser från normalfördelningsantagandet, möjligen pekar QQ-plotten på mindre spridning i svansarna än en teoretisk normalfördelning.
 
@@ -5474,7 +5667,7 @@ Data kan läsas in från excelfilen med uppgiftsdata. Två kontinuerliga variabl
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-224-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-231-1} \end{center}
 
 Det finns ett tydligt positivt samband mellan variablerna.
 
@@ -5534,7 +5727,7 @@ c. Modellen bygger på normalfördelade residualer och lika varians för skilda 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-227-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-234-1} \end{center}
 
 Det finns inga extremvärden bland residualer och inga tydliga tecken på skillnader i varians.
 
@@ -5666,7 +5859,7 @@ a. Tidsdata illustreras ofta med en linjediagram. Regressionslinjen kan skapas m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-233-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-240-1} \end{center}
 
 Det finns tecken på en ökning över tid.
 
@@ -5713,7 +5906,7 @@ Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller strukt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-235-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5721,7 +5914,7 @@ Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller strukt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-235-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-2} \end{center}
 
 c. Det är möjligt att prognosticera värden med \texttt{predict}. Funktionen tar en skattad modell (här \texttt{mod}) och en ny datatabellen, som innehåller en kolumn med samma namn som den förklarande variabeln i modellen (här \texttt{År}). Funktionen kan även producera konfidensintervall för skattningen, här genom \texttt{interval\ =\ "conf"} för ett konfidensintervall.
 
@@ -5739,7 +5932,7 @@ c. Det är möjligt att prognosticera värden med \texttt{predict}. Funktionen t
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-236-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-243-1} \end{center}
 
 d. I en tidigare uppgift påpekas att data inte samlats in samma tider på dygnet under hela mätperioden - det är därmed möjligt att den observerade ökningen beror på förändringar i mätmetod. Valet av de fyrtio senaste åren var ett godtyckligt val som påverkar lutningen kraftigt (till exempel om man av en ren slump börjar med några kalla år och avslutar med några varma). Regressionsmodellen är en linjär modell, vilket ger den uppenbarligen orimliga tolkning av interceptet som en temperatur år 0.
 
@@ -5779,7 +5972,7 @@ Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-238-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-245-1} \end{center}
 
 a. Ibland behöver man inget test.
 
@@ -5843,7 +6036,7 @@ b.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-241-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-248-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5887,7 +6080,7 @@ Data finns tillgänglig i R som \texttt{anscombe}, vilket är en tabell med ått
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-249-1} \end{center}
 
 Graferna ser olika ut.
 
@@ -5992,7 +6185,7 @@ b. Datan kan illustreras med ett spridningsdiagram. Funktionen \texttt{facet\_wr
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-246-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-253-1} \end{center}
 
 Figuren visar att det finns tydliga mönster i flera av grupperna och tydliga skillnader mellan dem.
 \end{hypothesis}
