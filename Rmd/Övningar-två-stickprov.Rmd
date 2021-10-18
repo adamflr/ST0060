@@ -46,7 +46,180 @@ t.test(dat$Konventionell, dat$Ekologisk, var.equal = F)
 
 Hypotestestet (ett t-test för två oberoende stickprov) ger ett p-värde på $0.0439$ eller $0.0503$, beroende på om varianser inom grupperna antas lika eller ej.
 
+Om man har fler än två grupper kan man vilja göra parvisa t-test - alltså ett t-test för varje par av grupper. 
+Ett exempel på funktionen `pairwise.t.test` ges nedan. Funktionen bygger på att datan är i *lång* form, med en kolumn som anger det numeriska utfallet och en kolumn som anger behandlingen.
+
+```{r}
+dat_long <- dat %>% 
+  pivot_longer(-Odlare, names_to = "Odlingstyp", 
+               values_to = "Monoglukosid")
+
+kable(dat_long)
+
+pairwise.t.test(dat_long$Monoglukosid, dat_long$Odlingstyp,
+                p.adjust.method = "none", pool.sd = F)
+```
+
+
 b\. Om varianser antas lika ges ett 95-procentigt konfidensintervall av $(-70.9, -1.4)$. Notera att ett 95-procentigt intervall inte täcker noll, vilket är i linje med att p-värdet är mindre än 5 procent.
+:::
+
+::: {.exercise name="Ekorrar"}
+I en undersökning av hur den europeiska ekorren (Sciurus vulgaris) förändras i vikt under övervintring mäts 7 slumpmässigt valda ekorrar före och 5 slumpmässigt valda ekorrar efter övervintring. 
+Resultaten ges av tabell.
+
+```{r, echo = F}
+dat <- read_excel("Data/Uppgiftsdata.xlsx", sheet = "Ekorrar")
+
+kable(dat)
+```
+
+Medelvärde och standardavvikelse per grupp ges av följande.
+
+```{r, echo = F}
+dat %>% 
+  group_by(Tidpunkt) %>% 
+  summarise(Medelvikt = mean(Vikt), Standardavvikelse = sd(Vikt)) %>% 
+  kable()
+```
+
+Antag normalfördelad data och lika populationsvarianser i de bägge grupperna. 
+
+a\. Konstruera ett 95-procentigt konfidensintervall för vikten före övervintring. 
+b\. Gör ett hypotestest för att se om det är någon skillnad i vikt före och efter vintern. Använd signifikansnivån 5%. 
+c\. Ett problem med att mäta skilda individer före och efter övervintring är att det kan finnas en stor skillnad i vikt mellan ekorrar. Kan man lägga upp försöket på ett sätt som reducerar det problemet?
+
+(Detta är en tentamensuppgift från 2019.)
+:::
+
+::: {.hypothesis name="Ekorrar"}
+Data läses in från kursdatan, fliken *Ekorrar*.
+
+```{r}
+dat <- read_excel("Data/Uppgiftsdata.xlsx", sheet = "Ekorrar")
+```
+
+En illustration kan skapas som en punktdiagram med tidpunkt på ena axeln och vikt på den andra. Notera i det steget att det inte finns några lika vikter, och därmed inga överlappande punkter.
+
+```{r, fig.height=3}
+ggplot(dat, aes(Vikt, Tidpunkt)) + geom_point()
+```
+
+Grafen visar på högre vikter före vintern.
+
+a\. Ett konfidensintervall kan skapas genom att filtrera datan för observationerna före vintern och sedan skapa intervallet med `t.test`.
+
+```{r}
+dat_före <- dat %>% filter(Tidpunkt == "Före")
+t.test(dat_före$Vikt)
+
+```
+
+Utskriften ger intervallet $(461.35, 589.22)$, vilket ger tolkningen att populationsmedelvärdet för ekorrvikt före vintern ligger i det intervallet med 95 procents konfidens.
+
+b\. Datan är på lång form - ett t-test genomförs enklast med formelskrivningen `Vikt ~ Tidpunkt`. Testet kan genomföras med eller utan antagandet om lika varianser i grupperna.
+
+```{r}
+t.test(Vikt ~ Tidpunkt, dat)
+t.test(Vikt ~ Tidpunkt, dat, var.equal = T)
+```
+
+c\. Om man mäter samma individ före och efter vintern och sedan analyserar viktförändringen över tid försvinner variansen *mellan* individer.
+:::
+
+::: {.exercise name="Burfågel"}
+I en undersökning av lungcancerpatienter finner man följande antal.
+
+```{r, echo = F}
+dat <- tibble(` ` = c("Burfågel", "Ej burfågel"),
+              Lungcancer = c(98, 141),
+              `Ej lungcancer` = c(101, 328))
+
+kable(dat)
+```
+
+Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.
+:::
+
+::: {.hypothesis name="Burfågel"}
+Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.
+```{r}
+prop.test(c(98, 101), c(98 + 141, 101 + 328), correct = F)
+```
+
+Det låga p-värdet tyder på att det finns skillnader mellan grupperna.
+:::
+
+::: {.exercise name="Po-ta-toes"}
+I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.
+
+```{r, echo = F}
+dat <- matrix(c(56,64,36,38,
+                45,36,44,48,
+                18,13,27,20,
+                6,12,18,19),
+              nrow = 4, byrow = T)
+data.frame(Färg = LETTERS[1:4], as.data.frame(dat)) %>% 
+  as_tibble() %>% 
+  `names<-`(c("Färg", "a1b1", "a1b2", "a2b1", "a2b2")) %>% 
+  kable()
+```
+
+Genomför ett lämpligt test för att se om det finns färgskillnader mellan behandlingarna.
+:::
+
+::: {.hypothesis name="Po-ta-toes"}
+Funktionen `matrix` kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till `chisq.test`.
+
+```{r}
+dat <- matrix(c(56,64,36,38,
+                45,36,44,48,
+                18,13,27,20,
+                6,12,18,19),
+              nrow = 4, byrow = T)
+
+test <- chisq.test(dat)
+test
+```
+
+I ett $\chi^2$-test är nollhypotesen att kolumner och rader är oberoende. Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket tyder på att det finns ett samband mellan behandling och färg.
+
+Datan kan illustreras med ett stapeldiagram.
+
+```{r, fig.height=4}
+dat_long <- dat %>% 
+  as_tibble() %>% 
+  mutate(Färg = c("A", "B", "C", "D")) %>% 
+  pivot_longer(-Färg)
+
+ggplot(dat_long, aes(name, value, fill = Färg)) +
+  geom_bar(stat = "identity", col = "black", width = 0.6) +
+  scale_fill_brewer(palette = "Reds")
+```
+:::
+
+::: {.exercise name="Mer burfågel"}
+En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.
+
+```{r, echo = F}
+dat <- tibble(` ` = c("Burfågel", "Ej burfågel"),
+              Lungcancer = c(98, 141),
+              `Ej lungcancer` = c(101, 328))
+
+kable(dat)
+```
+
+Genomför ett $\chi^2$-test för att se om det finns något signifikant samband mellan variablerna.
+:::
+
+::: {.hypothesis name="Mer burfågel"}
+För att genomföra $\chi^2$-testet kan man skriva in data som en 2-gånger-2-matris med funktionen `matrix`.
+```{r}
+dat <- matrix(c(98, 141, 101, 328), nrow = 2)
+chisq.test(dat, correct = F)
+```
+
+Samma resultat som i den tidigare beräkningen på samma data.
 :::
 
 ::: {.exercise name="Allsvenskan. Genomsnittligt antal mål"}
@@ -259,101 +432,6 @@ chisq.test(dat_prop %>% select(Left, Right))
 ```
 
 Testet pekar på en skillnad i proportionen höger- respektive vänstergående mellan arterna.
-:::
-
-::: {.exercise name="Burfågel"}
-I en undersökning av lungcancerpatienter finner man följande antal.
-
-```{r, echo = F}
-dat <- tibble(` ` = c("Burfågel", "Ej burfågel"),
-              Lungcancer = c(98, 141),
-              `Ej lungcancer` = c(101, 328))
-
-kable(dat)
-```
-
-Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.
-:::
-
-::: {.hypothesis name="Burfågel"}
-Frågan är om proportionen burfågelägare bland patienter är densamma som proportionen burfågelägare bland icke-drabbade. Man ska alltså ställa proportionen 98 av 239 mot 101 av 429.
-```{r}
-prop.test(c(98, 101), c(98 + 141, 101 + 328), correct = F)
-```
-
-Det låga p-värdet tyder på att det finns skillnader mellan grupperna.
-:::
-
-::: {.exercise name="Po-ta-toes"}
-I en undersökning på potatis används fyra behandlingar (a1b1, a1b2, a2b1 och a2b2). 125 potatisar från varje behandling sorteras in i fyra olika färggrupper (A, B, C och D). Frekvenstabellen ges av följande.
-
-```{r, echo = F}
-dat <- matrix(c(56,64,36,38,
-                45,36,44,48,
-                18,13,27,20,
-                6,12,18,19),
-              nrow = 4, byrow = T)
-data.frame(Färg = LETTERS[1:4], as.data.frame(dat)) %>% 
-  as_tibble() %>% 
-  `names<-`(c("Färg", "a1b1", "a1b2", "a2b1", "a2b2")) %>% 
-  kable()
-```
-
-Genomför ett lämpligt test för att se om det finns färgskillnader mellan behandlingarna.
-:::
-
-::: {.hypothesis name="Po-ta-toes"}
-Funktionen `matrix` kan användas för att skapa korstabellen. Tabellen kan sedan tas som ingångsvärde till `chisq.test`.
-
-```{r}
-dat <- matrix(c(56,64,36,38,
-                45,36,44,48,
-                18,13,27,20,
-                6,12,18,19),
-              nrow = 4, byrow = T)
-
-test <- chisq.test(dat)
-test
-```
-
-I ett $\chi^2$-test är nollhypotesen att kolumner och rader är oberoende. Det låga p-värdet tyder på att nollhypotesen bör förkastas, vilket tyder på att det finns ett samband mellan behandling och färg.
-
-Datan kan illustreras med ett stapeldiagram.
-
-```{r, fig.height=4}
-dat_long <- dat %>% 
-  as_tibble() %>% 
-  mutate(Färg = c("A", "B", "C", "D")) %>% 
-  pivot_longer(-Färg)
-
-ggplot(dat_long, aes(name, value, fill = Färg)) +
-  geom_bar(stat = "identity", col = "black", width = 0.6) +
-  scale_fill_brewer(palette = "Reds")
-```
-:::
-
-::: {.exercise name="Mer burfågel"}
-En tidigare uppgift gav följande data kring en eventuell koppling mellan fågelägande och lungcancer.
-
-```{r, echo = F}
-dat <- tibble(` ` = c("Burfågel", "Ej burfågel"),
-              Lungcancer = c(98, 141),
-              `Ej lungcancer` = c(101, 328))
-
-kable(dat)
-```
-
-Genomför ett $\chi^2$-test för att se om det finns något signifikant samband mellan variablerna.
-:::
-
-::: {.hypothesis name="Mer burfågel"}
-För att genomföra $\chi^2$-testet kan man skriva in data som en 2-gånger-2-matris med funktionen `matrix`.
-```{r}
-dat <- matrix(c(98, 141, 101, 328), nrow = 2)
-chisq.test(dat, correct = F)
-```
-
-Samma resultat som i den tidigare beräkningen på samma data.
 :::
 
 ::: {.exercise name="Röda rummet, Gösta Berlings saga, och okänd"}
