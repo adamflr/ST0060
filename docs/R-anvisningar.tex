@@ -1429,7 +1429,7 @@ En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktio
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## <bytecode: 0x0000000012339750>
+## <bytecode: 0x0000000020e6c728>
 ## <environment: namespace:stats>
 \end{verbatim}
 
@@ -1747,7 +1747,7 @@ Eftersom standardavvikelsen i den ursprungliga dragningen var 1 (\(\sigma = 1\))
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2475117
+## [1] 0.2503807
 \end{verbatim}
 
 Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra observationer bör ge ett värde kring 0.1 (eftersom \(\sigma / \sqrt{100} = 1 / 10 = 0.1\)).
@@ -1760,7 +1760,7 @@ Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra obser
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.1005226
+## [1] 0.09999448
 \end{verbatim}
 
 Sannolikhetsteorin viktigaste resultat är \emph{centrala gränsvärdesatsen}, som säger att medelvärden av flera lika slumpvariabler är ungefärligt normalfördelade även om den ursprungliga slumpvariabeln inte är det. Detta kan illustreras genom att dra slumptal från valfri fördelning, beräkna medelvärden av de slumptalen, och sedan titta på fördelningen för de medelvärdena. Ett första steg kan vara att skriva en funktion som drar slumptal och beräknar ett medelvärde.
@@ -2119,12 +2119,12 @@ För att beräkna och illustrera den relativa frekvensen skapas en \texttt{tibbl
 ##  2     2      1               2            1    
 ##  3     3      1               3            1    
 ##  4     4      1               4            1    
-##  5     5      1               5            1    
-##  6     6      1               6            1    
-##  7     7      1               7            1    
-##  8     8      0               7            0.875
-##  9     9      1               8            0.889
-## 10    10      0               8            0.8  
+##  5     5      0               4            0.8  
+##  6     6      0               4            0.667
+##  7     7      1               5            0.714
+##  8     8      0               5            0.625
+##  9     9      0               5            0.556
+## 10    10      0               5            0.5  
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -2359,7 +2359,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 ## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   <dbl> <dbl> <dbl>     <dbl>      <dbl>
-## 1  4.03  4.00  4.02      8.06       5.67
+## 1  4.04  4.02  4.01      8.08       5.68
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärde
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0497
+## [1] 0.0475
 \end{verbatim}
 
 När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.
@@ -3095,7 +3095,7 @@ När slumptalen genereras från en normalfördelning med medelvärde 0 följer p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.1705
+## [1] 0.1716
 \end{verbatim}
 
 När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
@@ -3255,7 +3255,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0266
+## [1] 0.0251
 \end{verbatim}
 
 \begin{Shaded}
@@ -3265,7 +3265,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0241
+## [1] 0.0256
 \end{verbatim}
 
 Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
@@ -3866,7 +3866,9 @@ Före & 525.2857 & 69.1344\\
 Antag normalfördelad data och lika populationsvarianser i de bägge grupperna.
 
 a. Konstruera ett 95-procentigt konfidensintervall för vikten före övervintring.
+
 b. Gör ett hypotestest för att se om det är någon skillnad i vikt före och efter vintern. Använd signifikansnivån 5\%.
+
 c. Ett problem med att mäta skilda individer före och efter övervintring är att det kan finnas en stor skillnad i vikt mellan ekorrar. Kan man lägga upp försöket på ett sätt som reducerar det problemet?
 
 (Detta är en tentamensuppgift från 2019.)
@@ -3978,7 +3980,7 @@ Ej burfågel & 141 & 328\\
 \end{tabular}
 \end{table}
 
-Genomför ett test för att se om andelen burfågelägare än densamma i de två grupperna.
+Genomför ett z-test för att se om andelen burfågelägare än densamma i de två grupperna.
 \end{exercise}
 
 \begin{hypothesis}[Burfågel]

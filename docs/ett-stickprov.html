@@ -921,7 +921,7 @@ F
 <span id="cb220-11"><a href="ett-stickprov.html#cb220-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>))</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-130-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="ett-stickprov.html#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0472</code></pre>
+<pre><code>## [1] 0.0518</code></pre>
 <p>När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="ett-stickprov.html#cb223-1" aria-hidden="true" tabindex="-1"></a>p_values_when_mean_0 <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
 <span id="cb223-2"><a href="ett-stickprov.html#cb223-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="fl">0.1</span>)</span>
@@ -936,7 +936,7 @@ F
 <span id="cb223-11"><a href="ett-stickprov.html#cb223-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.05</span>))</span></code></pre></div>
 <p><img src="R-anvisningar_files/figure-html/unnamed-chunk-131-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="ett-stickprov.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(p_values <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 0.1683</code></pre>
+<pre><code>## [1] 0.1675</code></pre>
 <p>När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.</p>
 </div>
 <div class="exercise">
@@ -1080,9 +1080,9 @@ För att sannolikheterna ska summera till 1 sätts sannolikheten att observera f
 <span id="cb234-10"><a href="ett-stickprov.html#cb234-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(intervals) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Undre&quot;</span>, <span class="st">&quot;Övre&quot;</span>)</span>
 <span id="cb234-11"><a href="ett-stickprov.html#cb234-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb234-12"><a href="ett-stickprov.html#cb234-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Undre <span class="sc">&gt;</span> <span class="dv">9</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0231</code></pre>
+<pre><code>## [1] 0.024</code></pre>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="ett-stickprov.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(intervals<span class="sc">$</span>Övre <span class="sc">&lt;</span> <span class="dv">9</span>)</span></code></pre></div>
-<pre><code>## [1] 0.0254</code></pre>
+<pre><code>## [1] 0.0249</code></pre>
 <p>Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.</p>
 <p>En illustration med 100 simulerade fall.</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="ett-stickprov.html#cb238-1" aria-hidden="true" tabindex="-1"></a>intervals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">ci_from_ten</span>())</span>
