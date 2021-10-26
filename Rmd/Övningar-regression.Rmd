@@ -70,6 +70,98 @@ test(emtrends(mod, ~ 1, "Ålder"), null = 1)
 P-värdet ligger precis under fem procent.
 :::
 
+
+
+::: {.exercise name="Metodjämförelse"}
+Någon vill jämföra två metoder för att mäta volym på någon planta. Hen mäter därför nio olika plantor med bägge metoderna, vilket ger följande värden.
+
+```{r, echo = F}
+dat <- read_excel("Data/Uppgiftsdata.xlsx", sheet = "Metodjämförelse")
+dat %>% 
+  pivot_wider(names_from = Yta, values_from = Volym) %>% 
+  kable()
+```
+
+a\. Illustrera datan med en lämplig figur. Testa med ett lämpligt test om metoderna ger samma medelvärdesvolym.
+
+b\. Beräkna korrelationen mellan metoderna. Metod A är en dyrare men bättre metod. Ger mätning med metod B en säker uppskattning av utfallet med metod A?
+:::
+
+::: {.hypothesis name="Metodjämförelse"}
+Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig skillnad mellan grupperna.
+```{r}
+dat <- read_excel("Data/Uppgiftsdata.xlsx", sheet = "Metodjämförelse")
+
+ggplot(dat, aes(Metod, Volym, group = Yta)) +
+  geom_point() +
+  geom_line()
+```
+
+a\. Ibland behöver man inget test.
+
+Men en jämförelse mellan två grupper kan förstås tas som ett parat t-test. Man kan först använda `pivot_wider` för att skriva om data till kolumnform.
+
+```{r}
+dat_wide <- dat %>% 
+  pivot_wider(names_from = Metod, values_from = Volym)
+
+t.test(dat_wide$A, dat_wide$B, paired = T)
+```
+
+Parad data kan också ses som det enklaste exemplet på ett block, och analyseras som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med `as.character`.
+
+```{r}
+dat <- dat %>% mutate(Yta = as.character(Yta))
+
+mod <- lm(Volym ~ Metod + Yta, dat)
+
+Anova(mod)
+```
+
+P-värdet från ett F-test på metod är detsamma som det från det parade t-testet.
+
+b\. 
+```{r}
+ggplot(dat_wide, aes(B, A)) + 
+  geom_point()
+
+cor.test(dat_wide$A, dat_wide$B)
+```
+
+Det finns inget signifikant samband mellan metoderna. Mätning med metod B säger alltså inget om utfallet i metod A. Om metod A är den mer precisa metoden, tyder detta på att metod B inte bör användas.
+:::
+
+::: {.exercise name="Anscombes data"}
+Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är *Anscombes kvartett*, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet `anscombe`. Plotta de fyra graferna (`x1` paras med `y1` och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Kommentera utfallet.
+:::
+
+::: {.hypothesis name="Anscombes data"}
+Data finns tillgänglig i R som `anscombe`, vilket är en tabell med åtta kolumner som består av fyra par (där `x1` är kopplad till `y1` och så vidare). Paren kan plottas med enkla spridningsdiagram.
+
+```{r, fig.height=5}
+g1 <- ggplot(anscombe, aes(x1, y1)) + geom_point()
+g2 <- ggplot(anscombe, aes(x2, y2)) + geom_point()
+g3 <- ggplot(anscombe, aes(x3, y3)) + geom_point()
+g4 <- ggplot(anscombe, aes(x4, y4)) + geom_point()
+
+library(patchwork)
+(g1 + g2) / (g3 + g4)
+```
+
+Graferna ser olika ut.
+
+```{r}
+cor(anscombe$x1, anscombe$y1)
+cor(anscombe$x2, anscombe$y2)
+cor(anscombe$x3, anscombe$y3)
+cor(anscombe$x4, anscombe$y4)
+```
+
+Men har samma korrelation (till fjärde decimal).
+
+En modern utveckling av Anscombes kvartett ges av *The Datasaurus Dozen*.
+:::
+
 ::: {.exercise name="Beach 2050"}
 Bland kursdata finns en fil med uppmätta temperaturer vid väderstationen i Falsterbo. Den kan läsas in från csv-filen. Se tidigare uppgift om beskrivande statistik för detaljer.
 
@@ -166,96 +258,6 @@ g1 + # Samma grundgraf som tidigare
 d\. I en tidigare uppgift påpekas att data inte samlats in samma tider på dygnet under hela mätperioden - det är därmed möjligt att den observerade ökningen beror på förändringar i mätmetod. Valet av de fyrtio senaste åren var ett godtyckligt val som påverkar lutningen kraftigt (till exempel om man av en ren slump börjar med några kalla år och avslutar med några varma). Regressionsmodellen är en linjär modell, vilket ger den uppenbarligen orimliga tolkning av interceptet som en temperatur år 0.
 
 Slutligen finns förstås det grundläggande problemet med prognoser: det kan ske oväntade saker som leder till strukturbrott och gör att sambandet mellan förklarande och förklarad variabel förändras.
-:::
-
-::: {.exercise name="Metodjämförelse"}
-Någon vill jämföra två metoder för att mäta volym på någon planta. Hen mäter därför nio olika plantor med bägge metoderna, vilket ger följande värden.
-
-```{r, echo = F}
-dat <- read_excel("Data/Uppgiftsdata.xlsx", sheet = "Metodjämförelse")
-dat %>% 
-  pivot_wider(names_from = Yta, values_from = Volym) %>% 
-  kable()
-```
-
-a\. Illustrera datan med en lämplig figur. Testa med ett lämpligt test om metoderna ger samma medelvärdesvolym.
-
-b\. Beräkna korrelationen mellan metoderna. Metod A är en dyrare men bättre metod. Ger mätning med metod B en säker uppskattning av utfallet med metod A?
-:::
-
-::: {.hypothesis name="Metodjämförelse"}
-Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig skillnad mellan grupperna.
-```{r}
-dat <- read_excel("Data/Uppgiftsdata.xlsx", sheet = "Metodjämförelse")
-
-ggplot(dat, aes(Metod, Volym, group = Yta)) +
-  geom_point() +
-  geom_line()
-```
-
-a\. Ibland behöver man inget test.
-
-Men en jämförelse mellan två grupper kan förstås tas som ett parat t-test. Man kan först använda `pivot_wider` för att skriva om data till kolumnform.
-
-```{r}
-dat_wide <- dat %>% 
-  pivot_wider(names_from = Metod, values_from = Volym)
-
-t.test(dat_wide$A, dat_wide$B, paired = T)
-```
-
-Parad data kan också ses som det enklaste exemplet på ett block, och analyseras som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med `as.character`.
-
-```{r}
-dat <- dat %>% mutate(Yta = as.character(Yta))
-
-mod <- lm(Volym ~ Metod + Yta, dat)
-
-Anova(mod)
-```
-
-P-värdet från ett F-test på metod är detsamma som det från det parade t-testet.
-
-b\. 
-```{r}
-ggplot(dat_wide, aes(B, A)) + 
-  geom_point()
-
-cor.test(dat_wide$A, dat_wide$B)
-```
-
-Det finns inget signifikant samband mellan metoderna. Mätning med metod B säger alltså inget om utfallet i metod A. Om metod A är den mer precisa metoden, tyder detta på att metod B inte bör användas.
-:::
-
-::: {.exercise name="Anscombes data"}
-Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är *Anscombes kvartett*, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet `anscombe`. Plotta de fyra graferna (`x1` paras med `y1` och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Kommentera utfallet.
-:::
-
-::: {.hypothesis name="Anscombes data"}
-Data finns tillgänglig i R som `anscombe`, vilket är en tabell med åtta kolumner som består av fyra par (där `x1` är kopplad till `y1` och så vidare). Paren kan plottas med enkla spridningsdiagram.
-
-```{r, fig.height=5}
-g1 <- ggplot(anscombe, aes(x1, y1)) + geom_point()
-g2 <- ggplot(anscombe, aes(x2, y2)) + geom_point()
-g3 <- ggplot(anscombe, aes(x3, y3)) + geom_point()
-g4 <- ggplot(anscombe, aes(x4, y4)) + geom_point()
-
-library(patchwork)
-(g1 + g2) / (g3 + g4)
-```
-
-Graferna ser olika ut.
-
-```{r}
-cor(anscombe$x1, anscombe$y1)
-cor(anscombe$x2, anscombe$y2)
-cor(anscombe$x3, anscombe$y3)
-cor(anscombe$x4, anscombe$y4)
-```
-
-Men har samma korrelation (till fjärde decimal).
-
-En modern utveckling av Anscombes kvartett ges av *The Datasaurus Dozen*.
 :::
 
 ::: {.exercise name="Datasaurus Dozen"}
