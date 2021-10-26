@@ -133,7 +133,7 @@
 
 \title{R-anvisningar till \emph{Grundläggande statistik}}
 \author{}
-\date{\vspace{-2.5em}2021-10-18}
+\date{\vspace{-2.5em}2021-10-26}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Sats}[chapter]
@@ -1429,7 +1429,7 @@ En styrka med R är hur enkelt nya funktioner kan skapas. Många standardfunktio
 ## function (x, na.rm = FALSE) 
 ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
 ##     na.rm = na.rm))
-## <bytecode: 0x0000000020e6c728>
+## <bytecode: 0x0000000025759f18>
 ## <environment: namespace:stats>
 \end{verbatim}
 
@@ -1747,7 +1747,7 @@ Eftersom standardavvikelsen i den ursprungliga dragningen var 1 (\(\sigma = 1\))
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.2503807
+## [1] 0.2485257
 \end{verbatim}
 
 Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra observationer bör ge ett värde kring 0.1 (eftersom \(\sigma / \sqrt{100} = 1 / 10 = 0.1\)).
@@ -1760,7 +1760,7 @@ Detta kan uppepas för andra stickprovsstorlekar - ett stickprov om hundra obser
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.09999448
+## [1] 0.1016
 \end{verbatim}
 
 Sannolikhetsteorin viktigaste resultat är \emph{centrala gränsvärdesatsen}, som säger att medelvärden av flera lika slumpvariabler är ungefärligt normalfördelade även om den ursprungliga slumpvariabeln inte är det. Detta kan illustreras genom att dra slumptal från valfri fördelning, beräkna medelvärden av de slumptalen, och sedan titta på fördelningen för de medelvärdena. Ett första steg kan vara att skriva en funktion som drar slumptal och beräknar ett medelvärde.
@@ -2120,11 +2120,11 @@ För att beräkna och illustrera den relativa frekvensen skapas en \texttt{tibbl
 ##  3     3      1               3            1    
 ##  4     4      1               4            1    
 ##  5     5      0               4            0.8  
-##  6     6      0               4            0.667
-##  7     7      1               5            0.714
-##  8     8      0               5            0.625
-##  9     9      0               5            0.556
-## 10    10      0               5            0.5  
+##  6     6      1               5            0.833
+##  7     7      1               6            0.857
+##  8     8      1               7            0.875
+##  9     9      1               8            0.889
+## 10    10      1               9            0.9  
 ## # ... with 990 more rows
 \end{verbatim}
 
@@ -2359,7 +2359,7 @@ Tre variabler med slumptal konstrueras med \texttt{rbinom}. Därefter skapas tv�
 ## # A tibble: 1 x 5
 ##      X1    X2    X3 Mult_by_2 Sum_of_two
 ##   <dbl> <dbl> <dbl>     <dbl>      <dbl>
-## 1  4.04  4.02  4.01      8.08       5.68
+## 1  4.01  3.99  4.01      8.02       5.65
 \end{verbatim}
 
 \begin{Shaded}
@@ -3065,7 +3065,7 @@ Här konstrueras en funktion som drar hundra slumpvärden, testar om medelvärde
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0475
+## [1] 0.0501
 \end{verbatim}
 
 När slumptalen genereras från en normalfördelning med medelvärde 0 följer p-värdena en likformig fördelning. Ganska exakt 5 procent av simuleringarna ger ett p-värde under 5 procent. Detta är simuleringar i situationen att nollhypotesen är sann - sannolikheten att felaktigt förkasta på femprocentsnivån när nollhypotesen stämmer är alltså fem procent. Detta är alltså risken för falska positiva resultat.
@@ -3095,7 +3095,7 @@ När slumptalen genereras från en normalfördelning med medelvärde 0 följer p
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.1716
+## [1] 0.1684
 \end{verbatim}
 
 När slumptalen istället genereras från en normalfördelning med medelvärde 0.1 följer p-värdena en avtagande kurva men högst sannolikheter kring noll. Runt 16 procent av simuleringarna har givit p-värden under 0.05 - man har alltså en större chans att korrekt förkasta nollhypotesen när den inte stämmer. Notera att man ändå har ganska låg sannolikhet att förkasta nollhypotesen.
@@ -3255,7 +3255,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0251
+## [1] 0.0238
 \end{verbatim}
 
 \begin{Shaded}
@@ -3265,7 +3265,7 @@ Här konstrueras en funktion som drar 10 slumptal och beräknar ett konfidensint
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.0256
+## [1] 0.0265
 \end{verbatim}
 
 Värdet 9 ligger under den övre gränsen ungefär 2.5 procent av gångerna och över den undre gränsen ungefär 2.5 gångerna. Intervallet täcker alltså 9 ungefär 95 procent av gångerna.
@@ -5749,6 +5749,196 @@ d. Eftersom 1 ligger precis utanför ett 95-procentigt konfidensintervall, bör 
 P-värdet ligger precis under fem procent.
 \end{hypothesis}
 
+\begin{exercise}[Metodjämförelse]
+Någon vill jämföra två metoder för att mäta volym på någon planta. Hen mäter därför nio olika plantor med bägge metoderna, vilket ger följande värden.
+
+\begin{table}
+\centering
+\begin{tabular}[t]{lrrrrrrrrr}
+\toprule
+Metod & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+\midrule
+A & 701 & 707 & 768 & 714 & 712 & 684 & 716 & 751 & 674\\
+B & 935 & 989 & 924 & 904 & 924 & 975 & 889 & 948 & 904\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+a. Illustrera datan med en lämplig figur. Testa med ett lämpligt test om metoderna ger samma medelvärdesvolym.
+
+b. Beräkna korrelationen mellan metoderna. Metod A är en dyrare men bättre metod. Ger mätning med metod B en säker uppskattning av utfallet med metod A?
+\end{exercise}
+
+\begin{hypothesis}[Metodjämförelse]
+Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig skillnad mellan grupperna.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Data/Uppgiftsdata.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Metodjämförelse"}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(Metod, Volym, }\AttributeTok{group =}\NormalTok{ Yta)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-237-1} \end{center}
+
+a. Ibland behöver man inget test.
+
+Men en jämförelse mellan två grupper kan förstås tas som ett parat t-test. Man kan först använda \texttt{pivot\_wider} för att skriva om data till kolumnform.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat\_wide }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Metod, }\AttributeTok{values\_from =}\NormalTok{ Volym)}
+
+\FunctionTok{t.test}\NormalTok{(dat\_wide}\SpecialCharTok{$}\NormalTok{A, dat\_wide}\SpecialCharTok{$}\NormalTok{B, }\AttributeTok{paired =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Paired t-test
+## 
+## data:  dat_wide$A and dat_wide$B
+## t = -14.228, df = 8, p-value = 5.8e-07
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -253.7192 -182.9475
+## sample estimates:
+## mean of the differences 
+##               -218.3333
+\end{verbatim}
+
+Parad data kan också ses som det enklaste exemplet på ett block, och analyseras som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med \texttt{as.character}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Yta =} \FunctionTok{as.character}\NormalTok{(Yta))}
+
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Volym }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Metod }\SpecialCharTok{+}\NormalTok{ Yta, dat)}
+
+\FunctionTok{Anova}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Anova Table (Type II tests)
+## 
+## Response: Volym
+##           Sum Sq Df  F value  Pr(>F)    
+## Metod     214512  1 202.4419 5.8e-07 ***
+## Yta         7440  8   0.8777  0.5709    
+## Residuals   8477  8                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+P-värdet från ett F-test på metod är detsamma som det från det parade t-testet.
+
+b.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(dat\_wide, }\FunctionTok{aes}\NormalTok{(B, A)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-240-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(dat\_wide}\SpecialCharTok{$}\NormalTok{A, dat\_wide}\SpecialCharTok{$}\NormalTok{B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  dat_wide$A and dat_wide$B
+## t = -0.17396, df = 7, p-value = 0.8668
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.6992626  0.6257789
+## sample estimates:
+##         cor 
+## -0.06560983
+\end{verbatim}
+
+Det finns inget signifikant samband mellan metoderna. Mätning med metod B säger alltså inget om utfallet i metod A. Om metod A är den mer precisa metoden, tyder detta på att metod B inte bör användas.
+\end{hypothesis}
+
+\begin{exercise}[Anscombes data]
+Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är \emph{Anscombes kvartett}, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet \texttt{anscombe}. Plotta de fyra graferna (\texttt{x1} paras med \texttt{y1} och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Kommentera utfallet.
+\end{exercise}
+
+\begin{hypothesis}[Anscombes data]
+Data finns tillgänglig i R som \texttt{anscombe}, vilket är en tabell med åtta kolumner som består av fyra par (där \texttt{x1} är kopplad till \texttt{y1} och så vidare). Paren kan plottas med enkla spridningsdiagram.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x1, y1)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{g2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x2, y2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{g3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x3, y3)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{g4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x4, y4)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+
+\FunctionTok{library}\NormalTok{(patchwork)}
+\NormalTok{(g1 }\SpecialCharTok{+}\NormalTok{ g2) }\SpecialCharTok{/}\NormalTok{ (g3 }\SpecialCharTok{+}\NormalTok{ g4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-241-1} \end{center}
+
+Graferna ser olika ut.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x1, anscombe}\SpecialCharTok{$}\NormalTok{y1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8164205
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x2, anscombe}\SpecialCharTok{$}\NormalTok{y2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8162365
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x3, anscombe}\SpecialCharTok{$}\NormalTok{y3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8162867
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x4, anscombe}\SpecialCharTok{$}\NormalTok{y4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8165214
+\end{verbatim}
+
+Men har samma korrelation (till fjärde decimal).
+
+En modern utveckling av Anscombes kvartett ges av \emph{The Datasaurus Dozen}.
+\end{hypothesis}
+
 \begin{exercise}[Beach 2050]
 Bland kursdata finns en fil med uppmätta temperaturer vid väderstationen i Falsterbo. Den kan läsas in från csv-filen. Se tidigare uppgift om beskrivande statistik för detaljer.
 
@@ -5861,7 +6051,7 @@ a. Tidsdata illustreras ofta med en linjediagram. Regressionslinjen kan skapas m
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-240-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-247-1} \end{center}
 
 Det finns tecken på en ökning över tid.
 
@@ -5908,7 +6098,7 @@ Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller strukt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-249-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5916,7 +6106,7 @@ Diagnosgrafer ger inga uppenbara avvikelser från normalfördelning eller strukt
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-242-2} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-249-2} \end{center}
 
 c. Det är möjligt att prognosticera värden med \texttt{predict}. Funktionen tar en skattad modell (här \texttt{mod}) och en ny datatabellen, som innehåller en kolumn med samma namn som den förklarande variabeln i modellen (här \texttt{År}). Funktionen kan även producera konfidensintervall för skattningen, här genom \texttt{interval\ =\ "conf"} för ett konfidensintervall.
 
@@ -5934,201 +6124,11 @@ c. Det är möjligt att prognosticera värden med \texttt{predict}. Funktionen t
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-243-1} \end{center}
+\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-250-1} \end{center}
 
 d. I en tidigare uppgift påpekas att data inte samlats in samma tider på dygnet under hela mätperioden - det är därmed möjligt att den observerade ökningen beror på förändringar i mätmetod. Valet av de fyrtio senaste åren var ett godtyckligt val som påverkar lutningen kraftigt (till exempel om man av en ren slump börjar med några kalla år och avslutar med några varma). Regressionsmodellen är en linjär modell, vilket ger den uppenbarligen orimliga tolkning av interceptet som en temperatur år 0.
 
 Slutligen finns förstås det grundläggande problemet med prognoser: det kan ske oväntade saker som leder till strukturbrott och gör att sambandet mellan förklarande och förklarad variabel förändras.
-\end{hypothesis}
-
-\begin{exercise}[Metodjämförelse]
-Någon vill jämföra två metoder för att mäta volym på någon planta. Hen mäter därför nio olika plantor med bägge metoderna, vilket ger följande värden.
-
-\begin{table}
-\centering
-\begin{tabular}[t]{lrrrrrrrrr}
-\toprule
-Metod & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
-\midrule
-A & 701 & 707 & 768 & 714 & 712 & 684 & 716 & 751 & 674\\
-B & 935 & 989 & 924 & 904 & 924 & 975 & 889 & 948 & 904\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-a. Illustrera datan med en lämplig figur. Testa med ett lämpligt test om metoderna ger samma medelvärdesvolym.
-
-b. Beräkna korrelationen mellan metoderna. Metod A är en dyrare men bättre metod. Ger mätning med metod B en säker uppskattning av utfallet med metod A?
-\end{exercise}
-
-\begin{hypothesis}[Metodjämförelse]
-Data kan hämtas från excelfilen med uppgiftsdata. Ett diagram visar en tydlig skillnad mellan grupperna.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Data/Uppgiftsdata.xlsx"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"Metodjämförelse"}\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(dat, }\FunctionTok{aes}\NormalTok{(Metod, Volym, }\AttributeTok{group =}\NormalTok{ Yta)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_line}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-245-1} \end{center}
-
-a. Ibland behöver man inget test.
-
-Men en jämförelse mellan två grupper kan förstås tas som ett parat t-test. Man kan först använda \texttt{pivot\_wider} för att skriva om data till kolumnform.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat\_wide }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Metod, }\AttributeTok{values\_from =}\NormalTok{ Volym)}
-
-\FunctionTok{t.test}\NormalTok{(dat\_wide}\SpecialCharTok{$}\NormalTok{A, dat\_wide}\SpecialCharTok{$}\NormalTok{B, }\AttributeTok{paired =}\NormalTok{ T)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Paired t-test
-## 
-## data:  dat_wide$A and dat_wide$B
-## t = -14.228, df = 8, p-value = 5.8e-07
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -253.7192 -182.9475
-## sample estimates:
-## mean of the differences 
-##               -218.3333
-\end{verbatim}
-
-Parad data kan också ses som det enklaste exemplet på ett block, och analyseras som en anova med block. För att R ska tolka variabeln Yta som en faktor kan man ändra dess typ med \texttt{as.character}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Yta =} \FunctionTok{as.character}\NormalTok{(Yta))}
-
-\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Volym }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Metod }\SpecialCharTok{+}\NormalTok{ Yta, dat)}
-
-\FunctionTok{Anova}\NormalTok{(mod)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Anova Table (Type II tests)
-## 
-## Response: Volym
-##           Sum Sq Df  F value  Pr(>F)    
-## Metod     214512  1 202.4419 5.8e-07 ***
-## Yta         7440  8   0.8777  0.5709    
-## Residuals   8477  8                     
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-P-värdet från ett F-test på metod är detsamma som det från det parade t-testet.
-
-b.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(dat\_wide, }\FunctionTok{aes}\NormalTok{(B, A)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-248-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(dat\_wide}\SpecialCharTok{$}\NormalTok{A, dat\_wide}\SpecialCharTok{$}\NormalTok{B)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Pearson's product-moment correlation
-## 
-## data:  dat_wide$A and dat_wide$B
-## t = -0.17396, df = 7, p-value = 0.8668
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  -0.6992626  0.6257789
-## sample estimates:
-##         cor 
-## -0.06560983
-\end{verbatim}
-
-Det finns inget signifikant samband mellan metoderna. Mätning med metod B säger alltså inget om utfallet i metod A. Om metod A är den mer precisa metoden, tyder detta på att metod B inte bör användas.
-\end{hypothesis}
-
-\begin{exercise}[Anscombes data]
-Den raka regressionslinjen eller det enkla korrelationsmåttet säger lite om hur data egentligen ser ut. En vanlig illustration av detta är \emph{Anscombes kvartett}, fyra exempel konstruerade av den brittiske statistikern Francis Anscombe 1973. Datan finns tillgänglig i R som datasetet \texttt{anscombe}. Plotta de fyra graferna (\texttt{x1} paras med \texttt{y1} och så vidare) i spridningsdiagram och beräkna korrelation för varje par. Kommentera utfallet.
-\end{exercise}
-
-\begin{hypothesis}[Anscombes data]
-Data finns tillgänglig i R som \texttt{anscombe}, vilket är en tabell med åtta kolumner som består av fyra par (där \texttt{x1} är kopplad till \texttt{y1} och så vidare). Paren kan plottas med enkla spridningsdiagram.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x1, y1)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-\NormalTok{g2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x2, y2)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-\NormalTok{g3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x3, y3)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-\NormalTok{g4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(anscombe, }\FunctionTok{aes}\NormalTok{(x4, y4)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
-
-\FunctionTok{library}\NormalTok{(patchwork)}
-\NormalTok{(g1 }\SpecialCharTok{+}\NormalTok{ g2) }\SpecialCharTok{/}\NormalTok{ (g3 }\SpecialCharTok{+}\NormalTok{ g4)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{R-anvisningar_files/figure-latex/unnamed-chunk-249-1} \end{center}
-
-Graferna ser olika ut.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x1, anscombe}\SpecialCharTok{$}\NormalTok{y1)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.8164205
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x2, anscombe}\SpecialCharTok{$}\NormalTok{y2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.8162365
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x3, anscombe}\SpecialCharTok{$}\NormalTok{y3)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.8162867
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor}\NormalTok{(anscombe}\SpecialCharTok{$}\NormalTok{x4, anscombe}\SpecialCharTok{$}\NormalTok{y4)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.8165214
-\end{verbatim}
-
-Men har samma korrelation (till fjärde decimal).
-
-En modern utveckling av Anscombes kvartett ges av \emph{The Datasaurus Dozen}.
 \end{hypothesis}
 
 \begin{exercise}[Datasaurus Dozen]
